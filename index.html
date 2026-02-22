@@ -4,16 +4,41 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Abby Cake and Bites</title>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body>
-<div id="root"></div>
-<script type="text/babel" src="AbbyBakery-Connected.jsx"></script>
-<script type="text/babel">
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(React.createElement(App));
-</script>
+<body style="margin:0;font-family:sans-serif;background:#fdf6ee;color:#2c1810">
+<nav style="background:white;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f5d6c8;position:sticky;top:0;z-index:100">
+<b style="font-size:18px">🎂 Abby Cake & Bites</b>
+<a href="https://wa.me/255620767919" style="background:#c97d6e;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:14px">Order via WhatsApp</a>
+</nav>
+<div style="background:linear-gradient(135deg,#fdf0e6,#f5d6c8);padding:60px 24px;text-align:center">
+<h1 style="font-size:48px;color:#6b3f2a;margin-bottom:16px">Abby Cake & Bites</h1>
+<p style="font-size:18px;color:#8a6050;margin-bottom:24px">Handcrafted cakes & pastries in Himo, Tanzania</p>
+<a href="https://wa.me/255620767919" style="background:#c97d6e;color:white;padding:16px 32px;border-radius:30px;text-decoration:none;font-size:16px;font-weight:bold">🎂 Order Now on WhatsApp</a>
+</div>
+<div style="max-width:800px;margin:40px auto;padding:0 24px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:40px">
+<div style="background:white;padding:20px;border-radius:16px;border:1px solid #f5d6c8"><div style="font-size:24px">📍</div><b>Location</b><p style="color:#8a6050;font-size:14px">Njiapanda, Himo, Tanzania</p></div>
+<div style="background:white;padding:20px;border-radius:16px;border:1px solid #f5d6c8"><div style="font-size:24px">📞</div><b>Phone</b><p style="color:#8a6050;font-size:14px">0620 767 919</p></div>
+<div style="background:white;padding:20px;border-radius:16px;border:1px solid #f5d6c8"><div style="font-size:24px">🕐</div><b>Hours</b><p style="color:#8a6050;font-size:14px">Mon-Thu 7AM-7PM<br/>Fri-Sat 7AM-8PM<br/>Sunday Closed</p></div>
+<div style="background:white;padding:20px;border-radius:16px;border:1px solid #f5d6c8"><div style="font-size:24px">🚗</div><b>Delivery</b><p style="color:#8a6050;font-size:14px">Available in Himo<br/>TZS 3,000-8,000</p></div>
+</div>
+<h2 style="color:#6b3f2a;margin-bottom:24px;font-size:28px">🎂 Our Menu</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
+<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Birthday Cake</b><p style="color:#9a7060;font-size:13px">Custom decorated</p><p style="color:#c97d6e;font-weight:bold">TZS 25,000-80,000</p></div>
+<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Wedding Cake</b><p style="color:#9a7060;font-size:13px">Multi-tier elegant</p><p style="color:#c97d6e;font-weight:bold">TZS 80,000-300,000</p></div>
+<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Cupcakes</b><p style="color:#9a7060;font-size:13px">6 or 12 pieces</p><p style="color:#c97d6e;font-weight:bold">TZS 12,000-22,000</p></div>
+<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Cookies</b><p style="color:#9a7060;font-size:13px">Freshly baked</p><p style="color:#c97d6e;font-weight:bold">TZS 8,000-15,000</p></div>
+<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Brownies</b><p style="color:#9a7060;font-size:13px">Fudgy chocolate</p><p style="color:#c97d6e;font-weight:bold">TZS 10,000-20,000</p></div>
+<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Doughnuts</b><p style="color:#9a7060;font-size:13px">Glazed & filled</p><p style="color:#c97d6e;font-weight:bold">TZS 9,000-17,000</p></div>
+</div>
+<div style="text-align:center;margin-top:40px;background:white;padding:32px;border-radius:20px;border:1px solid #f5d6c8">
+<h2 style="color:#6b3f2a;margin-bottom:12px">Ready to Order?</h2>
+<p style="color:#8a6050;margin-bottom:20px">Contact us on WhatsApp to place your order!</p>
+<a href="https://wa.me/255620767919" style="background:#25D366;color:white;padding:16px 32px;border-radius:30px;text-decoration:none;font-size:16px;font-weight:bold">💬 Chat on WhatsApp</a>
+</div>
+</div>
+<footer style="background:#2c1810;color:rgba(255,255,255,0.7);text-align:center;padding:24px;margin-top:40px">
+<b style="color:#e8a598">Abby Cake and Bites</b> · Njiapanda, Himo · 0620 767 919
+</footer>
 </body>
 </html>
