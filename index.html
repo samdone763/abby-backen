@@ -467,8 +467,18 @@ function smartReply(text) {
 }
 
 async function submitLocalOrder(){
-  try{
-    await fetch(API+'/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customer:{name:orderData.name,phone:orderData.phone},item:{type:orderData.item,size:'',flavor:'',quantity:1},delivery:{type:orderData.delivery.toLowerCase().includes('delivery')?'delivery':'pickup',address:''},dateNeeded:orderData.date,notes:''})});
+  try{await fetch(API+'/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customer:{name:orderData.name,phone:orderData.phone},item:{type:orderData.item,size:'',flavor:'',quantity:1},delivery:{type:orderData.delivery.toLowerCase().includes('delivery')?'delivery':'pickup',address:''},dateNeeded:orderData.date,notes:''})});}catch(e){}
+  var msg='New Order!%0AName: '+orderData.name+'%0APhone: '+orderData.phone+'%0AItem: '+orderData.item+'%0ADelivery: '+orderData.delivery+'%0ADate: '+orderData.date;
+  var waUrl='https://wa.me/255620767919?text='+msg;
+  var d=document.createElement('div');d.className='msg assistant';
+  var b=document.createElement('div');b.className='msg-bubble';
+  b.innerHTML='Order confirmed! Thank you <b>'+orderData.name+'</b>!<br/><br/><a href="'+waUrl+'" target="_blank" style="background:#25D366;color:white;padding:10px 20px;border-radius:20px;text-decoration:none;display:inline-block;font-weight:600">Send Order on WhatsApp</a><br/><br/>We will call you on '+orderData.phone+' to confirm.';
+  d.appendChild(b);
+  document.getElementById('chatMsgs').appendChild(d);
+  document.getElementById('chatMsgs').scrollTop=99999;
+  orderStep=null;orderData={};chatLoading=false;
+  document.getElementById('sendBtn').disabled=false;
+},body:JSON.stringify({customer:{name:orderData.name,phone:orderData.phone},item:{type:orderData.item,size:'',flavor:'',quantity:1},delivery:{type:orderData.delivery.toLowerCase().includes('delivery')?'delivery':'pickup',address:''},dateNeeded:orderData.date,notes:''})});
   }catch(e){}
   removeTyping();
   var msg = 'New Order from Abby Website!\nName: '+orderData.name+'\nPhone: '+orderData.phone+'\nItem: '+orderData.item+'\nDelivery: '+orderData.delivery+'\nDate: '+orderData.date;
