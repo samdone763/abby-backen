@@ -471,7 +471,10 @@ async function submitLocalOrder(){
     await fetch(API+'/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customer:{name:orderData.name,phone:orderData.phone},item:{type:orderData.item,size:'',flavor:'',quantity:1},delivery:{type:orderData.delivery.toLowerCase().includes('delivery')?'delivery':'pickup',address:''},dateNeeded:orderData.date,notes:''})});
   }catch(e){}
   removeTyping();
-  addMsg('assistant','Order confirmed! Thank you '+orderData.name+'! We will call you on '+orderData.phone+' to confirm your '+orderData.item+' order. Questions? Call: 0620 767 919');
+  var msg = 'New Order from Abby Website!\n\nName: '+orderData.name+'\nPhone: '+orderData.phone+'\nItem: '+orderData.item+'\nDelivery: '+orderData.delivery+'\nDate: '+orderData.date;
+  var waUrl = 'https://wa.me/255620767919?text='+encodeURIComponent(msg);
+  window.open(waUrl, '_blank');
+  addMsg('assistant','Order confirmed! Thank you '+orderData.name+'!\n\nWhatsApp has been opened to notify the bakery.\nWe will call you on '+orderData.phone+' to confirm.\n\nQuestions? Call: 0620 767 919');
   orderStep=null;orderData={};
   chatLoading=false;
   document.getElementById('sendBtn').disabled=false;
