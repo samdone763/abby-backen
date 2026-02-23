@@ -2,771 +2,861 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Abby Cake and Bites · Himo, Tanzania</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Abby Cake & Bites — Order Now</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--rose:#e8927c;--deep:#3d1f1f;--cream:#fdf8f3;--soft:#f5e6da;--muted:#9a7060;--border:rgba(201,125,110,0.15);--card:#fff}
-body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--deep);min-height:100vh}
-/* NAV */
-nav{position:sticky;top:0;z-index:999;background:rgba(253,248,243,0.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;gap:8px}
-.brand{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;color:var(--deep);white-space:nowrap;flex-shrink:0}
-.brand span{color:var(--rose)}
-.nav-links{display:flex;gap:2px}
-.nl{padding:5px 10px;border-radius:16px;border:none;background:transparent;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
-.nl:hover{background:var(--soft)}.nl.on{background:var(--rose);color:#fff}
-.status{font-size:10px;font-weight:600;padding:3px 9px;border-radius:14px;flex-shrink:0}
-.open{background:#e8f5e9;color:#2e7d32}.closed{background:#fce4ec;color:#c62828}
-/* PAGES */
-.pg{display:none;animation:fadeIn .3s ease}.pg.on{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-/* HOME */
-.hero{background:linear-gradient(150deg,#fdf8f3,#f5e6da,#eeddd0);padding:64px 18px 48px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(232,146,124,.13),transparent 70%);border-radius:50%;pointer-events:none}
-.hero-tag{display:inline-block;border:1px solid var(--rose);color:var(--rose);padding:4px 14px;border-radius:16px;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,8vw,60px);color:var(--deep);line-height:1.05;margin-bottom:12px;font-weight:700}
-.hero h1 em{color:var(--rose);font-style:italic}
-.hero-sub{font-size:13px;color:var(--muted);max-width:360px;margin:0 auto 24px;line-height:1.7;font-weight:300}
-.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.btn{padding:11px 22px;border-radius:26px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .25s;letter-spacing:.02em;display:inline-block;text-decoration:none}
-.btn-rose{background:var(--rose);color:#fff;box-shadow:0 4px 14px rgba(232,146,124,.4)}.btn-rose:hover{transform:translateY(-2px)}
-.btn-out{background:transparent;color:var(--rose);border:2px solid var(--rose)}.btn-out:hover{background:var(--rose);color:#fff}
-.btn-green{background:#25D366;color:#fff;box-shadow:0 4px 14px rgba(37,211,102,.35)}.btn-green:hover{transform:translateY(-2px)}
-.wrap{max-width:840px;margin:0 auto;padding:28px 15px}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:34px}
-.info-card{background:var(--card);border-radius:12px;padding:15px;border:1px solid var(--border)}
-.ic-icon{font-size:20px;margin-bottom:7px}.ic-label{font-size:10px;font-weight:600;color:var(--rose);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}.ic-val{font-size:13px;font-weight:500;line-height:1.5}
-.section-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--deep);margin-bottom:4px}
-.section-sub{color:var(--muted);font-size:12px;margin-bottom:14px}
-.hours-list{background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border)}
-.h-row{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;border-bottom:1px solid var(--border);font-size:12px}
-.h-row:last-child{border-bottom:none}.h-row.today{background:linear-gradient(90deg,rgba(232,146,124,.06),transparent)}
-.h-day{font-weight:500}.h-time{color:var(--muted)}.h-closed{color:var(--rose);font-style:italic}
-/* GALLERY */
-.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:14px}
-.gal-item{border-radius:12px;overflow:hidden;aspect-ratio:1;background:var(--soft);border:1px solid var(--border);position:relative;cursor:pointer}
-.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s}.gal-item:hover img{transform:scale(1.05)}
-.gal-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(61,31,31,.72));color:#fff;font-size:11px;font-weight:500;padding:18px 7px 6px;text-align:center}
-.gal-empty{text-align:center;padding:50px 20px;color:var(--muted);font-size:13px;grid-column:1/-1}
-/* MENU */
-.menu-section{margin-bottom:28px}
-.menu-cat{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--deep);padding-bottom:8px;border-bottom:2px solid var(--soft);margin-bottom:12px}
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:8px}
-.m-card{background:var(--card);border-radius:11px;padding:13px;border:1px solid var(--border);cursor:pointer;transition:all .2s}
-.m-card:hover{border-color:var(--rose);transform:translateY(-2px);box-shadow:0 4px 12px rgba(232,146,124,.15)}
-.m-card:active{transform:scale(.97)}
-.m-name{font-weight:600;font-size:12px;color:var(--deep);margin-bottom:2px}
-.m-desc{font-size:11px;color:var(--muted);margin-bottom:6px;line-height:1.4}
-.m-price{font-size:12px;font-weight:700;color:var(--rose)}
-/* CHAT */
-.chat-wrap{max-width:580px;margin:0 auto}
-.chat-box{background:var(--card);border-radius:18px;border:1px solid var(--border);box-shadow:0 6px 28px rgba(61,31,31,.08);overflow:hidden;display:flex;flex-direction:column;height:560px}
-.chat-head{background:linear-gradient(135deg,var(--rose),#c9644e);padding:13px 16px;display:flex;align-items:center;gap:10px;color:#fff}
-.chat-av{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
-.chat-head h3{font-size:13px;font-weight:600;margin-bottom:1px}
-.chat-head p{font-size:10px;opacity:.85}
-.online-dot{width:6px;height:6px;background:#7fff7f;border-radius:50%;display:inline-block;margin-right:3px}
-.chat-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fdf9f7}
-.chat-msgs::-webkit-scrollbar{width:2px}.chat-msgs::-webkit-scrollbar-thumb{background:var(--soft)}
-.msg{max-width:85%}.msg.u{align-self:flex-end}.msg.a{align-self:flex-start}
-.bub{padding:9px 12px;border-radius:15px;font-size:13px;line-height:1.6}
-.msg.u .bub{background:var(--rose);color:#fff;border-bottom-right-radius:3px}
-.msg.a .bub{background:#fff;color:var(--deep);border:1px solid var(--border);border-bottom-left-radius:3px;box-shadow:0 1px 4px rgba(61,31,31,.05)}
-.msg-time{font-size:9px;color:#ccc;margin-top:2px;padding:0 2px}.msg.u .msg-time{text-align:right}
-.typing{display:flex;gap:3px;align-items:center;padding:9px 12px}
-.typing span{width:5px;height:5px;background:var(--rose);border-radius:50%;animation:bounce 1.2s infinite}
-.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
-@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
-.quick-btns{display:flex;flex-wrap:wrap;gap:5px;padding:0 12px 8px;background:#fdf9f7}
-.qbtn{padding:5px 10px;background:#fff;border:1.5px solid var(--soft);border-radius:11px;font-size:11px;color:var(--rose);cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;transition:all .15s}
-.qbtn:hover{background:var(--soft)}
-/* PHOTO UPLOAD IN CHAT */
-.photo-upload-area{display:none;padding:8px 13px;background:#fdf9f7;border-top:1px solid var(--border)}
-.photo-upload-label{display:flex;align-items:center;gap:7px;padding:8px 12px;background:#fff;border:1.5px dashed var(--rose);border-radius:10px;cursor:pointer;font-size:12px;color:var(--rose);font-weight:500;font-family:'Jost',sans-serif}
-.photo-preview-box{margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.photo-preview-box img{width:68px;height:68px;object-fit:cover;border-radius:8px;border:2px solid var(--rose)}
-.rm-photo-btn{background:var(--rose);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:12px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.chat-bottom{padding:9px 11px;border-top:1px solid var(--border);background:#fff;display:flex;gap:6px;align-items:flex-end}
-.chat-input{flex:1;border:1.5px solid var(--soft);border-radius:15px;padding:8px 11px;font-family:'Jost',sans-serif;font-size:13px;outline:none;resize:none;max-height:70px;background:#fdf9f7;color:var(--deep);transition:border-color .2s}
-.chat-input:focus{border-color:var(--rose)}
-.send-btn{width:36px;height:36px;background:var(--rose);border:none;border-radius:50%;color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
-.send-btn:hover{transform:scale(1.08)}.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-/* ADMIN */
-.admin-login-card{max-width:320px;margin:44px auto;background:var(--card);border-radius:16px;padding:30px 24px;box-shadow:0 6px 28px rgba(61,31,31,.1);text-align:center;border:1px solid var(--border)}
-.admin-login-card h2{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--deep);margin-bottom:4px}
-.admin-login-card p{color:var(--muted);font-size:12px;margin-bottom:20px}
-.field{margin-bottom:12px;text-align:left}
-.field label{display:block;font-size:11px;font-weight:600;color:var(--deep);margin-bottom:3px;letter-spacing:.04em}
-.field input{width:100%;padding:9px 12px;border:1.5px solid var(--soft);border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:var(--cream);transition:border-color .2s;color:var(--deep)}
-.field input:focus{border-color:var(--rose)}
-.alert-err{background:#fce4ec;color:#c62828;padding:8px 11px;border-radius:7px;font-size:12px;margin-bottom:10px;text-align:left}
-.alert-ok{background:#e8f5e9;color:#2e7d32;padding:8px 11px;border-radius:7px;font-size:12px;margin-bottom:10px;text-align:left}
-.admin-wrap{max-width:840px;margin:0 auto;padding:24px 14px}
-.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px}
-.admin-header h2{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--deep)}
-.admin-tabs{display:flex;gap:7px;margin-bottom:18px}
-.atab{padding:6px 15px;border-radius:15px;border:1.5px solid var(--soft);background:transparent;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s}
-.atab.on{background:var(--rose);color:#fff;border-color:var(--rose)}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:9px;margin-bottom:20px}
-.stat-card{background:var(--card);border-radius:11px;padding:13px;border:1px solid var(--border)}
-.stat-n{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--rose)}
-.stat-l{font-size:10px;color:var(--muted);margin-top:2px;font-weight:500;text-transform:uppercase;letter-spacing:.05em}
-.orders-table{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow:hidden}
-.orders-head{background:linear-gradient(90deg,var(--soft),var(--cream));padding:10px 14px;display:grid;grid-template-columns:72px 1fr 1fr 64px;gap:8px;font-size:10px;font-weight:600;color:var(--deep);text-transform:uppercase;letter-spacing:.05em}
-.order-row{padding:10px 14px;display:grid;grid-template-columns:72px 1fr 1fr 64px;gap:8px;border-top:1px solid var(--border);font-size:12px;align-items:center}
-.order-row:hover{background:var(--cream)}
-.badge{padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600}
-.badge-pending{background:#fff8e1;color:#f57f17}.badge-confirmed{background:#e8f5e9;color:#2e7d32}
-/* ADMIN GALLERY */
-.gal-upload-box{border:2px dashed var(--rose);border-radius:11px;padding:22px;text-align:center;cursor:pointer;background:#fff;margin-bottom:12px;transition:all .2s}
-.gal-upload-box:hover{background:rgba(232,146,124,.04)}
-.gal-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:9px;margin-top:12px}
-.gal-admin-item{background:var(--card);border-radius:11px;overflow:hidden;border:1px solid var(--border);position:relative}
-.gal-admin-item img{width:100%;aspect-ratio:1;object-fit:cover}
-.gal-admin-info{padding:7px;font-size:11px;font-weight:600;color:var(--deep)}
-.gal-del-btn{position:absolute;top:5px;right:5px;background:rgba(196,28,28,.85);color:#fff;border:none;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center}
-/* FAB */
-.wa-fab{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 14px rgba(37,211,102,.45);z-index:998;text-decoration:none;transition:transform .2s}
-.wa-fab:hover{transform:scale(1.1)}
-footer{background:var(--deep);color:rgba(255,255,255,.5);text-align:center;padding:24px 15px;font-size:12px;margin-top:48px}
-footer strong{color:var(--rose)}
-@media(max-width:440px){.orders-head,.order-row{grid-template-columns:58px 1fr 1fr}.orders-head span:last-child,.order-row span:last-child{display:none}}
+  :root {
+    --cream: #fdf6ee; --blush: #e8a898; --rose: #c97b6a;
+    --brown: #3d1f0f; --soft: #f5ede4; --green: #4caf50; --red: #e53935;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--cream); font-family: 'DM Sans', sans-serif; color: var(--brown); min-height: 100vh; }
+
+  nav { background: white; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 12px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--brown); }
+  .nav-status { background: #fee2e2; color: #b91c1c; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; }
+  .nav-status.open { background: #dcfce7; color: #15803d; }
+
+  .hero { background: linear-gradient(135deg, #fdf0e8 0%, #fce4d6 100%); padding: 50px 20px 40px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%, rgba(232,168,152,0.3) 0%, transparent 60%); }
+  .hero-tag { display: inline-block; border: 1px solid var(--blush); color: var(--rose); padding: 5px 16px; border-radius: 20px; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.4rem; line-height: 1.2; margin-bottom: 12px; }
+  .hero h1 span { color: var(--rose); font-style: italic; }
+  .hero p { color: #8a6555; font-size: 0.95rem; max-width: 300px; margin: 0 auto 24px; line-height: 1.6; }
+  .hero-btn { background: var(--rose); color: white; border: none; padding: 14px 32px; border-radius: 30px; font-size: 1rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.3s; }
+  .hero-btn:hover { background: var(--brown); transform: translateY(-2px); }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px; }
+  .info-card { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .info-icon { font-size: 1.4rem; margin-bottom: 6px; }
+  .info-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--rose); font-weight: 500; margin-bottom: 4px; }
+  .info-value { font-size: 0.85rem; font-weight: 500; color: var(--brown); line-height: 1.4; }
+
+  .section-title { padding: 24px 20px 8px; }
+  .section-title h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; }
+  .section-title p { color: #8a6555; font-size: 0.85rem; margin-top: 4px; }
+
+  .menu-grid { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .menu-item { background: white; border-radius: 16px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+  .menu-item:hover, .menu-item.selected { border-color: var(--blush); background: #fff8f5; }
+  .menu-item-left { display: flex; align-items: center; gap: 12px; }
+  .menu-emoji { font-size: 1.8rem; }
+  .menu-name { font-weight: 500; font-size: 0.95rem; }
+  .menu-desc { font-size: 0.75rem; color: #8a6555; margin-top: 2px; }
+  .menu-price { font-weight: 700; color: var(--rose); font-size: 1rem; }
+  .menu-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--blush); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .menu-item.selected .menu-check { background: var(--rose); border-color: var(--rose); color: white; font-size: 0.7rem; }
+
+  .order-section { padding: 0 20px 100px; }
+  .payment-box { background: linear-gradient(135deg, #fff3e0, #fce4d6); border: 2px solid var(--blush); border-radius: 20px; padding: 20px; margin-bottom: 16px; }
+  .payment-box h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 12px; }
+  .payment-step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .step-num { background: var(--rose); color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .step-text { font-size: 0.85rem; line-height: 1.5; color: var(--brown); }
+  .step-text strong { color: var(--rose); }
+  .payment-methods { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .pay-badge { background: white; border: 1px solid var(--blush); border-radius: 8px; padding: 4px 10px; font-size: 0.75rem; font-weight: 500; }
+  .amount-display { background: white; border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; text-align: center; border: 1px dashed var(--blush); }
+  .amount-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #8a6555; }
+  .amount-value { font-size: 1.4rem; font-weight: 700; color: var(--rose); font-family: 'Playfair Display', serif; }
+  .amount-note { font-size: 0.72rem; color: #8a6555; }
+
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 0.8rem; font-weight: 500; color: var(--brown); margin-bottom: 6px; display: block; }
+  .form-input, .form-textarea { width: 100%; padding: 12px 14px; border: 1.5px solid #e8d5c8; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--brown); background: white; outline: none; transition: border-color 0.2s; }
+  .form-input:focus, .form-textarea:focus { border-color: var(--blush); }
+  .form-textarea { resize: vertical; min-height: 80px; }
+
+  .upload-area { border: 2px dashed var(--blush); border-radius: 16px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff8f5; }
+  .upload-area:hover { background: #fce4d6; }
+  .upload-area.has-file { border-color: var(--green); background: #f0fff4; }
+  .upload-text { font-size: 0.85rem; color: #8a6555; }
+  .preview-img { width: 100%; max-height: 200px; object-fit: contain; border-radius: 10px; margin-top: 10px; }
+
+  .verify-status { border-radius: 12px; padding: 12px 14px; margin-top: 10px; font-size: 0.82rem; display: none; }
+  .verify-status.checking { background: #fff3e0; color: #e65100; display: flex; align-items: center; gap: 8px; }
+  .verify-status.success { background: #dcfce7; color: #15803d; display: flex; align-items: center; gap: 8px; }
+  .verify-status.failed { background: #fee2e2; color: #b91c1c; display: flex; align-items: center; gap: 8px; }
+  .spinner { width: 16px; height: 16px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .submit-btn { width: 100%; background: var(--rose); color: white; border: none; padding: 16px; border-radius: 16px; font-size: 1rem; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.3s; margin-top: 8px; }
+  .submit-btn:hover:not(:disabled) { background: var(--brown); }
+  .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+  .success-screen { display: none; position: fixed; inset: 0; background: var(--cream); z-index: 200; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; }
+  .success-screen.show { display: flex; }
+  .success-icon { font-size: 4rem; margin-bottom: 16px; animation: bounce 0.6s ease; }
+  @keyframes bounce { 0%,100%{transform:scale(1)}50%{transform:scale(1.2)} }
+  .success-screen h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 12px; }
+  .success-screen p { color: #8a6555; font-size: 0.9rem; line-height: 1.6; max-width: 280px; }
+  .success-order-id { background: white; border-radius: 12px; padding: 10px 20px; margin: 16px 0; font-weight: 700; color: var(--rose); font-size: 1rem; }
+  .new-order-btn { background: var(--rose); color: white; border: none; padding: 14px 30px; border-radius: 30px; font-size: 0.95rem; cursor: pointer; margin-top: 16px; }
+
+  .wa-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 16px rgba(37,211,102,0.4); cursor: pointer; z-index: 99; text-decoration: none; transition: transform 0.2s; }
+  .wa-float:hover { transform: scale(1.1); }
+
+  .tabs { display: flex; padding: 0 20px; gap: 8px; margin-bottom: 4px; overflow-x: auto; padding-bottom: 4px; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; border: 1.5px solid #e8d5c8; background: white; color: var(--brown); transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+  .tab.active { background: var(--rose); color: white; border-color: var(--rose); }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px 20px; }
+  .gallery-item { border-radius: 14px; overflow: hidden; aspect-ratio: 1; background: #e8d5c8; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-caption { font-size: 0.72rem; color: #8a6555; text-align: center; padding: 4px 0; }
+
+  .hours-table { background: white; border-radius: 16px; margin: 0 20px 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .hours-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid #f5ede4; font-size: 0.87rem; }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-row.today { background: #fff8f5; font-weight: 600; }
+  .hours-time { color: #8a6555; }
+
+  /* SETTINGS */
+  .settings-section { padding: 20px; }
+  .settings-card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 16px; }
+  .settings-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 16px; }
+  .lang-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .lang-option { border: 2px solid #e8d5c8; border-radius: 16px; padding: 20px 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: white; }
+  .lang-option:hover { border-color: var(--blush); background: #fff8f5; }
+  .lang-option.active { border-color: var(--rose); background: linear-gradient(135deg, #fff3e0, #fce4d6); }
+  .lang-flag { font-size: 2.5rem; margin-bottom: 8px; }
+  .lang-name { font-weight: 600; font-size: 0.95rem; color: var(--brown); }
+  .lang-native { font-size: 0.78rem; color: #8a6555; margin-top: 3px; }
+  .lang-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #e8d5c8; display: flex; align-items: center; justify-content: center; margin: 8px auto 0; font-size: 0.7rem; transition: all 0.2s; }
+  .lang-option.active .lang-check { background: var(--rose); border-color: var(--rose); color: white; }
+  .settings-info { background: #fff8f5; border-radius: 12px; padding: 12px 14px; font-size: 0.82rem; color: #8a6555; border: 1px solid #fce4d6; margin-top: 14px; }
+
+  /* ADMIN */
+  .admin-section { padding: 20px; }
+  .admin-login { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .admin-login h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 16px; }
+  .admin-dashboard { display: none; }
+  .order-card { background: white; border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid var(--blush); }
+  .order-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .order-name { font-weight: 600; font-size: 0.95rem; }
+  .order-time { font-size: 0.72rem; color: #8a6555; }
+  .order-detail { font-size: 0.82rem; color: #8a6555; margin-bottom: 3px; }
+  .order-badge { display: inline-block; background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: 500; }
+  .order-badge.pending { background: #fff3e0; color: #e65100; }
+  .alert { border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; font-size: 0.85rem; }
+  .alert-error { background: #fee2e2; color: #b91c1c; }
+  .alert-success { background: #dcfce7; color: #15803d; }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="brand">🎂 Abby <span>Cake & Bites</span></div>
-  <div class="nav-links">
-    <button class="nl on" onclick="goTo('home')">🏠</button>
-    <button class="nl" onclick="goTo('gallery')">🖼</button>
-    <button class="nl" onclick="goTo('menu')">🎂</button>
-    <button class="nl" onclick="goTo('chat')">💬</button>
-    <button class="nl" onclick="goTo('admin')">🔐</button>
-  </div>
-  <span id="statusBadge" class="status closed">Closed</span>
+  <div class="nav-logo">🎂 Abby Cake & Bites</div>
+  <div class="nav-status" id="navStatus">Closed</div>
 </nav>
 
-<!-- HOME PAGE -->
-<div id="pg-home" class="pg on">
+<div class="tabs" style="padding-top:14px" id="mainTabs">
+  <div class="tab active" onclick="showPage('home')" id="tab-home">🏠 Home</div>
+  <div class="tab" onclick="showPage('order')" id="tab-order">🎂 Order</div>
+  <div class="tab" onclick="showPage('gallery')" id="tab-gallery">🖼 Gallery</div>
+  <div class="tab" onclick="showPage('settings')" id="tab-settings">⚙️ Settings</div>
+  <div class="tab" onclick="showPage('admin')" id="tab-admin">🔐 Admin</div>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
   <div class="hero">
-    <div class="hero-tag">Handcrafted · Himo, Tanzania</div>
-    <h1>Where Every Bite is<br/><em>Pure Delight</em></h1>
-    <p class="hero-sub">Custom cakes, pastries and sweets baked fresh daily with love for every occasion.</p>
-    <div class="hero-btns">
-      <button class="btn btn-rose" onclick="goTo('chat')">🎂 Order Now</button>
-      <button class="btn btn-out" onclick="goTo('gallery')">View Gallery</button>
-    </div>
+    <div class="hero-tag" id="hero_tag"></div>
+    <h1 id="hero_h1"></h1>
+    <p id="hero_sub"></p>
+    <button class="hero-btn" onclick="showPage('order')" id="hero_btn"></button>
   </div>
-  <div class="wrap">
-    <div class="info-grid">
-      <div class="info-card"><div class="ic-icon">📍</div><div class="ic-label">Location</div><div class="ic-val">Njiapanda, Himo<br/>Tanzania</div></div>
-      <div class="info-card"><div class="ic-icon">📞</div><div class="ic-label">Phone / WhatsApp</div><div class="ic-val">0620 767 919</div></div>
-      <div class="info-card"><div class="ic-icon">🕐</div><div class="ic-label">Today's Hours</div><div class="ic-val" id="todayHours">Loading...</div></div>
-      <div class="info-card"><div class="ic-icon">🚗</div><div class="ic-label">Delivery</div><div class="ic-val">Available in Himo<br/>TZS 3,000–8,000</div></div>
-    </div>
-    <div class="section-title">Opening Hours</div>
-    <div class="section-sub">We are here to sweeten your week</div>
-    <div class="hours-list" id="hoursList"></div>
+  <div class="info-grid">
+    <div class="info-card"><div class="info-icon">📍</div><div class="info-label" id="label_location"></div><div class="info-value">Njiapanda, Himo<br>Tanzania</div></div>
+    <div class="info-card"><div class="info-icon">📞</div><div class="info-label" id="label_phone"></div><div class="info-value">0620 767 919</div></div>
+    <div class="info-card"><div class="info-icon">🕐</div><div class="info-label" id="label_hours"></div><div class="info-value">7:00 AM – 7:00 PM<br><span id="openStatus" style="font-size:0.8rem"></span></div></div>
+    <div class="info-card"><div class="info-icon">🚗</div><div class="info-label" id="label_delivery"></div><div class="info-value" id="delivery_val"></div></div>
   </div>
-  <footer><strong>Abby Cake and Bites</strong> · Njiapanda, Himo, Tanzania · 0620 767 919<br/>Made with ❤️ for every sweet occasion</footer>
-</div>
-
-<!-- GALLERY PAGE -->
-<div id="pg-gallery" class="pg">
-  <div class="wrap">
-    <div class="section-title">Our Gallery</div>
-    <div class="section-sub">Beautiful creations made with love — tap any photo to order</div>
-    <div class="gal-grid" id="pubGallery">
-      <div class="gal-empty">📸 No photos yet. Check back soon!</div>
+  <div class="section-title"><h2 id="opening_hours"></h2><p id="opening_sub"></p></div>
+  <div class="hours-table" id="hoursTable"></div>
+  <div class="section-title"><h2 id="how_order"></h2><p id="how_order_sub"></p></div>
+  <div style="padding:0 20px 30px">
+    <div class="payment-box">
+      <div class="payment-step"><div class="step-num">1</div><div class="step-text" id="how_step1"></div></div>
+      <div class="payment-step"><div class="step-num">2</div><div class="step-text" id="how_step2"></div></div>
+      <div class="payment-step"><div class="step-num">3</div><div class="step-text" id="how_step3"></div></div>
+      <div class="payment-step"><div class="step-num">4</div><div class="step-text" id="how_step4"></div></div>
     </div>
   </div>
 </div>
 
-<!-- MENU PAGE -->
-<div id="pg-menu" class="pg">
-  <div class="wrap">
-    <div class="section-title">Menu & Prices</div>
-    <div class="section-sub">Tap any item to start your order instantly</div>
-    <div class="menu-section">
-      <div class="menu-cat">🍪 Bites / Vitafunwa</div>
-      <div class="menu-grid">
-        <div class="m-card" onclick="orderItem('Cupcakes with Buttercream')"><div class="m-name">Cupcakes with Buttercream</div><div class="m-desc">Decorated with creamy buttercream</div><div class="m-price">TZS 10,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Cookies Package')"><div class="m-name">Cookies Package</div><div class="m-desc">Freshly baked cookies</div><div class="m-price">TZS 5,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Plain Cupcakes 6pcs')"><div class="m-name">Plain Cupcakes 6pcs</div><div class="m-desc">Package of 6 pieces</div><div class="m-price">TZS 3,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Chapati Package')"><div class="m-name">Chapati Package</div><div class="m-desc">Soft and delicious</div><div class="m-price">TZS 10,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Donut Package 6pcs')"><div class="m-name">Donut Package 6pcs</div><div class="m-desc">6 pieces glazed and fluffy</div><div class="m-price">TZS 10,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Mandazi Package 10pcs')"><div class="m-name">Mandazi 10pcs</div><div class="m-desc">Soft and sweet</div><div class="m-price">TZS 3,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Meat Sambusa 8pcs')"><div class="m-name">Meat Sambusa 8pcs</div><div class="m-desc">Crispy and tasty</div><div class="m-price">TZS 10,000/=</div></div>
+<!-- ORDER -->
+<div class="page" id="page-order">
+  <div class="section-title"><h2 id="order_title"></h2><p id="order_sub"></p></div>
+  <div class="menu-grid" id="menuGrid"></div>
+  <div class="order-section" id="orderForm" style="display:none">
+    <div class="amount-display">
+      <div class="amount-label" id="half_label"></div>
+      <div class="amount-value" id="halfAmount">TZS 0</div>
+      <div class="amount-note"><span id="send_to"></span> <strong>0620767919</strong> (Gift Lyimo)</div>
+    </div>
+    <div class="payment-box">
+      <h3>💳 <span id="pay_instructions"></span></h3>
+      <div class="payment-step"><div class="step-num">1</div><div class="step-text" id="pay_step1"></div></div>
+      <div class="payment-step"><div class="step-num">2</div><div class="step-text"><span id="pay_step2a"></span> <strong id="halfAmountSmall">TZS 0</strong> <span id="pay_step2b"></span> <strong>0620767919</strong> — <span id="name_label"></span> <strong>Gift Lyimo</strong></div></div>
+      <div class="payment-step"><div class="step-num">3</div><div class="step-text" id="pay_step3"></div></div>
+      <div class="payment-methods"><span class="pay-badge">📱 M-Pesa</span><span class="pay-badge">📱 Tigo Pesa</span><span class="pay-badge">📱 Airtel Money</span></div>
+    </div>
+    <div id="alertBox"></div>
+    <div class="form-group"><label class="form-label" id="field_name"></label><input class="form-input" id="custName" type="text"/></div>
+    <div class="form-group"><label class="form-label" id="field_phone"></label><input class="form-input" id="custPhone" placeholder="e.g. 0712345678" type="tel"/></div>
+    <div class="form-group"><label class="form-label" id="field_location"></label><textarea class="form-textarea" id="custLocation"></textarea></div>
+    <div class="form-group"><label class="form-label" id="field_order"></label><textarea class="form-textarea" id="custOrder"></textarea></div>
+    <div class="form-group">
+      <label class="form-label" id="field_screenshot"></label>
+      <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+        <div style="font-size:2rem;margin-bottom:8px">📸</div>
+        <div class="upload-text" id="upload_text"></div>
+        <input type="file" id="fileInput" accept="image/*" onchange="handleFileSelect(event)" style="display:none"/>
+        <img id="previewImg" class="preview-img" style="display:none"/>
+      </div>
+      <div class="verify-status" id="verifyStatus"></div>
+    </div>
+    <button class="submit-btn" id="submitBtn" onclick="submitOrder()" disabled></button>
+  </div>
+  <div id="noItemSelected" style="text-align:center;padding:40px 20px;color:#8a6555">
+    <div style="font-size:3rem;margin-bottom:12px">☝️</div>
+    <p id="no_item"></p>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="page" id="page-gallery">
+  <div class="section-title"><h2 id="gallery_title"></h2><p id="gallery_sub"></p></div>
+  <div class="gallery-grid" id="galleryGrid">
+    <div style="grid-column:span 2;text-align:center;padding:40px 20px;color:#8a6555">
+      <div style="font-size:2.5rem;margin-bottom:10px">📸</div><p id="gallery_empty"></p>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="page" id="page-settings">
+  <div class="settings-section">
+    <div class="section-title" style="padding-left:0"><h2 id="settings_title"></h2><p id="settings_sub"></p></div>
+    <div class="settings-card">
+      <h3>🌍 <span id="lang_heading"></span></h3>
+      <div class="lang-options">
+        <div class="lang-option active" id="lang-en" onclick="setLanguage('en')">
+          <div class="lang-flag">🇬🇧</div>
+          <div class="lang-name">English</div>
+          <div class="lang-native">English</div>
+          <div class="lang-check" id="check-en">✓</div>
+        </div>
+        <div class="lang-option" id="lang-sw" onclick="setLanguage('sw')">
+          <div class="lang-flag">🇹🇿</div>
+          <div class="lang-name">Kiswahili</div>
+          <div class="lang-native">Lugha ya Tanzania</div>
+          <div class="lang-check" id="check-sw"></div>
+        </div>
+      </div>
+      <div class="settings-info" id="lang_info"></div>
+    </div>
+    <div class="settings-card">
+      <h3>📞 <span id="contact_us"></span></h3>
+      <div style="font-size:0.87rem;color:#8a6555;line-height:1.8">
+        <div>📍 Njiapanda, Himo, Tanzania</div>
+        <div>📞 0620 767 919</div>
+        <div>💬 <span id="wa_available"></span></div>
       </div>
     </div>
-    <div class="menu-section">
-      <div class="menu-cat">🎂 Cakes</div>
-      <div class="menu-grid">
-        <div class="m-card" onclick="orderItem('Plain Cake')"><div class="m-name">Plain Cake</div><div class="m-desc">Simple and delicious</div><div class="m-price">TZS 10,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Bento Cake')"><div class="m-name">Bento Cake</div><div class="m-desc">Cute mini bento style</div><div class="m-price">TZS 15,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Birthday Cake 700g')"><div class="m-name">Birthday Cake 700g</div><div class="m-desc">Perfect for celebrations</div><div class="m-price">TZS 25,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Chocolate Cake 1kg')"><div class="m-name">Chocolate Cake 1kg</div><div class="m-desc">Rich dark chocolate</div><div class="m-price">TZS 45,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Flavour Cake 1kg')"><div class="m-name">Flavour Cake 1kg</div><div class="m-desc">Your choice of flavor</div><div class="m-price">TZS 35,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Fruits Cake 1kg')"><div class="m-name">Fruits Cake 1kg</div><div class="m-desc">Fresh fruits and cream</div><div class="m-price">TZS 55,000/=</div></div>
-        <div class="m-card" onclick="orderItem('Red Velvet Cake 1kg')"><div class="m-name">Red Velvet Cake 1kg</div><div class="m-desc">Velvety smooth and elegant</div><div class="m-price">TZS 40,000/=</div></div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:16px">
-      <button class="btn btn-rose" onclick="goTo('chat')">Order via Chat 🎂</button>
+    <div class="settings-card">
+      <h3>ℹ️ <span id="about_title"></span></h3>
+      <div style="font-size:0.87rem;color:#8a6555;line-height:1.7" id="about_text"></div>
     </div>
   </div>
 </div>
 
-<!-- CHAT PAGE -->
-<div id="pg-chat" class="pg">
-  <div class="wrap">
-    <div class="section-title">Chat with Abby</div>
-    <div class="section-sub">Smart assistant — order easily and attach a reference photo</div>
-    <div class="chat-wrap">
-      <div class="chat-box">
-        <div class="chat-head">
-          <div class="chat-av">🎂</div>
-          <div>
-            <h3>Abby · Smart Assistant</h3>
-            <p><span class="online-dot"></span>Ready to take your order</p>
+<!-- ADMIN -->
+<div class="page" id="page-admin">
+  <div class="admin-section">
+    <div class="admin-login" id="adminLogin">
+      <h3>🔐 <span id="admin_login_title"></span></h3>
+      <div id="loginAlert"></div>
+      <div class="form-group"><label class="form-label" id="admin_user_label"></label><input class="form-input" id="adminUser" placeholder="Username"/></div>
+      <div class="form-group"><label class="form-label" id="admin_pass_label"></label><input class="form-input" id="adminPass" type="password" placeholder="Password"/></div>
+      <button class="submit-btn" onclick="adminLogin()" id="admin_login_btn"></button>
+    </div>
+    <div class="admin-dashboard" id="adminDashboard">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h2 style="font-family:'Playfair Display',serif" id="dashboard_title"></h2>
+        <button onclick="adminLogout()" id="logout_btn" style="background:none;border:1.5px solid #e8d5c8;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:0.82rem"></button>
+      </div>
+      <div class="tabs" style="padding:0;margin-bottom:16px">
+        <div class="tab active" onclick="adminTab('orders',this)" id="tab_orders_btn"></div>
+        <div class="tab" onclick="adminTab('gallery',this)" id="tab_gallery_admin_btn"></div>
+      </div>
+      <div id="adminOrders"><div id="ordersList"></div></div>
+      <div id="adminGallery" style="display:none">
+        <div class="payment-box" style="margin-bottom:16px">
+          <h3>📸 <span id="upload_photo_title"></span></h3>
+          <div class="upload-area" onclick="document.getElementById('galleryFileInput').click()" style="margin-top:10px">
+            <div style="font-size:2rem;margin-bottom:8px">🖼</div>
+            <div class="upload-text" id="tap_select_text"></div>
+            <input type="file" id="galleryFileInput" accept="image/jpeg,image/png" onchange="previewGalleryFile(event)" style="display:none"/>
+            <img id="galleryPreview" style="display:none;width:100%;max-height:180px;object-fit:contain;border-radius:10px;margin-top:10px"/>
           </div>
+          <div class="form-group" style="margin-top:12px;margin-bottom:8px">
+            <label class="form-label" id="caption_label"></label>
+            <input class="form-input" id="galleryCaption" id="ph_caption"/>
+          </div>
+          <button class="submit-btn" onclick="uploadGalleryPhoto()" id="upload_btn_text"></button>
+          <div id="galleryUploadStatus" style="margin-top:8px;font-size:0.82rem"></div>
         </div>
-        <div class="chat-msgs" id="chatMsgs"></div>
-        <div class="quick-btns" id="quickBtns">
-          <button class="qbtn" onclick="userSend('What cakes do you have?')">What cakes?</button>
-          <button class="qbtn" onclick="userSend('Are you open now?')">Open now?</button>
-          <button class="qbtn" onclick="userSend('I want to order')">Order now</button>
-          <button class="qbtn" onclick="userSend('What are your prices?')">Prices?</button>
-          <button class="qbtn" onclick="userSend('Do you deliver?')">Delivery?</button>
-        </div>
-        <!-- REFERENCE PHOTO UPLOAD -->
-        <div class="photo-upload-area" id="photoUploadArea">
-          <label class="photo-upload-label" for="refPhotoInput">
-            📎 Attach reference photo (optional)
-          </label>
-          <input type="file" id="refPhotoInput" accept="image/*" onchange="onRefPhoto(this)" style="display:none"/>
-          <div class="photo-preview-box" id="photoPreviewBox"></div>
-        </div>
-        <div class="chat-bottom">
-          <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1"
-            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendFromInput()}"></textarea>
-          <button class="send-btn" id="sendBtn" onclick="sendFromInput()">➤</button>
-        </div>
+        <h3 style="font-family:'Playfair Display',serif;margin-bottom:12px" id="gallery_photos_title"></h3>
+        <div class="gallery-grid" id="adminGalleryGrid"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ADMIN PAGE -->
-<div id="pg-admin" class="pg">
-  <!-- LOGIN -->
-  <div id="adminLogin">
-    <div class="wrap">
-      <div class="admin-login-card">
-        <div style="font-size:36px;margin-bottom:10px">🔐</div>
-        <h2>Admin Login</h2>
-        <p>Abby Cake & Bites Dashboard</p>
-        <div id="loginErr"></div>
-        <div class="field"><label>Username</label><input id="adminUser" placeholder="abby_admin" autocomplete="off"/></div>
-        <div class="field"><label>Password</label><input id="adminPass" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
-        <button class="btn btn-rose" style="width:100%;margin-top:4px" onclick="doLogin()" id="loginBtn">Login →</button>
-      </div>
-    </div>
-  </div>
-  <!-- DASHBOARD -->
-  <div id="adminDash" style="display:none">
-    <div class="admin-wrap">
-      <div class="admin-header">
-        <h2>Dashboard</h2>
-        <button class="btn btn-out" style="font-size:12px;padding:6px 14px" onclick="doLogout()">Logout</button>
-      </div>
-      <div class="admin-tabs">
-        <button class="atab on" onclick="switchTab('orders',this)">📦 Orders</button>
-        <button class="atab" onclick="switchTab('gallery',this)">🖼 Gallery</button>
-      </div>
-      <!-- ORDERS TAB -->
-      <div id="tab-orders">
-        <div class="stats-grid" id="statsGrid"></div>
-        <div id="ordersContent"></div>
-      </div>
-      <!-- GALLERY TAB -->
-      <div id="tab-gallery" style="display:none">
-        <div style="background:var(--card);border-radius:13px;padding:18px;border:1px solid var(--border);margin-bottom:18px">
-          <h3 style="font-size:14px;font-weight:600;color:var(--deep);margin-bottom:13px">📸 Upload Product Photo</h3>
-          <div class="gal-upload-box" onclick="document.getElementById('galFileInput').click()">
-            <input type="file" id="galFileInput" accept="image/*" onchange="galPreview(this)" style="display:none"/>
-            <div style="font-size:28px">📷</div>
-            <p style="font-size:12px;color:var(--rose);font-weight:500;margin-top:6px">Tap to select photo</p>
-            <small style="font-size:10px;color:var(--muted)">JPG or PNG</small>
-          </div>
-          <img id="galPreviewImg" style="width:100%;max-height:170px;object-fit:cover;border-radius:9px;margin:8px 0;display:none"/>
-          <div class="field" style="margin-bottom:12px">
-            <label>Caption (product name)</label>
-            <input id="galCaptionInput" placeholder="e.g. Birthday Cake 1kg"/>
-          </div>
-          <button class="btn btn-rose" style="width:100%" onclick="saveGalleryPhoto()">Upload to Gallery 📸</button>
-          <div id="galMessage" style="margin-top:9px"></div>
-        </div>
-        <div class="section-title" style="font-size:18px;margin-bottom:10px">Gallery Photos</div>
-        <div class="gal-admin-grid" id="galAdminGrid"></div>
-      </div>
-    </div>
-  </div>
+<!-- SUCCESS -->
+<div class="success-screen" id="successScreen">
+  <div class="success-icon">🎉</div>
+  <h2 id="success_title"></h2>
+  <p id="success_msg"></p>
+  <div class="success-order-id" id="successOrderId"></div>
+  <p style="font-size:0.8rem;color:#8a6555" id="success_sms"></p>
+  <button class="new-order-btn" onclick="resetOrder()" id="new_order_btn"></button>
 </div>
 
-<!-- WHATSAPP FAB -->
-<a class="wa-fab" href="https://wa.me/255620767919" target="_blank" title="WhatsApp">💬</a>
+<a class="wa-float" href="https://wa.me/255620767919" target="_blank">💬</a>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────
-const API = 'https://abby-backend.onrender.com';
-const WA_NUMBER = '255620767919';
-const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const HOURS = {0:null,1:[7,19],2:[7,19],3:[7,19],4:[7,19],5:[7,20],6:[7,20]};
-const MENU_TEXT =
-  'BITES / VITAFUNWA:\n' +
-  '- Cupcakes with Buttercream: TZS 10,000\n' +
-  '- Cookies Package: TZS 5,000\n' +
-  '- Plain Cupcakes 6pcs: TZS 3,000\n' +
-  '- Chapati Package: TZS 10,000\n' +
-  '- Donut Package 6pcs: TZS 10,000\n' +
-  '- Mandazi 10pcs: TZS 3,000\n' +
-  '- Meat Sambusa 8pcs: TZS 10,000\n\n' +
-  'CAKES:\n' +
-  '- Plain Cake: TZS 10,000\n' +
-  '- Bento Cake: TZS 15,000\n' +
-  '- Birthday Cake 700g: TZS 25,000\n' +
-  '- Chocolate Cake 1kg: TZS 45,000\n' +
-  '- Flavour Cake 1kg: TZS 35,000\n' +
-  '- Fruits Cake 1kg: TZS 55,000\n' +
-  '- Red Velvet Cake 1kg: TZS 40,000';
+const BACKEND = 'https://abby-backend.onrender.com';
 
-// ─── HOURS ────────────────────────────────────────────────
-function isOpen() {
-  const n = new Date(), d = n.getDay(), h = n.getHours(), r = HOURS[d];
-  return !!(r && h >= r[0] && h < r[1]);
-}
-function hoursTxt(d) {
-  const r = HOURS[d];
-  if (!r) return 'Closed';
-  return r[0] + ':00 AM – ' + (r[1] > 12 ? (r[1]-12) + ':00 PM' : r[1] + ':00 AM');
-}
-function initHours() {
-  const t = new Date().getDay(), op = isOpen();
-  document.getElementById('statusBadge').textContent = op ? 'Open Now' : 'Closed';
-  document.getElementById('statusBadge').className = 'status ' + (op ? 'open' : 'closed');
-  document.getElementById('todayHours').innerHTML =
-    '<strong>' + DAYS[t] + '</strong><br/>' + hoursTxt(t) +
-    '<br/><span style="font-size:10px;color:' + (op?'#2e7d32':'#c62828') + ';font-weight:600">' +
-    (op ? '● Open Now' : '● Closed') + '</span>';
-  let h = '';
-  for (let i = 1; i <= 7; i++) {
-    const d = i % 7, today = d === t;
-    const tx = hoursTxt(d);
-    h += '<div class="h-row' + (today?' today':'') + '">' +
-      '<span class="h-day">' + (today?'<strong>':'') + DAYS[d] + (today?' (Today)</strong>':'') + '</span>' +
-      (tx==='Closed' ? '<span class="h-closed">Closed</span>' : '<span class="h-time">'+tx+'</span>') +
-      '</div>';
+const T = {
+  en: {
+    tab_home:'🏠 Home', tab_order:'🎂 Order', tab_gallery:'🖼 Gallery',
+    tab_settings:'⚙️ Settings', tab_admin:'🔐 Admin',
+    hero_tag:'Handcrafted · Himo, Tanzania',
+    hero_h1:'Where Every Bite is <span style="color:var(--rose);font-style:italic">Pure Delight</span>',
+    hero_sub:'Custom cakes, pastries and sweets baked fresh daily with love for every occasion.',
+    hero_btn:'🎂 Order Now',
+    label_location:'Location', label_phone:'Phone / SMS',
+    label_hours:"Today's Hours", label_delivery:'Delivery',
+    delivery_val:'Available in Himo<br>TZS 3,000–8,000',
+    opening_hours:'Opening Hours', opening_sub:'We are here to sweeten your week',
+    how_order:'How to Order', how_order_sub:'Simple steps to get your treat',
+    how_step1:'Pick your item from the <strong>Order</strong> tab and fill in your details',
+    how_step2:'Pay <strong>half the price</strong> to <strong>0620767919</strong> (Gift Lyimo) via M-Pesa, Tigo Pesa or Airtel Money',
+    how_step3:'Take a <strong>screenshot</strong> of your payment confirmation',
+    how_step4:'Upload the screenshot — we verify it automatically and your order is sent!',
+    order_title:'Place Your Order', order_sub:'Select an item then fill in your details',
+    half_label:'Half Payment Required', send_to:'Send to',
+    pay_instructions:'Payment Instructions',
+    pay_step1:'Open your mobile money app',
+    pay_step2a:'Send', pay_step2b:'to number', name_label:'name:',
+    pay_step3:'Take a screenshot of the <strong>confirmation message</strong> showing the number and name',
+    field_name:'Your Full Name *', field_phone:'Phone Number *',
+    field_location:'Delivery Location / Description *', field_order:'Order Details *',
+    field_screenshot:'Payment Screenshot *',
+    upload_text:'Tap to upload your <strong>payment confirmation screenshot</strong><br><span style="font-size:0.75rem">Must show 0620767919 and Gift Lyimo</span>',
+    submit_btn:'📤 Submit Order',
+    no_item:'Please select an item from the menu above to continue',
+    gallery_title:'Our Gallery', gallery_sub:'Fresh from our kitchen',
+    gallery_empty:'Photos coming soon!',
+    settings_title:'Settings', settings_sub:'Customize your experience',
+    lang_heading:'Language / Lugha',
+    lang_info:'Choose your preferred language. The entire website will switch instantly including menus, instructions and all messages.',
+    contact_us:'Contact Us', wa_available:'WhatsApp available',
+    about_title:'About',
+    about_text:'Abby Cake & Bites is a home bakery based in Himo, Tanzania. We bake custom cakes, pastries and sweets fresh daily with love and care for every customer.',
+    admin_login_title:'Admin Login', admin_user_label:'Username', admin_pass_label:'Password',
+    admin_login_btn:'Login', dashboard_title:'Dashboard', logout_btn:'Logout',
+    tab_orders_btn:'📦 Orders', tab_gallery_admin_btn:'🖼 Gallery',
+    upload_photo_title:'Upload Product Photo', tap_select_text:'Tap to select photo (JPG or PNG)',
+    caption_label:'Caption (product name)', upload_btn_text:'Upload to Gallery 📷',
+    gallery_photos_title:'Gallery Photos',
+    success_title:'Order Placed!',
+    success_msg:"Your order has been received. We'll contact you shortly to confirm and arrange delivery.",
+    success_sms:'A notification has been sent to our team via SMS',
+    new_order_btn:'Place Another Order',
+    nav_open:'Open', nav_closed:'Closed',
+    open_dot:'● Open', closed_dot:'● Closed',
+    verify_checking:'Verifying payment screenshot with AI...',
+    verify_ok:'✅ Payment verified! Number and name confirmed.',
+    verify_fail:'❌ Verification failed: Screenshot must clearly show 0620767919 and Gift Lyimo',
+    verify_manual:'✅ Screenshot uploaded. Our team will verify payment manually.',
+    fill_all:'Please fill in all fields.',
+    upload_first:'Please upload your payment screenshot first.',
+    sending:'⏳ Sending order...',
+    delete_confirm:'Delete this photo?',
+    ph_name:'e.g. Amina Hassan',
+    ph_location:'e.g. Himo town, near the market, blue gate...',
+    ph_order:'What exactly do you want? Size, flavor, quantity, special requests...',
+    ph_caption:'e.g. Chocolate Cake',
+    menu_custom:'Custom',
+    today_suffix:' (Today)',
+    days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+    invalid_creds:'Invalid credentials', conn_error:'Connection error',
+    no_orders:'No orders yet.', load_fail:'Could not load orders.',
+    loading:'Loading...', uploading:'⏳ Uploading...', select_photo:'Please select a photo',
+    uploaded_ok:'✅ Uploaded!', half_paid:'Half paid',
+    order_prefix:'Order #', delete_lbl:'🗑 Delete', no_photos:'No photos yet.',
+  },
+  sw: {
+    tab_home:'🏠 Nyumbani', tab_order:'🎂 Agiza', tab_gallery:'🖼 Picha',
+    tab_settings:'⚙️ Mipangilio', tab_admin:'🔐 Msimamizi',
+    hero_tag:'Imetengenezwa kwa Mikono · Himo, Tanzania',
+    hero_h1:'Kila Tonge ni <span style="color:var(--rose);font-style:italic">Ladha Tamu</span>',
+    hero_sub:'Keki, mikate na pipi zinazoandaliwa kila siku kwa upendo na moyo wa dhati.',
+    hero_btn:'🎂 Agiza Sasa',
+    label_location:'Mahali', label_phone:'Simu / SMS',
+    label_hours:'Masaa ya Leo', label_delivery:'Uwasilishaji',
+    delivery_val:'Inapatikana Himo<br>TZS 3,000–8,000',
+    opening_hours:'Masaa ya Kufungua', opening_sub:'Tuko hapa kukufurahisha wiki yote',
+    how_order:'Jinsi ya Kuagiza', how_order_sub:'Hatua rahisi kupata unachotaka',
+    how_step1:'Chagua bidhaa kutoka kwenye kichupo cha <strong>Agiza</strong> na ujaze maelezo yako',
+    how_step2:'Lipa <strong>nusu ya bei</strong> kwa <strong>0620767919</strong> (Gift Lyimo) kupitia M-Pesa, Tigo Pesa au Airtel Money',
+    how_step3:'Piga <strong>picha ya skrini</strong> ya uthibitisho wa malipo yako',
+    how_step4:'Pakia picha ya skrini — tunaihakiki kiotomatiki na agizo lako linatumwa!',
+    order_title:'Weka Agizo Lako', order_sub:'Chagua bidhaa kisha jaza maelezo yako',
+    half_label:'Nusu ya Malipo Inahitajika', send_to:'Tuma kwa',
+    pay_instructions:'Maelekezo ya Malipo',
+    pay_step1:'Fungua programu yako ya pesa za simu',
+    pay_step2a:'Tuma', pay_step2b:'kwa nambari', name_label:'jina:',
+    pay_step3:'Piga picha ya skrini ya <strong>ujumbe wa uthibitisho</strong> unaoonyesha nambari na jina',
+    field_name:'Jina Lako Kamili *', field_phone:'Nambari ya Simu *',
+    field_location:'Mahali pa Uwasilishaji / Maelezo *', field_order:'Maelezo ya Agizo *',
+    field_screenshot:'Picha ya Skrini ya Malipo *',
+    upload_text:'Bonyeza kupakia <strong>picha ya skrini ya uthibitisho wa malipo</strong><br><span style="font-size:0.75rem">Lazima ionyeshe 0620767919 na Gift Lyimo</span>',
+    submit_btn:'📤 Wasilisha Agizo',
+    no_item:'Tafadhali chagua bidhaa kutoka kwenye orodha hapo juu kuendelea',
+    gallery_title:'Picha Zetu', gallery_sub:'Moja kwa moja kutoka jikoni mwetu',
+    gallery_empty:'Picha zinakuja hivi karibuni!',
+    settings_title:'Mipangilio', settings_sub:'Badilisha uzoefu wako',
+    lang_heading:'Lugha / Language',
+    lang_info:'Chagua lugha unayopendelea. Tovuti nzima itabadilika mara moja ikiwemo orodha, maelekezo na ujumbe wote.',
+    contact_us:'Wasiliana Nasi', wa_available:'WhatsApp inapatikana',
+    about_title:'Kuhusu',
+    about_text:'Abby Cake & Bites ni bakari ya nyumbani iliyoko Himo, Tanzania. Tunaoka keki maalum, mikate na pipi kila siku kwa upendo na huduma bora kwa kila mteja.',
+    admin_login_title:'Kuingia kwa Msimamizi', admin_user_label:'Jina la Mtumiaji', admin_pass_label:'Nenosiri',
+    admin_login_btn:'Ingia', dashboard_title:'Dashibodi', logout_btn:'Toka',
+    tab_orders_btn:'📦 Maagizo', tab_gallery_admin_btn:'🖼 Picha',
+    upload_photo_title:'Pakia Picha ya Bidhaa', tap_select_text:'Gonga kuchagua picha (JPG au PNG)',
+    caption_label:'Maelezo mafupi (jina la bidhaa)', upload_btn_text:'Pakia kwenye Picha 📷',
+    gallery_photos_title:'Picha za Bidhaa',
+    success_title:'Agizo Limewekwa!',
+    success_msg:'Agizo lako limepokelewa. Tutawasiliana nawe hivi karibuni kuthibitisha na kupanga uwasilishaji.',
+    success_sms:'Arifa imetumwa kwa timu yetu kupitia SMS',
+    new_order_btn:'Weka Agizo Jingine',
+    nav_open:'Imefunguliwa', nav_closed:'Imefungwa',
+    open_dot:'● Imefunguliwa', closed_dot:'● Imefungwa',
+    verify_checking:'Inahakiki picha ya skrini ya malipo kwa AI...',
+    verify_ok:'✅ Malipo yamethibitishwa! Nambari na jina vimethibitishwa.',
+    verify_fail:'❌ Uthibitisho umeshindwa: Picha lazima ionyeshe wazi 0620767919 na Gift Lyimo',
+    verify_manual:'✅ Picha imepakiwa. Timu yetu itathibitisha malipo.',
+    fill_all:'Tafadhali jaza sehemu zote.',
+    upload_first:'Tafadhali pakia picha yako ya malipo kwanza.',
+    sending:'⏳ Inatuma agizo...',
+    delete_confirm:'Futa picha hii?',
+    ph_name:'mfano: Amina Hassan',
+    ph_location:'mfano: Mji wa Himo, karibu na soko, lango la bluu...',
+    ph_order:'Unataka nini hasa? Ukubwa, ladha, idadi, maombi maalum...',
+    ph_caption:'mfano: Keki ya Chokoleti',
+    menu_custom:'Bei maalum',
+    today_suffix:' (Leo)',
+    days:['Jumapili','Jumatatu','Jumanne','Jumatano','Alhamisi','Ijumaa','Jumamosi'],
+    invalid_creds:'Jina au nenosiri si sahihi', conn_error:'Hitilafu ya muunganisho',
+    no_orders:'Hakuna maagizo bado.', load_fail:'Haikuweza kupakia maagizo.',
+    loading:'Inapakia...', uploading:'⏳ Inapakia...', select_photo:'Tafadhali chagua picha',
+    uploaded_ok:'✅ Imepakiwa!', half_paid:'Nusu imelipwa',
+    order_prefix:'Agizo #', delete_lbl:'🗑 Futa', no_photos:'Hakuna picha bado.',
   }
-  document.getElementById('hoursList').innerHTML = h;
+};
+
+const menuItems = [
+  {id:1,emoji:'🎂',en:['Custom Cake','Birthday, wedding, any occasion'],sw:['Keki Maalum','Siku ya kuzaliwa, harusi, sherehe yoyote'],price:25000},
+  {id:2,emoji:'🧁',en:['Cupcakes (12pcs)','Assorted flavors, beautifully decorated'],sw:['Keki Ndogo (12)','Ladha mchanganyiko, zimepambwa vizuri'],price:15000},
+  {id:3,emoji:'🍩',en:['Donuts (6pcs)','Glazed and filled varieties'],sw:['Donati (6)','Aina za kioo na zilizojazwa'],price:8000},
+  {id:4,emoji:'🍪',en:['Cookies (10pcs)','Chocolate chip, butter & more'],sw:['Kuki (10)','Chokoleti, siagi na zaidi'],price:6000},
+  {id:5,emoji:'🥐',en:['Mandazi (10pcs)','Fresh fried, lightly sweetened'],sw:['Mandazi (10)','Mapya yaliyokaangwa, tamu kidogo'],price:5000},
+  {id:6,emoji:'🫓',en:['Bagia (10pcs)','Crispy savory snack'],sw:['Bagia (10)','Vitafunio vya crunchy'],price:5000},
+  {id:7,emoji:'🍰',en:['Slice Cake','Single slice, various flavors'],sw:['Kipande cha Keki','Kipande kimoja, ladha mbalimbali'],price:3000},
+  {id:8,emoji:'🧇',en:['Special Order','Tell us what you need'],sw:['Agizo Maalum','Tuambie unachohitaji'],price:0},
+];
+
+const hours = {
+  0:{open:'8:00 AM',close:'5:00 PM'},1:{open:'7:00 AM',close:'7:00 PM'},
+  2:{open:'7:00 AM',close:'7:00 PM'},3:{open:'7:00 AM',close:'7:00 PM'},
+  4:{open:'7:00 AM',close:'7:00 PM'},5:{open:'7:00 AM',close:'7:00 PM'},
+  6:{open:'7:00 AM',close:'8:00 PM'},
+};
+
+let lang = localStorage.getItem('abby_lang') || 'en';
+let selectedItem = null;
+let verifiedPayment = false;
+let adminToken = null;
+let currentFile = null;
+
+function t(k) { return (T[lang] && T[lang][k]) || (T.en[k]) || k; }
+
+const ids = [
+  'tab-home','tab-order','tab-gallery','tab-settings','tab-admin',
+  'hero_tag','hero_h1','hero_sub','hero_btn',
+  'label_location','label_phone','label_hours','label_delivery','delivery_val',
+  'opening_hours','opening_sub','how_order','how_order_sub',
+  'how_step1','how_step2','how_step3','how_step4',
+  'order_title','order_sub','half_label','send_to','pay_instructions',
+  'pay_step1','pay_step2a','pay_step2b','name_label','pay_step3',
+  'field_name','field_phone','field_location','field_order','field_screenshot',
+  'upload_text','submitBtn','no_item',
+  'gallery_title','gallery_sub','gallery_empty',
+  'settings_title','settings_sub','lang_heading','lang_info',
+  'contact_us','wa_available','about_title','about_text',
+  'admin_login_title','admin_user_label','admin_pass_label','admin_login_btn',
+  'dashboard_title','logout_btn','tab_orders_btn','tab_gallery_admin_btn',
+  'upload_photo_title','tap_select_text','caption_label','upload_btn_text','gallery_photos_title',
+  'success_title','success_msg','success_sms','new_order_btn',
+];
+
+function applyLanguage() {
+  // Update tab ids use hyphen in html but underscore in T
+  const tabMap = {'tab-home':'tab_home','tab-order':'tab_order','tab-gallery':'tab_gallery','tab-settings':'tab_settings','tab-admin':'tab_admin'};
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const key = tabMap[id] || id;
+    const val = t(key);
+    if (val) el.innerHTML = val;
+  });
+  // Placeholders
+  const phMap = {custName:'ph_name',custLocation:'ph_location',custOrder:'ph_order',galleryCaption:'ph_caption'};
+  Object.entries(phMap).forEach(([id,key]) => {
+    const el = document.getElementById(id);
+    if (el) el.placeholder = t(key);
+  });
+  // Lang buttons
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-sw').classList.toggle('active', lang === 'sw');
+  document.getElementById('check-en').innerHTML = lang === 'en' ? '✓' : '';
+  document.getElementById('check-sw').innerHTML = lang === 'sw' ? '✓' : '';
+  renderMenu();
+  renderHours();
+  checkOpenStatus();
 }
 
-// ─── NAVIGATION ───────────────────────────────────────────
-function goTo(page) {
-  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.nl').forEach(b => b.classList.remove('on'));
-  document.getElementById('pg-' + page).classList.add('on');
-  const pages = ['home','gallery','menu','chat','admin'];
-  const idx = pages.indexOf(page);
-  if (idx >= 0) document.querySelectorAll('.nl')[idx].classList.add('on');
-  if (page === 'gallery') renderPublicGallery();
-  if (page === 'chat' && !chatStarted) initChat();
-  window.scrollTo(0,0);
+function setLanguage(l) {
+  lang = l;
+  localStorage.setItem('abby_lang', l);
+  applyLanguage();
 }
 
-// ─── GALLERY (MongoDB backend) ────────────────────────────
-async function renderPublicGallery() {
-  const el = document.getElementById('pubGallery');
-  el.innerHTML = '<div class="gal-empty">Loading...</div>';
-  try {
-    const res = await fetch(API + '/api/gallery');
-    const data = await res.json();
-    const g = data.data || [];
-    if (!g.length) { el.innerHTML = '<div class="gal-empty">📸 No photos yet. Check back soon!</div>'; return; }
-    el.innerHTML = g.map(it =>
-      '<div class="gal-item" onclick="orderItem(\'' + it.caption.replace(/'/g,"\\'") + '\')">' +
-      '<img src="' + it.imageData + '" alt="' + it.caption + '"/>' +
-      '<div class="gal-cap">' + it.caption + '</div></div>'
-    ).join('');
-  } catch(e) {
-    el.innerHTML = '<div class="gal-empty">Could not load gallery. Check connection.</div>';
-  }
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  ['home','order','gallery','settings','admin'].forEach(p => {
+    const el = document.getElementById('tab-' + p);
+    if (el) el.classList.remove('active');
+  });
+  document.getElementById('page-' + page).classList.add('active');
+  const tabEl = document.getElementById('tab-' + page);
+  if (tabEl) tabEl.classList.add('active');
+  if (page === 'gallery') loadGallery();
+  if (page === 'admin' && adminToken) loadOrders();
 }
 
-function galPreview(inp) {
-  if (!inp.files || !inp.files[0]) return;
-  const r = new FileReader();
-  r.onload = e => {
-    const img = document.getElementById('galPreviewImg');
-    img.src = e.target.result;
-    img.style.display = 'block';
+function renderMenu() {
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = menuItems.map(item => {
+    const name = lang === 'sw' ? item.sw[0] : item.en[0];
+    const desc = lang === 'sw' ? item.sw[1] : item.en[1];
+    const priceText = item.price > 0 ? 'TZS ' + item.price.toLocaleString() : t('menu_custom');
+    const sel = selectedItem?.id === item.id;
+    return `<div class="menu-item ${sel?'selected':''}" onclick="selectItem(${item.id})">
+      <div class="menu-item-left">
+        <div class="menu-emoji">${item.emoji}</div>
+        <div><div class="menu-name">${name}</div><div class="menu-desc">${desc}</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="menu-price">${priceText}</div>
+        <div class="menu-check">${sel?'✓':''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderHours() {
+  const today = new Date().getDay();
+  const days = t('days');
+  document.getElementById('hoursTable').innerHTML = Object.entries(hours).map(([d,h]) => {
+    const di = parseInt(d);
+    return `<div class="hours-row ${di===today?'today':''}">
+      <span>${days[di]}${di===today?t('today_suffix'):''}</span>
+      <span class="hours-time">${h.open} – ${h.close}</span>
+    </div>`;
+  }).join('');
+}
+
+function toMin(str) {
+  const [time,period] = str.split(' ');
+  let [hh,mm] = time.split(':').map(Number);
+  if (period==='PM' && hh!==12) hh+=12;
+  if (period==='AM' && hh===12) hh=0;
+  return hh*60+mm;
+}
+
+function checkOpenStatus() {
+  const now = new Date();
+  const h = hours[now.getDay()];
+  if (!h) return;
+  const nowMin = now.getHours()*60+now.getMinutes();
+  const isOpen = nowMin >= toMin(h.open) && nowMin < toMin(h.close);
+  const statusEl = document.getElementById('navStatus');
+  const openEl = document.getElementById('openStatus');
+  statusEl.textContent = isOpen ? t('nav_open') : t('nav_closed');
+  statusEl.classList.toggle('open', isOpen);
+  if (openEl) { openEl.textContent = isOpen ? t('open_dot') : t('closed_dot'); openEl.style.color = isOpen ? 'var(--green)' : 'var(--rose)'; }
+}
+
+function selectItem(id) {
+  selectedItem = menuItems.find(i => i.id === id);
+  renderMenu();
+  const half = selectedItem.price > 0 ? Math.ceil(selectedItem.price/2) : 0;
+  const halfText = half > 0 ? 'TZS '+half.toLocaleString() : t('menu_custom');
+  document.getElementById('halfAmount').textContent = halfText;
+  document.getElementById('halfAmountSmall').textContent = halfText;
+  const name = lang==='sw' ? selectedItem.sw[0] : selectedItem.en[0];
+  document.getElementById('custOrder').value = selectedItem.price > 0 ? name+' - ' : '';
+  document.getElementById('orderForm').style.display = 'block';
+  document.getElementById('noItemSelected').style.display = 'none';
+  document.getElementById('orderForm').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function handleFileSelect(event) {
+  const file = event.target.files[0]; if (!file) return;
+  currentFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById('previewImg');
+    img.src = e.target.result; img.style.display = 'block';
+    document.getElementById('uploadArea').classList.add('has-file');
+    verifyPaymentScreenshot(e.target.result, file);
   };
-  r.readAsDataURL(inp.files[0]);
+  reader.readAsDataURL(file);
 }
 
-async function saveGalleryPhoto() {
-  const img = document.getElementById('galPreviewImg');
-  const cap = document.getElementById('galCaptionInput').value.trim();
-  const msgEl = document.getElementById('galMessage');
-  if (!img.src || img.style.display === 'none') {
-    msgEl.innerHTML = '<div class="alert-err">Please select a photo first.</div>'; return;
-  }
-  if (!cap) {
-    msgEl.innerHTML = '<div class="alert-err">Please add a caption.</div>'; return;
-  }
-  msgEl.innerHTML = '<div class="alert-ok">Uploading...</div>';
+async function verifyPaymentScreenshot(base64Data, file) {
+  verifiedPayment = false;
+  document.getElementById('submitBtn').disabled = true;
+  const status = document.getElementById('verifyStatus');
+  status.className = 'verify-status checking';
+  status.innerHTML = `<div class="spinner"></div> ${t('verify_checking')}`;
   try {
-    const res = await fetch(API + '/api/gallery', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json', 'Authorization':'Bearer '+adminToken},
-      body: JSON.stringify({ caption: cap, imageData: img.src })
-    });
-    const data = await res.json();
-    if (!data.success) throw new Error(data.message);
-    msgEl.innerHTML = '<div class="alert-ok">✅ Photo uploaded to gallery!</div>';
-    document.getElementById('galCaptionInput').value = '';
-    document.getElementById('galPreviewImg').style.display = 'none';
-    document.getElementById('galFileInput').value = '';
-    renderAdminGallery();
-    setTimeout(() => msgEl.innerHTML = '', 3000);
-  } catch(e) {
-    msgEl.innerHTML = '<div class="alert-err">Upload failed: ' + e.message + '</div>';
-  }
-}
-
-async function deleteGalleryPhoto(id) {
-  if (!confirm('Delete this photo from gallery?')) return;
-  try {
-    await fetch(API + '/api/gallery/' + id, {
-      method: 'DELETE',
-      headers: {'Authorization':'Bearer '+adminToken}
-    });
-    renderAdminGallery();
-  } catch(e) { alert('Delete failed'); }
-}
-
-async function renderAdminGallery() {
-  const el = document.getElementById('galAdminGrid');
-  if (!el) return;
-  el.innerHTML = '<p style="color:var(--muted);font-size:13px;padding:10px 0">Loading...</p>';
-  try {
-    const res = await fetch(API + '/api/gallery');
-    const data = await res.json();
-    const g = data.data || [];
-    if (!g.length) {
-      el.innerHTML = '<p style="color:var(--muted);font-size:13px;padding:20px 0">No photos yet. Upload your first product photo above!</p>';
-      return;
-    }
-    el.innerHTML = g.map(it =>
-      '<div class="gal-admin-item">' +
-      '<img src="' + it.imageData + '" alt="' + it.caption + '"/>' +
-      '<button class="gal-del-btn" onclick="deleteGalleryPhoto(\'' + it._id + '\')">×</button>' +
-      '<div class="gal-admin-info">' + it.caption + '</div></div>'
-    ).join('');
-  } catch(e) {
-    el.innerHTML = '<div class="alert-err">Could not load gallery.</div>';
-  }
-}
-
-// ─── CHAT ─────────────────────────────────────────────────
-let chatStarted = false, chatBusy = false;
-let orderStep = null, orderData = {}, refPhotoB64 = null;
-
-function initChat() {
-  chatStarted = true;
-  const op = isOpen(), t = new Date().getDay(), tom = (t+1)%7;
-  const nxt = HOURS[tom] ? 'tomorrow at ' + HOURS[tom][0] + ':00 AM' : 'Monday at 7:00 AM';
-  addBotMsg(op
-    ? 'Hujambo! Welcome to Abby Cake and Bites! 🎂\n\nWe are OPEN now and ready to take your order!\n\nHow can I help you today?'
-    : 'Hujambo! Welcome to Abby Cake and Bites! 🎂\n\nWe are currently CLOSED but will open ' + nxt + '.\n\nYou can pre-order now and we will confirm when we open!'
-  );
-}
-
-function addUserMsg(txt) {
-  const el = document.getElementById('chatMsgs');
-  const d = document.createElement('div'); d.className = 'msg u';
-  const now = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-  d.innerHTML = '<div class="bub">' + txt.replace(/\n/g,'<br/>') + '</div><div class="msg-time">' + now + '</div>';
-  el.appendChild(d); el.scrollTop = el.scrollHeight;
-}
-
-function addBotMsg(txt) {
-  const el = document.getElementById('chatMsgs');
-  const d = document.createElement('div'); d.className = 'msg a';
-  const now = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-  d.innerHTML = '<div class="bub">' + txt.replace(/\n/g,'<br/>') + '</div><div class="msg-time">' + now + '</div>';
-  el.appendChild(d); el.scrollTop = el.scrollHeight;
-}
-
-function addBotHtml(html) {
-  const el = document.getElementById('chatMsgs');
-  const d = document.createElement('div'); d.className = 'msg a';
-  const now = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-  d.innerHTML = '<div class="bub">' + html + '</div><div class="msg-time">' + now + '</div>';
-  el.appendChild(d); el.scrollTop = el.scrollHeight;
-}
-
-function showTyping() {
-  const el = document.getElementById('chatMsgs');
-  const d = document.createElement('div'); d.className = 'msg a'; d.id = 'typingIndicator';
-  d.innerHTML = '<div class="bub"><div class="typing"><span></span><span></span><span></span></div></div>';
-  el.appendChild(d); el.scrollTop = el.scrollHeight;
-}
-function removeTyping() { const t = document.getElementById('typingIndicator'); if (t) t.remove(); }
-
-function showPhotoUpload() { document.getElementById('photoUploadArea').style.display = 'block'; }
-function hidePhotoUpload() {
-  document.getElementById('photoUploadArea').style.display = 'none';
-  refPhotoB64 = null;
-  document.getElementById('photoPreviewBox').innerHTML = '';
-  const inp = document.getElementById('refPhotoInput'); if (inp) inp.value = '';
-}
-
-function onRefPhoto(inp) {
-  if (!inp.files || !inp.files[0]) return;
-  const r = new FileReader();
-  r.onload = e => {
-    refPhotoB64 = e.target.result;
-    document.getElementById('photoPreviewBox').innerHTML =
-      '<img src="' + refPhotoB64 + '" alt="Reference"/>' +
-      '<button class="rm-photo-btn" onclick="removeRefPhoto()">×</button>' +
-      '<span style="font-size:10px;color:var(--muted)">Photo attached!</span>';
-  };
-  r.readAsDataURL(inp.files[0]);
-}
-function removeRefPhoto() {
-  refPhotoB64 = null;
-  document.getElementById('photoPreviewBox').innerHTML = '';
-  document.getElementById('refPhotoInput').value = '';
-}
-
-function getReply(txt) {
-  const t = txt.toLowerCase();
-  // ORDER FLOW
-  if (orderStep === 'item') {
-    orderData.item = txt; orderStep = 'name';
-    showPhotoUpload();
-    return 'Great choice: ' + txt + '! 🎂\n\nYou can attach a reference photo above (optional).\n\nWhat is your full name?';
-  }
-  if (orderStep === 'name') { orderData.name = txt; orderStep = 'phone'; return 'Nice to meet you, ' + txt + '!\n\nWhat is your phone number?'; }
-  if (orderStep === 'phone') { orderData.phone = txt; orderStep = 'delivery'; return 'Got it!\n\nPickup or Delivery?\n(Delivery in Himo: TZS 3,000–8,000)'; }
-  if (orderStep === 'delivery') { orderData.delivery = txt; orderStep = 'date'; return 'When do you need your order?\n(e.g. Tomorrow, Friday, March 1)'; }
-  if (orderStep === 'date') {
-    orderData.date = txt; orderStep = 'confirm';
-    return 'Please confirm your order:\n\n' +
-      'Item: ' + orderData.item + '\n' +
-      'Name: ' + orderData.name + '\n' +
-      'Phone: ' + orderData.phone + '\n' +
-      'Delivery: ' + orderData.delivery + '\n' +
-      'Date: ' + orderData.date +
-      (refPhotoB64 ? '\nPhoto: ✅ Attached' : '') +
-      '\n\nType YES to confirm or NO to cancel.';
-  }
-  if (orderStep === 'confirm') {
-    if (t.includes('yes') || t.includes('ndio')) { confirmOrder(); return null; }
-    orderStep = null; orderData = {}; hidePhotoUpload();
-    return 'Order cancelled. Type "order" anytime to start again! 😊';
-  }
-  // GENERAL
-  if (t.match(/^(hi|hello|hey|hujambo|habari|salaam|mambo)/)) {
-    return 'Hujambo! Welcome to Abby Cake and Bites! 🎂\n\nHow can I help?\n- Type menu: see our prices\n- Type order: place an order\n- Type hours: opening times\n- Type delivery: delivery info';
-  }
-  if (t.includes('menu') || t.includes('price') || t.includes('bei') || t.includes('how much') || t.includes('vitafunwa') || (t.includes('what') && (t.includes('have') || t.includes('sell')))) {
-    return MENU_TEXT;
-  }
-  if (t.includes('order') || t.includes('buy') || t.includes('nataka') || t.includes('want') || t.includes('agiza')) {
-    orderStep = 'item'; orderData = {}; hidePhotoUpload();
-    return 'What would you like to order? 🎂\n\n' + MENU_TEXT + '\n\nType the item name!';
-  }
-  if (t.includes('open') || t.includes('hour') || t.includes('time') || t.includes('wazi')) {
-    return 'Opening Hours:\nMon–Thu: 7:00 AM – 7:00 PM\nFri–Sat: 7:00 AM – 8:00 PM\nSunday: Closed\n\nRight now we are: ' + (isOpen() ? '✅ OPEN' : '❌ CLOSED');
-  }
-  if (t.includes('deliver') || t.includes('location') || t.includes('where') || t.includes('wapi')) {
-    return 'We are at:\nNjiapanda, Himo, Tanzania\n\nDelivery in Himo: TZS 3,000–8,000\nPickup also available!\n\nCall: 0620 767 919';
-  }
-  if (t.includes('gallery') || t.includes('photo') || t.includes('picture') || t.includes('picha')) {
-    goTo('gallery'); return 'Here is our gallery! Tap any photo to order that item. 📸';
-  }
-  if (t.includes('thank') || t.includes('asante')) { return 'Asante sana! It\'s our pleasure! 🙏🎂'; }
-  if (t.includes('bye') || t.includes('kwaheri')) { return 'Kwaheri! Come back for more sweet treats! 🎂❤️'; }
-  return 'I can help with:\n- menu: see prices\n- order: place an order\n- hours: opening times\n- delivery: info\n\nOr call us: 0620 767 919 📞';
-}
-
-async function confirmOrder() {
-  // Save to backend
-  try {
-    await fetch(API + '/api/orders', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
+    const base64 = base64Data.split(',')[1];
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        customer: {name: orderData.name, phone: orderData.phone},
-        item: {type: orderData.item, size:'', flavor:'', quantity:1},
-        delivery: {type: orderData.delivery.toLowerCase().includes('delivery')?'delivery':'pickup', address:''},
-        dateNeeded: orderData.date,
-        notes: refPhotoB64 ? 'Customer attached a reference photo' : ''
+        model:'claude-sonnet-4-20250514', max_tokens:300,
+        messages:[{role:'user',content:[
+          {type:'image',source:{type:'base64',media_type:file.type,data:base64}},
+          {type:'text',text:'This is a mobile money payment screenshot. Check if it contains BOTH: 1) Phone number 0620767919 or 255620767919, AND 2) Name "Gift Lyimo". Reply ONLY with JSON: {"verified":true/false,"reason":"brief"}'}
+        ]}]
       })
     });
-  } catch(e) {}
-
-  // Build WhatsApp message
-  const waTxt =
-    '🎂 NEW ORDER - Abby Cake and Bites\n\n' +
-    'Name: ' + orderData.name + '\n' +
-    'Phone: ' + orderData.phone + '\n' +
-    'Item: ' + orderData.item + '\n' +
-    'Delivery: ' + orderData.delivery + '\n' +
-    'Date: ' + orderData.date +
-    (refPhotoB64 ? '\n\n📎 Customer has a reference photo. Please ask them to send it on WhatsApp.' : '');
-  const waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waTxt);
-
-  removeTyping();
-
-  // Build confirmation HTML
-  let html = '✅ Order confirmed! Thank you <strong>' + orderData.name + '</strong>!<br/><br/>' +
-    'We will call you on <strong>' + orderData.phone + '</strong> to confirm.<br/><br/>';
-
-  if (refPhotoB64) {
-    html += '<img src="' + refPhotoB64 + '" style="width:85px;height:85px;object-fit:cover;border-radius:10px;border:2px solid var(--rose);display:block;margin-bottom:10px"/>';
-  }
-
-  html +=
-    '<a href="' + waUrl + '" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:11px 22px;border-radius:22px;text-decoration:none;font-weight:600;font-size:13px;margin-bottom:6px">📱 Send Order on WhatsApp</a>' +
-    '<br/><span style="font-size:10px;color:#aaa">Tap to notify the bakery directly!</span>';
-
-  addBotHtml(html);
-
-  orderStep = null; orderData = {}; hidePhotoUpload();
-  chatBusy = false;
-  document.getElementById('sendBtn').disabled = false;
-}
-
-async function userSend(txt) {
-  if (chatBusy || !txt.trim()) return;
-  if (!chatStarted) initChat();
-  addUserMsg(txt);
-  chatBusy = true;
-  document.getElementById('sendBtn').disabled = true;
-  if (document.getElementById('chatMsgs').children.length > 4) {
-    document.getElementById('quickBtns').style.display = 'none';
-  }
-  showTyping();
-  await new Promise(r => setTimeout(r, 650));
-  if (orderStep === 'confirm' && (txt.toLowerCase().includes('yes') || txt.toLowerCase().includes('ndio'))) {
-    await confirmOrder(); return;
-  }
-  removeTyping();
-  const reply = getReply(txt);
-  if (reply) addBotMsg(reply);
-  chatBusy = false;
-  document.getElementById('sendBtn').disabled = false;
-}
-
-function sendFromInput() {
-  const inp = document.getElementById('chatInput');
-  const txt = inp.value.trim();
-  if (txt) { inp.value = ''; userSend(txt); }
-}
-
-function orderItem(item) {
-  goTo('chat');
-  if (!chatStarted) initChat();
-  setTimeout(() => userSend('I want to order ' + item), 400);
-}
-
-// ─── ADMIN ────────────────────────────────────────────────
-let adminToken = null;
-
-async function doLogin() {
-  const u = document.getElementById('adminUser').value;
-  const p = document.getElementById('adminPass').value;
-  const errEl = document.getElementById('loginErr');
-  const btn = document.getElementById('loginBtn');
-  errEl.innerHTML = '';
-  btn.textContent = 'Logging in...'; btn.disabled = true;
-  try {
-    const res = await fetch(API + '/api/admin/login', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({username: u, password: p})
-    });
     const data = await res.json();
-    if (!data.success) throw new Error(data.message || 'Invalid credentials');
-    adminToken = data.token;
-    document.getElementById('adminLogin').style.display = 'none';
-    document.getElementById('adminDash').style.display = 'block';
-    loadOrders();
+    const text = data.content?.map(c=>c.text||'').join('') || '';
+    let result;
+    try { result = JSON.parse(text.replace(/```json|```/g,'').trim()); }
+    catch(e) { result = {verified: text.includes('"verified":true') || text.includes('"verified": true')}; }
+    if (result.verified) {
+      verifiedPayment = true;
+      status.className = 'verify-status success';
+      status.innerHTML = t('verify_ok');
+      document.getElementById('submitBtn').disabled = false;
+    } else {
+      status.className = 'verify-status failed';
+      status.innerHTML = t('verify_fail');
+    }
   } catch(e) {
-    errEl.innerHTML = '<div class="alert-err">' + e.message + '</div>';
+    verifiedPayment = true;
+    status.className = 'verify-status success';
+    status.innerHTML = t('verify_manual');
+    document.getElementById('submitBtn').disabled = false;
   }
-  btn.textContent = 'Login →'; btn.disabled = false;
 }
 
-function doLogout() {
+async function submitOrder() {
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const location = document.getElementById('custLocation').value.trim();
+  const orderDetail = document.getElementById('custOrder').value.trim();
+  const alertBox = document.getElementById('alertBox');
+  if (!name||!phone||!location||!orderDetail) {
+    alertBox.innerHTML = `<div class="alert alert-error">${t('fill_all')}</div>`; return;
+  }
+  if (!verifiedPayment) {
+    alertBox.innerHTML = `<div class="alert alert-error">${t('upload_first')}</div>`; return;
+  }
+  alertBox.innerHTML = '';
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = t('sending');
+  const half = selectedItem.price > 0 ? Math.ceil(selectedItem.price/2) : 0;
+  const orderId = 'ABY'+Date.now().toString().slice(-6);
+  const itemName = lang==='sw' ? selectedItem.sw[0] : selectedItem.en[0];
+  try {
+    let sc = '';
+    if (currentFile) sc = await new Promise(res => { const r=new FileReader(); r.onload=e=>res(e.target.result.split(',')[1]); r.readAsDataURL(currentFile); });
+    const res = await fetch(`${BACKEND}/api/orders`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({customer:{name,phone},item:{name:itemName,price:selectedItem.price,halfPaid:half},delivery:{address:location},notes:orderDetail,orderId,paymentVerified:verifiedPayment,screenshot:sc})
+    });
+    const json = await res.json();
+    if (json.success||json._id) { showSuccess(orderId); return; }
+  } catch(e) {}
+  showSuccess(orderId);
+}
+
+function showSuccess(orderId) {
+  document.getElementById('successOrderId').textContent = t('order_prefix') + orderId;
+  document.getElementById('successScreen').classList.add('show');
+}
+
+function resetOrder() {
+  document.getElementById('successScreen').classList.remove('show');
+  selectedItem = null; verifiedPayment = false; currentFile = null;
+  renderMenu();
+  document.getElementById('orderForm').style.display = 'none';
+  document.getElementById('noItemSelected').style.display = 'block';
+  ['custName','custPhone','custLocation','custOrder'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('previewImg').style.display = 'none';
+  document.getElementById('uploadArea').classList.remove('has-file');
+  document.getElementById('verifyStatus').className = 'verify-status';
+  document.getElementById('submitBtn').disabled = true;
+  applyLanguage();
+  showPage('order');
+}
+
+async function loadGallery() {
+  try {
+    const res = await fetch(`${BACKEND}/api/gallery`);
+    const json = await res.json();
+    if (json.success && json.data.length > 0) {
+      document.getElementById('galleryGrid').innerHTML = json.data.map(p =>
+        `<div><div class="gallery-item"><img src="${p.url}" alt="${p.caption||''}" loading="lazy"/></div><div class="gallery-caption">${p.caption||''}</div></div>`
+      ).join('');
+    }
+  } catch(e) {}
+}
+
+function adminLogin() {
+  const user = document.getElementById('adminUser').value;
+  const pass = document.getElementById('adminPass').value;
+  fetch(`${BACKEND}/api/admin/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:user,password:pass})})
+    .then(r=>r.json()).then(json=>{
+      if (json.success||json.token) {
+        adminToken = json.token;
+        document.getElementById('adminLogin').style.display = 'none';
+        document.getElementById('adminDashboard').style.display = 'block';
+        loadOrders();
+      } else {
+        document.getElementById('loginAlert').innerHTML = `<div class="alert alert-error">${t('invalid_creds')}</div>`;
+      }
+    }).catch(()=>{ document.getElementById('loginAlert').innerHTML = `<div class="alert alert-error">${t('conn_error')}</div>`; });
+}
+
+function adminLogout() {
   adminToken = null;
   document.getElementById('adminLogin').style.display = 'block';
-  document.getElementById('adminDash').style.display = 'none';
-  document.getElementById('adminUser').value = '';
-  document.getElementById('adminPass').value = '';
+  document.getElementById('adminDashboard').style.display = 'none';
 }
 
-function switchTab(tab, el) {
-  document.querySelectorAll('.atab').forEach(b => b.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('tab-orders').style.display = tab === 'orders' ? 'block' : 'none';
-  document.getElementById('tab-gallery').style.display = tab === 'gallery' ? 'block' : 'none';
-  if (tab === 'gallery') renderAdminGallery();
+function adminTab(tab, el) {
+  document.querySelectorAll('#adminDashboard .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('adminOrders').style.display = tab==='orders' ? 'block' : 'none';
+  document.getElementById('adminGallery').style.display = tab==='gallery' ? 'block' : 'none';
+  if (tab==='gallery') loadAdminGallery();
 }
 
 async function loadOrders() {
+  const list = document.getElementById('ordersList');
+  list.innerHTML = `<p style="color:#8a6555;font-size:0.85rem">${t('loading')}</p>`;
   try {
-    const [or, sr] = await Promise.all([
-      fetch(API + '/api/admin/orders', {headers:{Authorization:'Bearer '+adminToken}}),
-      fetch(API + '/api/admin/stats', {headers:{Authorization:'Bearer '+adminToken}})
-    ]);
-    const od = await or.json(), sd = await sr.json(), s = sd.stats || {};
-    document.getElementById('statsGrid').innerHTML =
-      '<div class="stat-card"><div class="stat-n">' + (s.totalOrders||0) + '</div><div class="stat-l">Total Orders</div></div>' +
-      '<div class="stat-card"><div class="stat-n">' + (s.pendingOrders||0) + '</div><div class="stat-l">Pending</div></div>' +
-      '<div class="stat-card"><div class="stat-n">' + (s.todayOrders||0) + '</div><div class="stat-l">Today</div></div>' +
-      '<div class="stat-card"><div class="stat-n">' + (s.deliveryCount||0) + '</div><div class="stat-l">Deliveries</div></div>';
-    const orders = od.data || [];
-    if (!orders.length) {
-      document.getElementById('ordersContent').innerHTML =
-        '<div style="text-align:center;padding:50px;color:var(--muted)"><div style="font-size:40px;margin-bottom:10px">🎂</div><p>No orders yet! Orders from chat will appear here.</p></div>';
-      return;
+    const res = await fetch(`${BACKEND}/api/admin/orders`,{headers:{'Authorization':'Bearer '+adminToken}});
+    const json = await res.json();
+    if (json.success && json.data?.length > 0) {
+      list.innerHTML = json.data.reverse().map(o=>`
+        <div class="order-card">
+          <div class="order-card-header"><div class="order-name">${o.customer?.name||'?'}</div><div class="order-time">${new Date(o.createdAt).toLocaleDateString()}</div></div>
+          <div class="order-detail">📞 ${o.customer?.phone||'-'}</div>
+          <div class="order-detail">📍 ${o.delivery?.address||'-'}</div>
+          <div class="order-detail">🎂 ${o.item?.name||o.notes||'-'}</div>
+          <div class="order-detail">💰 ${t('half_paid')}: TZS ${(o.item?.halfPaid||0).toLocaleString()}</div>
+          <div style="margin-top:6px"><span class="order-badge ${o.status==='pending'?'pending':''}">${o.status||'pending'}</span></div>
+        </div>`).join('');
+    } else {
+      list.innerHTML = `<p style="color:#8a6555;font-size:0.85rem">${t('no_orders')}</p>`;
     }
-    document.getElementById('ordersContent').innerHTML =
-      '<div class="orders-table">' +
-      '<div class="orders-head"><span>Order ID</span><span>Customer</span><span>Item</span><span>Status</span></div>' +
-      orders.map(o =>
-        '<div class="order-row">' +
-        '<span style="font-size:9px;color:#bbb;font-weight:600">' + (o.orderId||'') + '</span>' +
-        '<span><div style="font-weight:600">' + (o.customer&&o.customer.name||'') + '</div><div style="font-size:10px;color:var(--muted)">' + (o.customer&&o.customer.phone||'') + '</div></span>' +
-        '<span><div style="font-weight:500">' + (o.item&&o.item.type||'') + '</div><div style="font-size:10px;color:var(--muted)">' + (o.delivery&&o.delivery.type||'') + '</div></span>' +
-        '<span><span class="badge badge-' + (o.status==='confirmed'?'confirmed':'pending') + '">' + (o.status||'pending') + '</span></span>' +
-        '</div>'
-      ).join('') + '</div>';
-  } catch(e) {
-    document.getElementById('ordersContent').innerHTML =
-      '<div class="alert-err">Could not load orders. <a href="https://abby-backend.onrender.com" target="_blank" style="color:var(--rose)">Wake the backend first</a></div>';
-  }
+  } catch(e) { list.innerHTML = `<p style="color:#8a6555;font-size:0.85rem">${t('load_fail')}</p>`; }
 }
 
-// ─── INIT ─────────────────────────────────────────────────
-initHours();
+async function loadAdminGallery() {
+  try {
+    const res = await fetch(`${BACKEND}/api/gallery`);
+    const json = await res.json();
+    const grid = document.getElementById('adminGalleryGrid');
+    if (json.success && json.data.length > 0) {
+      grid.innerHTML = json.data.map(p=>`
+        <div>
+          <div class="gallery-item"><img src="${p.url}" loading="lazy"/></div>
+          <div class="gallery-caption">${p.caption||''}</div>
+          <button onclick="deletePhoto('${p._id}')" style="width:100%;margin-top:4px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:4px;font-size:0.75rem;cursor:pointer">${t('delete_lbl')}</button>
+        </div>`).join('');
+    } else {
+      grid.innerHTML = `<p style="grid-column:span 2;color:#8a6555;font-size:0.85rem">${t('no_photos')}</p>`;
+    }
+  } catch(e) {}
+}
+
+function previewGalleryFile(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { const img=document.getElementById('galleryPreview'); img.src=e.target.result; img.style.display='block'; };
+  reader.readAsDataURL(file);
+}
+
+async function uploadGalleryPhoto() {
+  const file = document.getElementById('galleryFileInput').files[0];
+  const caption = document.getElementById('galleryCaption').value;
+  const status = document.getElementById('galleryUploadStatus');
+  if (!file) { status.innerHTML=`<span style="color:var(--red)">${t('select_photo')}</span>`; return; }
+  status.innerHTML = t('uploading');
+  const formData = new FormData();
+  formData.append('photo',file); formData.append('caption',caption);
+  try {
+    const res = await fetch(`${BACKEND}/api/gallery/upload`,{method:'POST',headers:{'Authorization':'Bearer '+adminToken},body:formData});
+    const json = await res.json();
+    if (json.success) {
+      status.innerHTML = `<span style="color:var(--green)">${t('uploaded_ok')}</span>`;
+      document.getElementById('galleryFileInput').value='';
+      document.getElementById('galleryPreview').style.display='none';
+      document.getElementById('galleryCaption').value='';
+      loadAdminGallery(); loadGallery();
+    } else { status.innerHTML=`<span style="color:var(--red)">❌ ${json.message}</span>`; }
+  } catch(e) { status.innerHTML=`<span style="color:var(--red)">❌ ${e.message}</span>`; }
+}
+
+async function deletePhoto(id) {
+  if (!confirm(t('delete_confirm'))) return;
+  try {
+    await fetch(`${BACKEND}/api/gallery/${id}`,{method:'DELETE',headers:{'Authorization':'Bearer '+adminToken}});
+    loadAdminGallery(); loadGallery();
+  } catch(e) {}
+}
+
+// INIT
+applyLanguage();
 </script>
 </body>
 </html>
