@@ -489,7 +489,20 @@ async function sendMsg(text) {
   await new Promise(r=>setTimeout(r,700));
   removeTyping();
   const reply=smartReply(text);
-  if(reply) addMsg('assistant',reply);
+  if(reply){
+  if(reply.includes('<a href')){
+    const div=document.createElement('div');
+    div.className='msg assistant';
+    const bubble=document.createElement('div');
+    bubble.className='msg-bubble';
+    bubble.innerHTML=reply.replace(/\n/g,'<br/>');
+    div.appendChild(bubble);
+    document.getElementById('chatMsgs').appendChild(div);
+    document.getElementById('chatMsgs').scrollTop=99999;
+  } else {
+    addMsg('assistant',reply);
+  }
+}
   if(chatHistory.length>2) document.getElementById('quickBtns').style.display='none';
   chatLoading=false;
   document.getElementById('sendBtn').disabled=false;
