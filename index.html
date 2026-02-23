@@ -4,41 +4,546 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Abby Cake and Bites</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#fdf6ee;color:#2c1810}
+nav{background:white;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f5d6c8;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(107,63,42,0.06)}
+.nav-brand{display:flex;align-items:center;gap:8px;font-family:'Playfair Display',serif;font-size:17px;color:#6b3f2a;font-weight:700}
+.nav-links{display:flex;gap:4px}
+.nav-btn{padding:7px 14px;border-radius:20px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;background:transparent;color:#6b3f2a;transition:all 0.2s}
+.nav-btn:hover{background:#f5d6c8}
+.nav-btn.active{background:#c97d6e;color:white}
+.status-pill{font-size:11px;padding:4px 10px;border-radius:12px;font-weight:600}
+.status-open{background:#d4edda;color:#155724}
+.status-closed{background:#f8d7da;color:#721c24}
+.page{display:none}
+.page.active{display:block}
+/* HERO */
+.hero{background:linear-gradient(150deg,#fdf0e6,#f9e2d2,#f5d6c8);padding:70px 24px 50px;text-align:center;position:relative}
+.hero-badge{display:inline-block;background:rgba(201,125,110,0.12);color:#c97d6e;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;margin-bottom:18px;border:1px solid rgba(201,125,110,0.2)}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,60px);color:#6b3f2a;line-height:1.1;margin-bottom:14px}
+.hero h1 em{font-style:italic;color:#c97d6e}
+.hero p{font-size:16px;color:#8a6050;max-width:440px;margin:0 auto 28px;line-height:1.6}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,#c97d6e,#b56e60);color:white;padding:13px 26px;border-radius:30px;border:none;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;box-shadow:0 4px 18px rgba(201,125,110,0.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(201,125,110,0.45)}
+.btn-secondary{background:white;color:#c97d6e;padding:13px 26px;border-radius:30px;border:2px solid #e8a598;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-secondary:hover{background:#f5d6c8}
+/* CONTAINER */
+.container{max-width:860px;margin:0 auto;padding:36px 20px}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:40px}
+.info-card{background:white;border-radius:14px;padding:18px;border:1px solid rgba(232,165,152,0.2);box-shadow:0 2px 12px rgba(107,63,42,0.04)}
+.info-icon{font-size:22px;margin-bottom:8px}
+.info-label{font-size:11px;font-weight:600;color:#e8a598;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px}
+.info-value{font-size:14px;color:#2c1810;font-weight:500;line-height:1.5}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,32px);color:#6b3f2a;margin-bottom:8px}
+.section-sub{color:#8a6050;font-size:14px;margin-bottom:24px}
+/* MENU */
+.menu-cat-title{font-family:'Playfair Display',serif;font-size:20px;color:#6b3f2a;margin-bottom:14px;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:2px solid #f5d6c8}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:32px}
+.menu-card{background:white;border-radius:12px;padding:16px;border:1px solid rgba(232,165,152,0.2);cursor:pointer;transition:all 0.2s}
+.menu-card:hover{border-color:#e8a598;box-shadow:0 4px 14px rgba(201,125,110,0.12);transform:translateY(-2px)}
+.menu-card-name{font-weight:600;font-size:14px;color:#2c1810;margin-bottom:3px}
+.menu-card-desc{font-size:12px;color:#9a7060;margin-bottom:7px;line-height:1.4}
+.menu-card-price{font-size:12px;font-weight:700;color:#c97d6e}
+/* HOURS */
+.hours-card{background:white;border-radius:14px;padding:20px;border:1px solid rgba(232,165,152,0.2)}
+.hours-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f5ede8;font-size:14px}
+.hours-row:last-child{border-bottom:none}
+.hours-day{font-weight:500;color:#2c1810}
+.hours-time{color:#8a6050}
+.hours-closed{color:#d4a0a0;font-style:italic}
+.hours-today{background:#fff8f6;border-radius:8px;padding:9px 12px;margin-bottom:2px}
+/* CHAT */
+.chat-wrapper{max-width:660px;margin:0 auto}
+.chat-box{background:white;border-radius:22px;border:1px solid rgba(232,165,152,0.3);box-shadow:0 4px 28px rgba(107,63,42,0.08);overflow:hidden;display:flex;flex-direction:column;height:560px}
+.chat-header{background:linear-gradient(135deg,#c97d6e,#b56e60);padding:16px 18px;display:flex;align-items:center;gap:10px;color:white}
+.chat-avatar{width:42px;height:42px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.chat-header h3{font-size:15px;font-weight:600}
+.chat-header p{font-size:12px;opacity:0.85}
+.online-dot{width:7px;height:7px;background:#7fff7f;border-radius:50%;display:inline-block;margin-right:4px}
+.chat-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;background:#fdf9f7}
+.chat-msgs::-webkit-scrollbar{width:3px}
+.chat-msgs::-webkit-scrollbar-thumb{background:#f5d6c8;border-radius:2px}
+.msg{max-width:80%;animation:fadeUp 0.3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{align-self:flex-end}
+.msg.assistant{align-self:flex-start}
+.msg-bubble{padding:11px 15px;border-radius:17px;font-size:14px;line-height:1.6;white-space:pre-wrap}
+.msg.user .msg-bubble{background:linear-gradient(135deg,#c97d6e,#b56e60);color:white;border-bottom-right-radius:4px}
+.msg.assistant .msg-bubble{background:white;color:#2c1810;border:1px solid rgba(232,165,152,0.25);border-bottom-left-radius:4px;box-shadow:0 2px 6px rgba(107,63,42,0.06)}
+.msg-time{font-size:10px;color:#ccc;margin-top:3px;padding:0 3px}
+.msg.user .msg-time{text-align:right}
+.typing{display:flex;gap:4px;align-items:center;padding:12px 15px}
+.typing span{width:6px;height:6px;background:#e8a598;border-radius:50%;animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:0.2s}
+.typing span:nth-child(3){animation-delay:0.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+.quick-btns{display:flex;flex-wrap:wrap;gap:7px;padding:0 18px 12px;background:#fdf9f7}
+.quick-btn{padding:6px 13px;background:white;border:1.5px solid #f5d6c8;border-radius:14px;font-size:12px;color:#c97d6e;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all 0.15s}
+.quick-btn:hover{background:#f5d6c8}
+.chat-input-row{padding:12px 14px;border-top:1px solid rgba(232,165,152,0.2);background:white;display:flex;gap:8px;align-items:flex-end}
+.chat-input{flex:1;border:1.5px solid #f5d6c8;border-radius:18px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:#2c1810;outline:none;resize:none;max-height:90px;transition:border-color 0.2s;background:#fdf9f7}
+.chat-input:focus{border-color:#c97d6e}
+.send-btn{width:40px;height:40px;background:linear-gradient(135deg,#c97d6e,#b56e60);border:none;border-radius:50%;color:white;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s}
+.send-btn:hover{transform:scale(1.08)}
+.send-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+/* ORDER SUCCESS */
+.order-success{background:white;border-radius:18px;padding:28px;text-align:center;border:2px solid rgba(168,184,154,0.4);box-shadow:0 4px 20px rgba(107,63,42,0.08)}
+.order-success-icon{font-size:48px;margin-bottom:14px}
+.order-success h3{font-family:'Playfair Display',serif;font-size:22px;color:#6b3f2a;margin-bottom:8px}
+.order-details{background:#fdf9f7;border-radius:10px;padding:14px;margin:18px 0;text-align:left;font-size:13px}
+.detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0e8e4}
+.detail-row:last-child{border-bottom:none}
+.detail-key{color:#9a7060;font-weight:500}
+.detail-val{font-weight:600;color:#6b3f2a}
+/* ADMIN */
+.admin-login{max-width:340px;margin:50px auto;background:white;border-radius:18px;padding:36px 28px;box-shadow:0 4px 28px rgba(107,63,42,0.1);text-align:center}
+.admin-login h2{font-family:'Playfair Display',serif;font-size:24px;color:#6b3f2a;margin-bottom:4px}
+.admin-login p{color:#9a7060;font-size:13px;margin-bottom:24px}
+.form-field{margin-bottom:14px;text-align:left}
+.form-field label{display:block;font-size:12px;font-weight:600;color:#6b3f2a;margin-bottom:5px}
+.form-input{width:100%;padding:10px 13px;border:1.5px solid #f5d6c8;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:14px;color:#2c1810;outline:none;transition:border-color 0.2s}
+.form-input:focus{border-color:#c97d6e}
+.admin-panel{max-width:860px;margin:0 auto;padding:28px 20px}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+.admin-header h2{font-family:'Playfair Display',serif;font-size:26px;color:#6b3f2a}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:white;border-radius:12px;padding:16px;border:1px solid rgba(232,165,152,0.2)}
+.stat-val{font-size:26px;font-weight:700;color:#c97d6e;font-family:'Playfair Display',serif}
+.stat-label{font-size:11px;color:#9a7060;margin-top:3px;font-weight:500}
+.orders-table{background:white;border-radius:14px;overflow:hidden;border:1px solid rgba(232,165,152,0.2)}
+.table-header{background:linear-gradient(135deg,#f5d6c8,#f9e2d2);padding:12px 18px;display:grid;grid-template-columns:80px 1fr 1fr 90px;gap:10px;font-size:11px;font-weight:700;color:#6b3f2a;text-transform:uppercase;letter-spacing:0.05em}
+.order-row{padding:12px 18px;display:grid;grid-template-columns:80px 1fr 1fr 90px;gap:10px;border-bottom:1px solid #f5ede8;font-size:13px;align-items:center}
+.order-row:last-child{border-bottom:none}
+.order-row:hover{background:#fdf9f7}
+.badge{padding:3px 8px;border-radius:8px;font-size:11px;font-weight:600;display:inline-block}
+.badge-pending{background:#fff3cd;color:#856404}
+.badge-confirmed{background:#d4edda;color:#155724}
+.error-msg{background:#fff0f0;color:#c0392b;padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;border:1px solid #ffd5d5}
+/* FLOATING BTNS */
+.wa-float{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:0 4px 14px rgba(37,211,102,0.4);z-index:999;text-decoration:none;transition:all 0.2s}
+.wa-float:hover{transform:scale(1.1)}
+footer{background:#2c1810;color:rgba(255,255,255,0.65);text-align:center;padding:28px 20px;font-size:13px;margin-top:50px}
+footer strong{color:#e8a598}
+@media(max-width:500px){
+  .table-header,.order-row{grid-template-columns:60px 1fr 1fr}
+  .table-header span:last-child,.order-row span:last-child{display:none}
+  .nav-btn span{display:none}
+}
+</style>
 </head>
-<body style="margin:0;font-family:sans-serif;background:#fdf6ee;color:#2c1810">
-<nav style="background:white;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f5d6c8;position:sticky;top:0;z-index:100">
-<b style="font-size:18px">🎂 Abby Cake & Bites</b>
-<a href="https://wa.me/255620767919" style="background:#c97d6e;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:14px">Order via WhatsApp</a>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">🎂 Abby Cake & Bites</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('home')">🏠 <span>Home</span></button>
+    <button class="nav-btn" onclick="showPage('menu')">🎂 <span>Menu</span></button>
+    <button class="nav-btn" onclick="showPage('chat')">💬 <span>Order</span></button>
+    <button class="nav-btn" onclick="showPage('admin')">🔐 <span>Admin</span></button>
+  </div>
+  <span id="statusPill" class="status-pill status-closed">Closed</span>
 </nav>
-<div style="background:linear-gradient(135deg,#fdf0e6,#f5d6c8);padding:60px 24px;text-align:center">
-<h1 style="font-size:48px;color:#6b3f2a;margin-bottom:16px">Abby Cake & Bites</h1>
-<p style="font-size:18px;color:#8a6050;margin-bottom:24px">Handcrafted cakes & pastries in Himo, Tanzania</p>
-<a href="https://wa.me/255620767919" style="background:#c97d6e;color:white;padding:16px 32px;border-radius:30px;text-decoration:none;font-size:16px;font-weight:bold">🎂 Order Now on WhatsApp</a>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">✨ Handcrafted Cakes & Bites · Himo, Tanzania</div>
+    <h1>Where Every Bite is<br/><em>Pure Delight</em></h1>
+    <p>Custom cakes, pastries & sweets baked fresh daily with love for every occasion.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="showPage('chat')">🎂 Order via AI Chat</button>
+      <button class="btn-secondary" onclick="showPage('menu')">View Menu</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-card"><div class="info-icon">📍</div><div class="info-label">Location</div><div class="info-value">Njiapanda, Himo<br/>Tanzania</div></div>
+      <div class="info-card"><div class="info-icon">📞</div><div class="info-label">Phone / WhatsApp</div><div class="info-value">0620 767 919</div></div>
+      <div class="info-card"><div class="info-icon">🕐</div><div class="info-label">Today's Hours</div><div class="info-value" id="todayHours">Loading...</div></div>
+      <div class="info-card"><div class="info-icon">🚗</div><div class="info-label">Delivery</div><div class="info-value">Available in Himo<br/>TZS 3,000–8,000</div></div>
+    </div>
+    <h2 class="section-title">Opening Hours</h2>
+    <p class="section-sub">We're here to sweeten your week</p>
+    <div class="hours-card" id="hoursCard"></div>
+  </div>
+  <footer><strong>Abby Cake and Bites</strong> · Njiapanda, Himo · 0620 767 919 · Made with 🎂</footer>
 </div>
-<div style="max-width:800px;margin:40px auto;padding:0 24px">
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:40px">
-<div style="background:white;padding:20px;border-radius:16px;border:1px solid #f5d6c8"><div style="font-size:24px">📍</div><b>Location</b><p style="color:#8a6050;font-size:14px">Njiapanda, Himo, Tanzania</p></div>
-<div style="background:white;padding:20px;border-radius:16px;border:1px solid #f5d6c8"><div style="font-size:24px">📞</div><b>Phone</b><p style="color:#8a6050;font-size:14px">0620 767 919</p></div>
-<div style="background:white;padding:20px;border-radius:16px;border:1px solid #f5d6c8"><div style="font-size:24px">🕐</div><b>Hours</b><p style="color:#8a6050;font-size:14px">Mon-Thu 7AM-7PM<br/>Fri-Sat 7AM-8PM<br/>Sunday Closed</p></div>
-<div style="background:white;padding:20px;border-radius:16px;border:1px solid #f5d6c8"><div style="font-size:24px">🚗</div><b>Delivery</b><p style="color:#8a6050;font-size:14px">Available in Himo<br/>TZS 3,000-8,000</p></div>
+
+<!-- MENU PAGE -->
+<div id="page-menu" class="page">
+  <div class="container">
+    <h2 class="section-title">Our Menu</h2>
+    <p class="section-sub">Fresh, handcrafted treats for every occasion — tap any item to order!</p>
+    <div class="menu-cat-title">🎂 Custom Cakes</div>
+    <div class="menu-grid">
+      <div class="menu-card" onclick="orderItem('Birthday Cake')"><div class="menu-card-name">Birthday Cake</div><div class="menu-card-desc">Personalized & themed to your wishes</div><div class="menu-card-price">TZS 25,000 – 80,000</div></div>
+      <div class="menu-card" onclick="orderItem('Wedding Cake')"><div class="menu-card-name">Wedding Cake</div><div class="menu-card-desc">Elegant multi-tier masterpieces</div><div class="menu-card-price">TZS 80,000 – 300,000</div></div>
+      <div class="menu-card" onclick="orderItem('Anniversary Cake')"><div class="menu-card-name">Anniversary Cake</div><div class="menu-card-desc">Romantic designs with messages</div><div class="menu-card-price">TZS 30,000 – 75,000</div></div>
+      <div class="menu-card" onclick="orderItem('Baby Shower Cake')"><div class="menu-card-name">Baby Shower Cake</div><div class="menu-card-desc">Adorable pastel creations</div><div class="menu-card-price">TZS 28,000 – 60,000</div></div>
+    </div>
+    <div class="menu-cat-title">🍪 Bites & Pastries</div>
+    <div class="menu-grid">
+      <div class="menu-card" onclick="orderItem('Cupcakes')"><div class="menu-card-name">Cupcakes</div><div class="menu-card-desc">Mini decorated in any flavor</div><div class="menu-card-price">TZS 12,000 – 22,000</div></div>
+      <div class="menu-card" onclick="orderItem('Cookies')"><div class="menu-card-name">Cookies</div><div class="menu-card-desc">Freshly baked butter & choco chip</div><div class="menu-card-price">TZS 8,000 – 15,000</div></div>
+      <div class="menu-card" onclick="orderItem('Brownies')"><div class="menu-card-name">Brownies</div><div class="menu-card-desc">Fudgy dark chocolate brownies</div><div class="menu-card-price">TZS 10,000 – 20,000</div></div>
+      <div class="menu-card" onclick="orderItem('Cake Pops')"><div class="menu-card-name">Cake Pops</div><div class="menu-card-desc">Fun bite-sized cake balls on a stick</div><div class="menu-card-price">TZS 12,000 – 22,000</div></div>
+      <div class="menu-card" onclick="orderItem('Doughnuts')"><div class="menu-card-name">Doughnuts</div><div class="menu-card-desc">Glazed, sprinkled or filled</div><div class="menu-card-price">TZS 9,000 – 17,000</div></div>
+      <div class="menu-card" onclick="orderItem('Muffins')"><div class="menu-card-name">Muffins</div><div class="menu-card-desc">Blueberry, banana or choco-chip</div><div class="menu-card-price">TZS 8,000 – 15,000</div></div>
+    </div>
+    <div style="text-align:center;margin-top:16px">
+      <button class="btn-primary" onclick="showPage('chat')">Place Order via AI Chat 🎂</button>
+    </div>
+  </div>
 </div>
-<h2 style="color:#6b3f2a;margin-bottom:24px;font-size:28px">🎂 Our Menu</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
-<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Birthday Cake</b><p style="color:#9a7060;font-size:13px">Custom decorated</p><p style="color:#c97d6e;font-weight:bold">TZS 25,000-80,000</p></div>
-<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Wedding Cake</b><p style="color:#9a7060;font-size:13px">Multi-tier elegant</p><p style="color:#c97d6e;font-weight:bold">TZS 80,000-300,000</p></div>
-<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Cupcakes</b><p style="color:#9a7060;font-size:13px">6 or 12 pieces</p><p style="color:#c97d6e;font-weight:bold">TZS 12,000-22,000</p></div>
-<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Cookies</b><p style="color:#9a7060;font-size:13px">Freshly baked</p><p style="color:#c97d6e;font-weight:bold">TZS 8,000-15,000</p></div>
-<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Brownies</b><p style="color:#9a7060;font-size:13px">Fudgy chocolate</p><p style="color:#c97d6e;font-weight:bold">TZS 10,000-20,000</p></div>
-<div style="background:white;padding:18px;border-radius:14px;border:1px solid #f5d6c8"><b>Doughnuts</b><p style="color:#9a7060;font-size:13px">Glazed & filled</p><p style="color:#c97d6e;font-weight:bold">TZS 9,000-17,000</p></div>
+
+<!-- CHAT PAGE -->
+<div id="page-chat" class="page">
+  <div class="container">
+    <h2 class="section-title">Chat with Abby</h2>
+    <p class="section-sub" id="chatStatusMsg">Ask anything or place your order</p>
+    <div class="chat-wrapper">
+      <div id="orderSuccess" style="display:none"></div>
+      <div id="chatBox" class="chat-box">
+        <div class="chat-header">
+          <div class="chat-avatar">🎂</div>
+          <div>
+            <h3>Abby · AI Assistant</h3>
+            <p><span class="online-dot"></span>Connected · Orders saved & SMS sent</p>
+          </div>
+        </div>
+        <div class="chat-msgs" id="chatMsgs"></div>
+        <div class="quick-btns" id="quickBtns">
+          <button class="quick-btn" onclick="sendMsg('What cakes do you have?')">What cakes?</button>
+          <button class="quick-btn" onclick="sendMsg('Are you open now?')">Are you open?</button>
+          <button class="quick-btn" onclick="sendMsg('I want to place an order')">Order now</button>
+          <button class="quick-btn" onclick="sendMsg('What are your prices?')">Prices?</button>
+          <button class="quick-btn" onclick="sendMsg('Do you deliver?')">Delivery?</button>
+        </div>
+        <div class="chat-input-row">
+          <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1" onkeydown="handleKey(event)"></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendFromInput()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div style="text-align:center;margin-top:40px;background:white;padding:32px;border-radius:20px;border:1px solid #f5d6c8">
-<h2 style="color:#6b3f2a;margin-bottom:12px">Ready to Order?</h2>
-<p style="color:#8a6050;margin-bottom:20px">Contact us on WhatsApp to place your order!</p>
-<a href="https://wa.me/255620767919" style="background:#25D366;color:white;padding:16px 32px;border-radius:30px;text-decoration:none;font-size:16px;font-weight:bold">💬 Chat on WhatsApp</a>
+
+<!-- ADMIN PAGE -->
+<div id="page-admin" class="page">
+  <div id="adminLogin">
+    <div class="container">
+      <div class="admin-login">
+        <div style="font-size:38px;margin-bottom:10px">🔐</div>
+        <h2>Admin Login</h2>
+        <p>Abby Cake & Bites · Dashboard</p>
+        <div id="loginErr"></div>
+        <div class="form-field"><label>Username</label><input class="form-input" id="adminUser" placeholder="abby_admin"/></div>
+        <div class="form-field"><label>Password</label><input class="form-input" type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+        <button class="btn-primary" style="width:100%" onclick="doLogin()" id="loginBtn">Login →</button>
+      </div>
+    </div>
+  </div>
+  <div id="adminPanel" style="display:none">
+    <div class="admin-panel">
+      <div class="admin-header">
+        <h2>📊 Orders Dashboard</h2>
+        <button class="btn-secondary" style="font-size:13px;padding:8px 16px" onclick="doLogout()">Logout</button>
+      </div>
+      <div class="stats-grid" id="statsGrid"></div>
+      <div id="ordersContent"></div>
+    </div>
+  </div>
 </div>
-</div>
-<footer style="background:#2c1810;color:rgba(255,255,255,0.7);text-align:center;padding:24px;margin-top:40px">
-<b style="color:#e8a598">Abby Cake and Bites</b> · Njiapanda, Himo · 0620 767 919
-</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/255620767919" target="_blank">💬</a>
+
+<script>
+const API = 'https://abby-backend.onrender.com';
+
+// ── HOURS ──────────────────────────────────────
+const HOURS = {
+  0: null,
+  1: [7,19], 2: [7,19], 3: [7,19], 4: [7,19],
+  5: [7,20], 6: [7,20]
+};
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+function isOpen() {
+  const now = new Date();
+  const day = now.getDay();
+  const h = now.getHours();
+  const rule = HOURS[day];
+  if (!rule) return false;
+  return h >= rule[0] && h < rule[1];
+}
+
+function getHoursText(day) {
+  const rule = HOURS[day];
+  if (!rule) return 'Closed';
+  return rule[0]+':00 AM – '+( rule[1] > 12 ? (rule[1]-12)+':00 PM' : rule[1]+':00 PM');
+}
+
+function initHours() {
+  const today = new Date().getDay();
+  const open = isOpen();
+  // status pill
+  const pill = document.getElementById('statusPill');
+  pill.textContent = open ? '🟢 Open Now' : '🔴 Closed';
+  pill.className = 'status-pill ' + (open ? 'status-open' : 'status-closed');
+  // today card
+  document.getElementById('todayHours').innerHTML = '<strong>'+DAYS[today]+'</strong><br/>'+getHoursText(today)+(open?'<br/><span style="color:#2d8a4e;font-size:12px;font-weight:600">● Open Now</span>':'<br/><span style="color:#c97d6e;font-size:12px;font-weight:600">● Currently Closed</span>');
+  // hours list
+  let html = '';
+  for (let i = 1; i <= 7; i++) {
+    const d = i % 7;
+    const isToday = d === today;
+    html += '<div class="hours-row'+(isToday?' hours-today':'')+'"><span class="hours-day">'+(isToday?'<strong>':'')+DAYS[d]+(isToday?' (Today)</strong>':'')+'</span>';
+    const t = getHoursText(d);
+    html += t === 'Closed' ? '<span class="hours-closed">Closed</span>' : '<span class="hours-time">'+t+'</span>';
+    html += '</div>';
+  }
+  document.getElementById('hoursCard').innerHTML = html;
+}
+
+// ── NAVIGATION ─────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-btn')[['home','menu','chat','admin'].indexOf(name)].classList.add('active');
+  if (name === 'chat' && chatHistory.length === 0) initChat();
+}
+
+function orderItem(item) {
+  showPage('chat');
+  if (chatHistory.length === 0) initChat();
+  setTimeout(() => sendMsg('I want to order ' + item), 400);
+}
+
+// ── CHAT ───────────────────────────────────────
+let chatHistory = [];
+let chatLoading = false;
+
+function initChat() {
+  const open = isOpen();
+  let greeting;
+  if (open) {
+    greeting = "Hi there! 🎂 I'm Abby, your virtual assistant for Abby Cake and Bites!\n\nWe're currently OPEN and ready to take your order! I can help you with our menu, prices, or place an order for you right now.\n\nWhat can I do for you today?";
+  } else {
+    const today = new Date().getDay();
+    const tomorrow = (today + 1) % 7;
+    const nextOpen = HOURS[tomorrow] ? 'tomorrow at ' + HOURS[tomorrow][0] + ':00 AM' : 'Monday at 7:00 AM';
+    greeting = "Hi there! 🎂 I'm Abby from Abby Cake and Bites!\n\nWe're currently CLOSED right now, but we'll be open " + nextOpen + ".\n\nYou're welcome to browse our menu or pre-order and we'll confirm when we open! How can I help you?";
+  }
+  addMsg('assistant', greeting);
+  chatHistory = [{role:'assistant', content: greeting}];
+}
+
+function addMsg(role, text) {
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  const now = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  div.innerHTML = '<div class="msg-bubble">'+escHtml(text)+'</div><div class="msg-time">'+now+'</div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  if (chatHistory.length > 2) document.getElementById('quickBtns').style.display = 'none';
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = 'msg assistant';
+  div.id = 'typingIndicator';
+  div.innerHTML = '<div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+function escHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br/>');
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendFromInput(); }
+}
+
+function sendFromInput() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (text) { input.value = ''; sendMsg(text); }
+}
+
+async function sendMsg(text) {
+  if (chatLoading || !text.trim()) return;
+  if (chatHistory.length === 0) initChat();
+  addMsg('user', text);
+  chatHistory.push({role:'user', content: text});
+  chatLoading = true;
+  document.getElementById('sendBtn').disabled = true;
+  showTyping();
+
+  try {
+    const res = await fetch(API + '/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({messages: chatHistory})
+    });
+    const data = await res.json();
+    removeTyping();
+
+    if (!data.success) throw new Error(data.message);
+    const reply = data.reply;
+
+    // Check for order JSON
+    const match = reply.match(/ORDER_JSON:(\{.*?\})/s);
+    if (match) {
+      try {
+        const parsed = JSON.parse(match[1]);
+        const orderRes = await fetch(API + '/api/orders', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({
+            customer: {name: parsed.customerName, phone: parsed.customerPhone},
+            item: {type: parsed.itemType, size: parsed.size, flavor: parsed.flavor, quantity: parsed.quantity},
+            delivery: {type: (parsed.deliveryType||'').toLowerCase().includes('delivery')?'delivery':'pickup', address: parsed.address},
+            dateNeeded: parsed.dateNeeded,
+            notes: parsed.notes || ''
+          })
+        });
+        const orderData = await orderRes.json();
+        const cleanReply = reply.replace(/ORDER_JSON:\{.*?\}/s,'').trim();
+        if (cleanReply) addMsg('assistant', cleanReply);
+        if (orderData.success) showOrderSuccess(orderData.order);
+      } catch(e) {
+        addMsg('assistant', reply.replace(/ORDER_JSON:\{.*?\}/s,'').trim() || 'Your order details have been noted! Please call 0620 767 919 to confirm.');
+      }
+    } else {
+      addMsg('assistant', reply);
+      chatHistory.push({role:'assistant', content: reply});
+    }
+  } catch(e) {
+    removeTyping();
+    addMsg('assistant', 'Sorry, having trouble connecting right now. Please call us at 0620 767 919 📞');
+  }
+  chatLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+}
+
+function showOrderSuccess(order) {
+  document.getElementById('chatBox').style.display = 'none';
+  const rows = [
+    ['Order ID', order.orderId],
+    ['Name', order.customer?.name],
+    ['Phone', order.customer?.phone],
+    ['Item', order.item?.type],
+    ['Flavor', order.item?.flavor],
+    ['Size', order.item?.size],
+    ['Delivery', order.delivery?.type],
+    ['Date Needed', order.dateNeeded],
+  ].filter(([,v])=>v&&v!=='undefined');
+  document.getElementById('orderSuccess').style.display = 'block';
+  document.getElementById('orderSuccess').innerHTML = `
+    <div class="order-success">
+      <div class="order-success-icon">🎉</div>
+      <h3>Order Confirmed!</h3>
+      <p>Your order has been saved and an SMS notification has been sent to the bakery. We'll contact you soon to confirm!</p>
+      <div class="order-details">${rows.map(([k,v])=>`<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val">${v}</span></div>`).join('')}</div>
+      <p style="font-size:12px;color:#9a7060;margin-bottom:18px">Questions? Call 0620 767 919</p>
+      <button class="btn-primary" onclick="resetChat()">New Order 💬</button>
+    </div>`;
+}
+
+function resetChat() {
+  chatHistory = [];
+  chatLoading = false;
+  document.getElementById('chatMsgs').innerHTML = '';
+  document.getElementById('orderSuccess').style.display = 'none';
+  document.getElementById('chatBox').style.display = 'flex';
+  document.getElementById('quickBtns').style.display = 'flex';
+  initChat();
+}
+
+// ── ADMIN ──────────────────────────────────────
+let adminToken = null;
+
+async function doLogin() {
+  const u = document.getElementById('adminUser').value;
+  const p = document.getElementById('adminPass').value;
+  const btn = document.getElementById('loginBtn');
+  document.getElementById('loginErr').innerHTML = '';
+  btn.textContent = 'Logging in...';
+  btn.disabled = true;
+  try {
+    const res = await fetch(API + '/api/admin/login', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({username:u, password:p})
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message || 'Invalid credentials');
+    adminToken = data.token;
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadAdminData();
+  } catch(e) {
+    document.getElementById('loginErr').innerHTML = '<div class="error-msg">'+e.message+'</div>';
+  }
+  btn.textContent = 'Login →';
+  btn.disabled = false;
+}
+
+function doLogout() {
+  adminToken = null;
+  document.getElementById('adminLogin').style.display = 'block';
+  document.getElementById('adminPanel').style.display = 'none';
+}
+
+async function loadAdminData() {
+  try {
+    const [oRes, sRes] = await Promise.all([
+      fetch(API+'/api/admin/orders', {headers:{Authorization:'Bearer '+adminToken}}),
+      fetch(API+'/api/admin/stats', {headers:{Authorization:'Bearer '+adminToken}})
+    ]);
+    const oData = await oRes.json();
+    const sData = await sRes.json();
+    const stats = sData.stats || {};
+    document.getElementById('statsGrid').innerHTML = `
+      <div class="stat-card"><div class="stat-val">${stats.totalOrders||0}</div><div class="stat-label">Total Orders</div></div>
+      <div class="stat-card"><div class="stat-val">${stats.pendingOrders||0}</div><div class="stat-label">Pending</div></div>
+      <div class="stat-card"><div class="stat-val">${stats.todayOrders||0}</div><div class="stat-label">Today</div></div>
+      <div class="stat-card"><div class="stat-val">${stats.deliveryCount||0}</div><div class="stat-label">Deliveries</div></div>`;
+    const orders = oData.data || [];
+    if (orders.length === 0) {
+      document.getElementById('ordersContent').innerHTML = '<div style="text-align:center;padding:50px;color:#9a7060"><div style="font-size:44px;margin-bottom:10px">🎂</div><p>No orders yet. Orders from the chat will appear here.</p></div>';
+      return;
+    }
+    document.getElementById('ordersContent').innerHTML = `
+      <div class="orders-table">
+        <div class="table-header"><span>Order ID</span><span>Customer</span><span>Item</span><span>Status</span></div>
+        ${orders.map(o=>`<div class="order-row">
+          <span style="font-size:11px;color:#bbb;font-weight:600">${o.orderId}</span>
+          <span><div style="font-weight:600">${o.customer?.name||''}</div><div style="font-size:11px;color:#9a7060">${o.customer?.phone||''}</div></span>
+          <span><div style="font-weight:500">${o.item?.type||''}</div><div style="font-size:11px;color:#9a7060">${o.item?.flavor||''} · ${o.delivery?.type||''}</div></span>
+          <span><span class="badge badge-${o.status}">${o.status}</span></span>
+        </div>`).join('')}
+      </div>`;
+  } catch(e) {
+    document.getElementById('ordersContent').innerHTML = '<div class="error-msg">Failed to load orders: '+e.message+'</div>';
+  }
+}
+
+// ── INIT ───────────────────────────────────────
+initHours();
+</script>
 </body>
 </html>
