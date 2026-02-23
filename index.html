@@ -388,134 +388,154 @@ async function sendMsg(text) {
   if (chatLoading || !text.trim()) return;
   if (chatHistory.length === 0) initChat();
   addMsg('user', text);
-  chatHistory.push({role:'user', content: text});
   chatLoading = true;
   document.getElementById('sendBtn').disabled = true;
   showTyping();
-
-  try {
-    const res = await fetch(API + '/api/chat', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({messages: chatHistory})
-    });
-    const data = await res.json();
-    removeTyping();
-
-    if (!data.success) throw new Error(data.message);
-    const reply = data.reply;
-
-    // Check for order JSON
-    const match = reply.match(/ORDER_JSON:(\{.*?\})/s);
-    if (match) {
-      try {
-        const parsed = JSON.parse(match[1]);
-        const orderRes = await fetch(API + '/api/orders', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({
-            customer: {name: parsed.customerName, phone: parsed.customerPhone},
-            item: {type: parsed.itemType, size: parsed.size, flavor: parsed.flavor, quantity: parsed.quantity},
-            delivery: {type: (parsed.deliveryType||'').toLowerCase().includes('delivery')?'delivery':'pickup', address: parsed.address},
-            dateNeeded: parsed.dateNeeded,
-            notes: parsed.notes || ''
-          })
-        });
-        const orderData = await orderRes.json();
-        const cleanReply = reply.replace(/ORDER_JSON:\{.*?\}/s,'').trim();
-        if (cleanReply) addMsg('assistant', cleanReply);
-        if (orderData.success) showOrderSuccess(orderData.order);
-      } catch(e) {
-        addMsg('assistant', reply.replace(/ORDER_JSON:\{.*?\}/s,'').trim() || 'Your order details have been noted! Please call 0620 767 919 to confirm.');
-      }
-    } else {
-      addMsg('assistant', reply);
-      chatHistory.push({role:'assistant', content: reply});
-    }
-  } catch(e) {
-    removeTyping();
-    const r = smartReply(text);
-    if(r) addMsg('assistant', r);
+  await new Promise(r => setTimeout(r, 650));
+  if (ostep === 'confirm' && (text.toLowerCase().includes('yes') || text.toLowerCase().includes('ndio'))) {
+    await doOrder(); return;
   }
+  removeTyping();
+  const reply = getSmartReply(text);
+  if (reply) addMsg('assistant', reply);
   chatLoading = false;
   document.getElementById('sendBtn').disabled = false;
 }
 
-
-let orderData = {};
-let orderStep = null;
-const MENU_TEXT = "BITES/VITAFUNWA:\n- Cupcakes with Buttercream: TZS 10,000\n- Cookies Package: TZS 5,000\n- Plain Cupcakes 6pcs: TZS 3,000\n- Chapati Package: TZS 10,000\n- Donut Package 6pcs: TZS 10,000\n- Mandazi 10pcs: TZS 3,000\n- Meat Sambusa 8pcs: TZS 10,000\n\nCAKES:\n- Plain Cake: TZS 10,000\n- Bento Cake: TZS 15,000\n- Birthday Cake 700g: TZS 25,000\n- Chocolate Cake 1kg: TZS 45,000\n- Flavour Cake 1kg: TZS 35,000\n- Fruits Cake 1kg: TZS 55,000\n- Red Velvet Cake 1kg: TZS 40,000";
-
-function smartReply(text) {
-  const t = text.toLowerCase();
-  if(orderStep==='item'){orderData.item=text;orderStep='name';return 'Great choice: '+text+'! What is your full name?';}
-  if(orderStep==='name'){orderData.name=text;orderStep='phone';return 'Nice to meet you '+text+'! What is your phone number?';}
-  if(orderStep==='phone'){orderData.phone=text;orderStep='delivery';return 'Got it! Pickup or Delivery? (Delivery in Himo: TZS 3,000-8,000)';}
-  if(orderStep==='delivery'){orderData.delivery=text;orderStep='date';return 'When do you need your order?';}
-  if(orderStep==='date'){orderData.date=text;orderStep='confirm';return 'Confirm your order:\nItem: '+orderData.item+'\nName: '+orderData.name+'\nPhone: '+orderData.phone+'\nDelivery: '+orderData.delivery+'\nDate: '+orderData.date+'\n\nType YES to confirm or NO to cancel.';}
-  if(orderStep==='confirm'){
-    if(t.includes('yes')||t.includes('ndio')){submitLocalOrder();return null;}
-    else{orderStep=null;orderData={};return 'Order cancelled. Type order to try again.';}
-  }
-  if(t.includes('hi')||t.includes('hello')||t.includes('hujambo')||t.includes('habari')){return 'Hujambo! Welcome to Abby Cake and Bites! How can I help?\n\nType: menu, order, hours, or delivery';}
-  if(t.includes('menu')||t.includes('price')||t.includes('bei')||t.includes('cake')||t.includes('vitafunwa')||t.includes('how much')){return MENU_TEXT;}
-  if(t.includes('order')||t.includes('buy')||t.includes('nataka')||t.includes('want')){orderStep='item';orderData={};return 'What would you like to order?\n\n'+MENU_TEXT+'\n\nType the item name!';}
-  if(t.includes('open')||t.includes('hours')||t.includes('time')){var op=isOpen();return 'Opening Hours:\nMon-Thu: 7AM-7PM\nFri-Sat: 7AM-8PM\nSunday: Closed\n\nNow: '+(op?'OPEN':'CLOSED');}
-  if(t.includes('deliver')||t.includes('location')||t.includes('where')){return 'We are at Njiapanda, Himo, Tanzania\nDelivery in Himo: TZS 3,000-8,000\nCall: 0620 767 919';}
-  if(t.includes('thank')||t.includes('asante')){return 'Asante sana! We love serving you!';}
-  return 'I can help with:\n- menu: see prices\n- order: place an order\n- hours: opening times\n- delivery: delivery info\n\nOr call: 0620 767 919';
+let ostep=null,od={},refB64=null;
+const MENU2='BITES:\n- Cupcakes Buttercream: 10,000\n- Cookies: 5,000\n- Plain Cupcakes 6pcs: 3,000\n- Chapati: 10,000\n- Donuts 6pcs: 10,000\n- Mandazi 10pcs: 3,000\n- Sambusa 8pcs: 10,000\n\nCAKES:\n- Plain Cake: 10,000\n- Bento Cake: 15,000\n- Birthday 700g: 25,000\n- Chocolate 1kg: 45,000\n- Flavour 1kg: 35,000\n- Fruits 1kg: 55,000\n- Red Velvet 1kg: 40,000';
+function getSmartReply(txt){
+  const t=txt.toLowerCase();
+  if(ostep==='item'){od.item=txt;ostep='name';return 'Great: '+txt+'! What is your full name?';}
+  if(ostep==='name'){od.name=txt;ostep='phone';return 'Nice to meet you '+txt+'! Your phone number?';}
+  if(ostep==='phone'){od.phone=txt;ostep='delivery';return 'Got it! Pickup or Delivery?\n(Delivery in Himo: TZS 3,000-8,000)';}
+  if(ostep==='delivery'){od.delivery=txt;ostep='date';return 'When do you need your order?';}
+  if(ostep==='date'){od.date=txt;ostep='confirm';return 'Confirm:\nItem: '+od.item+'\nName: '+od.name+'\nPhone: '+od.phone+'\nDelivery: '+od.delivery+'\nDate: '+od.date+(refB64?'\nPhoto: Attached':'')+'\n\nType YES or NO';}
+  if(ostep==='confirm'){if(t.includes('yes')||t.includes('ndio')){doOrder();return null;}ostep=null;od={};return 'Cancelled. Type order anytime!';}
+  if(t.match(/^(hi|hello|hujambo|hey)/)){return 'Hujambo! Welcome to Abby Cake and Bites!\n\nType menu, order, hours, or delivery';}
+  if(t.includes('menu')||t.includes('price')||t.includes('bei')||t.includes('how much')){return MENU2;}
+  if(t.includes('order')||t.includes('nataka')||t.includes('want')||t.includes('buy')){ostep='item';od={};return 'What would you like?\n\n'+MENU2+'\n\nType the item name!';}
+  if(t.includes('open')||t.includes('hour')||t.includes('time')){return 'Mon-Thu: 7AM-7PM\nFri-Sat: 7AM-8PM\nSunday: Closed\n\nNow: '+(isOpen()?'OPEN':'CLOSED');}
+  if(t.includes('deliver')||t.includes('location')||t.includes('where')){return 'Njiapanda, Himo, Tanzania\nDelivery: TZS 3,000-8,000\nCall: 0620 767 919';}
+  if(t.includes('thank')||t.includes('asante')){return 'Asante sana!';}
+  return 'Type menu, order, hours, or delivery\nOr call: 0620 767 919';
 }
-
-async function submitLocalOrder(){
-  try{await fetch(API+'/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customer:{name:orderData.name,phone:orderData.phone},item:{type:orderData.item,size:'',flavor:'',quantity:1},delivery:{type:orderData.delivery.toLowerCase().includes('delivery')?'delivery':'pickup',address:''},dateNeeded:orderData.date,notes:''})});}catch(e){}
-  var msg='New Order!%0AName: '+orderData.name+'%0APhone: '+orderData.phone+'%0AItem: '+orderData.item+'%0ADelivery: '+orderData.delivery+'%0ADate: '+orderData.date;
-  var waUrl='https://wa.me/255620767919?text='+msg;
-  var d=document.createElement('div');d.className='msg assistant';
-  var b=document.createElement('div');b.className='msg-bubble';
-  b.innerHTML='Order confirmed! Thank you <b>'+orderData.name+'</b>!<br/><br/><a href="'+waUrl+'" target="_blank" style="background:#25D366;color:white;padding:10px 20px;border-radius:20px;text-decoration:none;display:inline-block;font-weight:600">Send Order on WhatsApp</a><br/><br/>We will call you on '+orderData.phone+' to confirm.';
-  d.appendChild(b);
-  document.getElementById('chatMsgs').appendChild(d);
-  document.getElementById('chatMsgs').scrollTop=99999;
-  orderStep=null;orderData={};chatLoading=false;
-  document.getElementById('sendBtn').disabled=false;
-},body:JSON.stringify({customer:{name:orderData.name,phone:orderData.phone},item:{type:orderData.item,size:'',flavor:'',quantity:1},delivery:{type:orderData.delivery.toLowerCase().includes('delivery')?'delivery':'pickup',address:''},dateNeeded:orderData.date,notes:''})});
-  }catch(e){}
+async function doOrder(){
+  try{await fetch(API+'/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customer:{name:od.name,phone:od.phone},item:{type:od.item,size:'',flavor:'',quantity:1},delivery:{type:od.delivery.toLowerCase().includes('delivery')?'delivery':'pickup',address:''},dateNeeded:od.date,notes:refB64?'Photo attached':''})});}catch(e){}
+  const waTxt='New Order - Abby Website\nName: '+od.name+'\nPhone: '+od.phone+'\nItem: '+od.item+'\nDelivery: '+od.delivery+'\nDate: '+od.date+(refB64?'\nCustomer has reference photo':'');
+  const waUrl='https://wa.me/255620767919?text='+encodeURIComponent(waTxt);
   removeTyping();
-  var msg = 'New Order from Abby Website!\nName: '+orderData.name+'\nPhone: '+orderData.phone+'\nItem: '+orderData.item+'\nDelivery: '+orderData.delivery+'\nDate: '+orderData.date;
-  var waUrl = 'https://wa.me/255620767919?text='+encodeURIComponent(msg);
-  addMsg('assistant','Order confirmed! Thank you '+orderData.name+'!\n\nPlease tap the button below to notify the bakery on WhatsApp:\n\n<a href=\"'+waUrl+'\" target=\"_blank\" style=\"background:#25D366;color:white;padding:10px 20px;border-radius:20px;text-decoration:none;display:inline-block;margin-top:8px;font-weight:600\">Send Order on WhatsApp</a>\n\nWe will call you on '+orderData.phone+' to confirm.');
-  orderStep=null;orderData={};
-  chatLoading=false;
+  const el=document.getElementById('chatMessages')||document.getElementById('cmsgs');
+  const d=document.createElement('div');d.className='message assistant-message';
+  let html='Order confirmed! Thank you <strong>'+od.name+'</strong>!<br/>We will call <strong>'+od.phone+'</strong> to confirm.<br/><br/>';
+  if(refB64)html+='<img src="'+refB64+'" style="width:80px;height:80px;object-fit:cover;border-radius:9px;border:2px solid #e8927c;display:block;margin-bottom:8px"/>';
+  html+='<a href="'+waUrl+'" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:10px 20px;border-radius:20px;text-decoration:none;font-weight:600">Send Order on WhatsApp</a>';
+  d.innerHTML='<div class="message-bubble">'+html+'</div>';
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
+  ostep=null;od={};refB64=null;chatLoading=false;
   document.getElementById('sendBtn').disabled=false;
 }
 
-async function sendMsg(text) {
-  if(chatLoading||!text.trim()) return;
-  if(chatHistory.length===0) initChat();
-  addMsg('user',text);
-  chatLoading=true;
-  document.getElementById('sendBtn').disabled=true;
-  showTyping();
-  await new Promise(r=>setTimeout(r,700));
-  removeTyping();
-  const reply=smartReply(text);
-  if(reply){
-  if(reply.includes('<a href')){
-    const div=document.createElement('div');
-    div.className='msg assistant';
-    const bubble=document.createElement('div');
-    bubble.className='msg-bubble';
-    bubble.innerHTML=reply.replace(/\n/g,'<br/>');
-    div.appendChild(bubble);
-    document.getElementById('chatMsgs').appendChild(div);
-    document.getElementById('chatMsgs').scrollTop=99999;
-  } else {
-    addMsg('assistant',reply);
-  }
+function showOrderSuccess(order) {
+  document.getElementById('chatBox').style.display = 'none';
+  const rows = [
+    ['Order ID', order.orderId],
+    ['Name', order.customer?.name],
+    ['Phone', order.customer?.phone],
+    ['Item', order.item?.type],
+    ['Flavor', order.item?.flavor],
+    ['Size', order.item?.size],
+    ['Delivery', order.delivery?.type],
+    ['Date Needed', order.dateNeeded],
+  ].filter(([,v])=>v&&v!=='undefined');
+  document.getElementById('orderSuccess').style.display = 'block';
+  document.getElementById('orderSuccess').innerHTML = `
+    <div class="order-success">
+      <div class="order-success-icon">🎉</div>
+      <h3>Order Confirmed!</h3>
+      <p>Your order has been saved and an SMS notification has been sent to the bakery. We'll contact you soon to confirm!</p>
+      <div class="order-details">${rows.map(([k,v])=>`<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val">${v}</span></div>`).join('')}</div>
+      <p style="font-size:12px;color:#9a7060;margin-bottom:18px">Questions? Call 0620 767 919</p>
+      <button class="btn-primary" onclick="resetChat()">New Order 💬</button>
+    </div>`;
 }
-  if(chatHistory.length>2) document.getElementById('quickBtns').style.display='none';
-  chatLoading=false;
-  document.getElementById('sendBtn').disabled=false;
+
+function resetChat() {
+  chatHistory = [];
+  chatLoading = false;
+  document.getElementById('chatMsgs').innerHTML = '';
+  document.getElementById('orderSuccess').style.display = 'none';
+  document.getElementById('chatBox').style.display = 'flex';
+  document.getElementById('quickBtns').style.display = 'flex';
+  initChat();
+}
+
+// ── ADMIN ──────────────────────────────────────
+let adminToken = null;
+
+async function doLogin() {
+  const u = document.getElementById('adminUser').value;
+  const p = document.getElementById('adminPass').value;
+  const btn = document.getElementById('loginBtn');
+  document.getElementById('loginErr').innerHTML = '';
+  btn.textContent = 'Logging in...';
+  btn.disabled = true;
+  try {
+    const res = await fetch(API + '/api/admin/login', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({username:u, password:p})
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message || 'Invalid credentials');
+    adminToken = data.token;
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadAdminData();
+  } catch(e) {
+    document.getElementById('loginErr').innerHTML = '<div class="error-msg">'+e.message+'</div>';
+  }
+  btn.textContent = 'Login →';
+  btn.disabled = false;
+}
+
+function doLogout() {
+  adminToken = null;
+  document.getElementById('adminLogin').style.display = 'block';
+  document.getElementById('adminPanel').style.display = 'none';
+}
+
+async function loadAdminData() {
+  try {
+    const [oRes, sRes] = await Promise.all([
+      fetch(API+'/api/admin/orders', {headers:{Authorization:'Bearer '+adminToken}}),
+      fetch(API+'/api/admin/stats', {headers:{Authorization:'Bearer '+adminToken}})
+    ]);
+    const oData = await oRes.json();
+    const sData = await sRes.json();
+    const stats = sData.stats || {};
+    document.getElementById('statsGrid').innerHTML = `
+      <div class="stat-card"><div class="stat-val">${stats.totalOrders||0}</div><div class="stat-label">Total Orders</div></div>
+      <div class="stat-card"><div class="stat-val">${stats.pendingOrders||0}</div><div class="stat-label">Pending</div></div>
+      <div class="stat-card"><div class="stat-val">${stats.todayOrders||0}</div><div class="stat-label">Today</div></div>
+      <div class="stat-card"><div class="stat-val">${stats.deliveryCount||0}</div><div class="stat-label">Deliveries</div></div>`;
+    const orders = oData.data || [];
+    if (orders.length === 0) {
+      document.getElementById('ordersContent').innerHTML = '<div style="text-align:center;padding:50px;color:#9a7060"><div style="font-size:44px;margin-bottom:10px">🎂</div><p>No orders yet. Orders from the chat will appear here.</p></div>';
+      return;
+    }
+    document.getElementById('ordersContent').innerHTML = `
+      <div class="orders-table">
+        <div class="table-header"><span>Order ID</span><span>Customer</span><span>Item</span><span>Status</span></div>
+        ${orders.map(o=>`<div class="order-row">
+          <span style="font-size:11px;color:#bbb;font-weight:600">${o.orderId}</span>
+          <span><div style="font-weight:600">${o.customer?.name||''}</div><div style="font-size:11px;color:#9a7060">${o.customer?.phone||''}</div></span>
+          <span><div style="font-weight:500">${o.item?.type||''}</div><div style="font-size:11px;color:#9a7060">${o.item?.flavor||''} · ${o.delivery?.type||''}</div></span>
+          <span><span class="badge badge-${o.status}">${o.status}</span></span>
+        </div>`).join('')}
+      </div>`;
+  } catch(e) {
+    document.getElementById('ordersContent').innerHTML = '<div class="error-msg">Failed to load orders: '+e.message+'</div>';
+  }
 }
 
 // ── INIT ───────────────────────────────────────
@@ -523,4 +543,3 @@ initHours();
 </script>
 </body>
 </html>
-< Mon Feb 23 13:16:06 EAT 2026 -->
