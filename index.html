@@ -213,6 +213,16 @@
     <div class="form-group"><label class="form-label" id="field_location"></label><textarea class="form-textarea" id="custLocation"></textarea></div>
     <div class="form-group"><label class="form-label" id="field_order"></label><textarea class="form-textarea" id="custOrder"></textarea></div>
     <div class="form-group">
+      <label class="form-label" id="field_reference"></label>
+      <div class="upload-area" id="refUploadArea" onclick="document.getElementById('refFileInput').click()">
+        <div style="font-size:2rem;margin-bottom:8px">🖼</div>
+        <div class="upload-text" id="ref_upload_text"></div>
+        <input type="file" id="refFileInput" accept="image/*" onchange="handleRefFileSelect(event)" style="display:none"/>
+        <img id="refPreviewImg" class="preview-img" style="display:none"/>
+      </div>
+      <div style="font-size:0.75rem;color:#8a6555;margin-top:6px" id="ref_optional_note"></div>
+    </div>
+    <div class="form-group">
       <label class="form-label" id="field_screenshot"></label>
       <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
         <div style="font-size:2rem;margin-bottom:8px">📸</div>
@@ -360,6 +370,9 @@ const T = {
     pay_step3:'Take a screenshot of the <strong>confirmation message</strong> showing the number and name',
     field_name:'Your Full Name *', field_phone:'Phone Number *',
     field_location:'Delivery Location / Description *', field_order:'Order Details *',
+    field_reference:'Reference Photo (Optional) 🖼',
+    ref_upload_text:'Tap to upload a <strong>reference photo</strong> showing what you want<br><span style="font-size:0.75rem">e.g. cake design, color, style you like</span>',
+    ref_optional_note:'Optional — helps us understand exactly what you want',
     field_screenshot:'Payment Screenshot *',
     upload_text:'Tap to upload your <strong>payment confirmation screenshot</strong><br><span style="font-size:0.75rem">Must show 0620767919 and Gift Lyimo</span>',
     submit_btn:'📤 Submit Order',
@@ -429,6 +442,9 @@ const T = {
     pay_step3:'Piga picha ya skrini ya <strong>ujumbe wa uthibitisho</strong> unaoonyesha nambari na jina',
     field_name:'Jina Lako Kamili *', field_phone:'Nambari ya Simu *',
     field_location:'Mahali pa Uwasilishaji / Maelezo *', field_order:'Maelezo ya Agizo *',
+    field_reference:'Picha ya Mfano (Si Lazima) 🖼',
+    ref_upload_text:'Bonyeza kupakia <strong>picha ya mfano</strong> inayoonyesha unachotaka<br><span style="font-size:0.75rem">mfano: muundo wa keki, rangi, mtindo unaopenda</span>',
+    ref_optional_note:'Si lazima — inatusaidia kuelewa vizuri unachotaka',
     field_screenshot:'Picha ya Skrini ya Malipo *',
     upload_text:'Bonyeza kupakia <strong>picha ya skrini ya uthibitisho wa malipo</strong><br><span style="font-size:0.75rem">Lazima ionyeshe 0620767919 na Gift Lyimo</span>',
     submit_btn:'📤 Wasilisha Agizo',
@@ -510,7 +526,7 @@ const ids = [
   'how_step1','how_step2','how_step3','how_step4',
   'order_title','order_sub','half_label','send_to','pay_instructions',
   'pay_step1','pay_step2a','pay_step2b','name_label','pay_step3',
-  'field_name','field_phone','field_location','field_order','field_screenshot',
+  'field_name','field_phone','field_location','field_order','field_reference','ref_upload_text','ref_optional_note','field_screenshot',
   'upload_text','submitBtn','no_item',
   'gallery_title','gallery_sub','gallery_empty',
   'settings_title','settings_sub','lang_heading','lang_info',
@@ -633,6 +649,20 @@ function selectItem(id) {
   document.getElementById('orderForm').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+let refFile = null;
+
+function handleRefFileSelect(event) {
+  const file = event.target.files[0]; if (!file) return;
+  refFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById('refPreviewImg');
+    img.src = e.target.result; img.style.display = 'block';
+    document.getElementById('refUploadArea').classList.add('has-file');
+  };
+  reader.readAsDataURL(file);
+}
+
 function handleFileSelect(event) {
   const file = event.target.files[0]; if (!file) return;
   currentFile = file;
@@ -707,9 +737,11 @@ async function submitOrder() {
   try {
     let sc = '';
     if (currentFile) sc = await new Promise(res => { const r=new FileReader(); r.onload=e=>res(e.target.result.split(',')[1]); r.readAsDataURL(currentFile); });
+    let refSc = '';
+    if (refFile) refSc = await new Promise(res => { const r=new FileReader(); r.onload=e=>res(e.target.result.split(',')[1]); r.readAsDataURL(refFile); });
     const res = await fetch(`${BACKEND}/api/orders`,{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({customer:{name,phone},item:{name:itemName,price:selectedItem.price,halfPaid:half},delivery:{address:location},notes:orderDetail,orderId,paymentVerified:verifiedPayment,screenshot:sc})
+      body:JSON.stringify({customer:{name,phone},item:{name:itemName,price:selectedItem.price,halfPaid:half},delivery:{address:location},notes:orderDetail,orderId,paymentVerified:verifiedPayment,screenshot:sc,referencePhoto:refSc})
     });
     const json = await res.json();
     if (json.success||json._id) { showSuccess(orderId); return; }
@@ -724,13 +756,15 @@ function showSuccess(orderId) {
 
 function resetOrder() {
   document.getElementById('successScreen').classList.remove('show');
-  selectedItem = null; verifiedPayment = false; currentFile = null;
+  selectedItem = null; verifiedPayment = false; currentFile = null; refFile = null;
   renderMenu();
   document.getElementById('orderForm').style.display = 'none';
   document.getElementById('noItemSelected').style.display = 'block';
   ['custName','custPhone','custLocation','custOrder'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('previewImg').style.display = 'none';
+  document.getElementById('refPreviewImg').style.display = 'none';
   document.getElementById('uploadArea').classList.remove('has-file');
+  document.getElementById('refUploadArea').classList.remove('has-file');
   document.getElementById('verifyStatus').className = 'verify-status';
   document.getElementById('submitBtn').disabled = true;
   applyLanguage();
@@ -742,9 +776,10 @@ async function loadGallery() {
     const res = await fetch(`${BACKEND}/api/gallery`);
     const json = await res.json();
     if (json.success && json.data.length > 0) {
-      document.getElementById('galleryGrid').innerHTML = json.data.map(p =>
-        `<div><div class="gallery-item"><img src="${p.url}" alt="${p.caption||''}" loading="lazy"/></div><div class="gallery-caption">${p.caption||''}</div></div>`
-      ).join('');
+      document.getElementById('galleryGrid').innerHTML = json.data.map(p => {
+        const src = p.url || (p.imageData ? 'data:image/jpeg;base64,' + p.imageData : '');
+        return `<div><div class="gallery-item"><img src="${src}" alt="${p.caption||''}" loading="lazy"/></div><div class="gallery-caption">${p.caption||''}</div></div>`;
+      }).join('');
     }
   } catch(e) {}
 }
@@ -807,12 +842,14 @@ async function loadAdminGallery() {
     const json = await res.json();
     const grid = document.getElementById('adminGalleryGrid');
     if (json.success && json.data.length > 0) {
-      grid.innerHTML = json.data.map(p=>`
-        <div>
-          <div class="gallery-item"><img src="${p.url}" loading="lazy"/></div>
+      grid.innerHTML = json.data.map(p=>{
+        const src = p.url || (p.imageData ? 'data:image/jpeg;base64,' + p.imageData : '');
+        return `<div>
+          <div class="gallery-item"><img src="${src}" loading="lazy"/></div>
           <div class="gallery-caption">${p.caption||''}</div>
           <button onclick="deletePhoto('${p._id}')" style="width:100%;margin-top:4px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:4px;font-size:0.75rem;cursor:pointer">${t('delete_lbl')}</button>
-        </div>`).join('');
+        </div>`;
+      }).join('');
     } else {
       grid.innerHTML = `<p style="grid-column:span 2;color:#8a6555;font-size:0.85rem">${t('no_photos')}</p>`;
     }
