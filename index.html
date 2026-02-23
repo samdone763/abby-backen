@@ -387,23 +387,23 @@ function goTo(page) {
   window.scrollTo(0,0);
 }
 
-// ─── GALLERY (localStorage) ───────────────────────────────
-function getGallery() {
-  try { return JSON.parse(localStorage.getItem('abby_gallery') || '[]'); } catch(e) { return []; }
-}
-function setGallery(g) { localStorage.setItem('abby_gallery', JSON.stringify(g)); }
-
-function renderPublicGallery() {
-  const g = getGallery(), el = document.getElementById('pubGallery');
-  if (!g.length) {
-    el.innerHTML = '<div class="gal-empty">📸 No photos yet. Check back soon!</div>';
-    return;
+// ─── GALLERY (MongoDB backend) ────────────────────────────
+async function renderPublicGallery() {
+  const el = document.getElementById('pubGallery');
+  el.innerHTML = '<div class="gal-empty">Loading...</div>';
+  try {
+    const res = await fetch(API + '/api/gallery');
+    const data = await res.json();
+    const g = data.data || [];
+    if (!g.length) { el.innerHTML = '<div class="gal-empty">📸 No photos yet. Check back soon!</div>'; return; }
+    el.innerHTML = g.map(it =>
+      '<div class="gal-item" onclick="orderItem(\'' + it.caption.replace(/'/g,"\\'") + '\')">' +
+      '<img src="' + it.imageData + '" alt="' + it.caption + '"/>' +
+      '<div class="gal-cap">' + it.caption + '</div></div>'
+    ).join('');
+  } catch(e) {
+    el.innerHTML = '<div class="gal-empty">Could not load gallery. Check connection.</div>';
   }
-  el.innerHTML = g.map(it =>
-    '<div class="gal-item" onclick="orderItem(\'' + it.caption.replace(/'/g,"\\'") + '\')">' +
-    '<img src="' + it.src + '" alt="' + it.caption + '"/>' +
-    '<div class="gal-cap">' + it.caption + '</div></div>'
-  ).join('');
 }
 
 function galPreview(inp) {
@@ -417,48 +417,68 @@ function galPreview(inp) {
   r.readAsDataURL(inp.files[0]);
 }
 
-function saveGalleryPhoto() {
+async function saveGalleryPhoto() {
   const img = document.getElementById('galPreviewImg');
   const cap = document.getElementById('galCaptionInput').value.trim();
   const msgEl = document.getElementById('galMessage');
   if (!img.src || img.style.display === 'none') {
-    msgEl.innerHTML = '<div class="alert-err">Please select a photo first.</div>';
-    return;
+    msgEl.innerHTML = '<div class="alert-err">Please select a photo first.</div>'; return;
   }
   if (!cap) {
-    msgEl.innerHTML = '<div class="alert-err">Please add a caption.</div>';
-    return;
+    msgEl.innerHTML = '<div class="alert-err">Please add a caption.</div>'; return;
   }
-  const g = getGallery();
-  g.unshift({ id: Date.now(), src: img.src, caption: cap });
-  setGallery(g);
-  msgEl.innerHTML = '<div class="alert-ok">✅ Photo uploaded to gallery!</div>';
-  document.getElementById('galCaptionInput').value = '';
-  document.getElementById('galPreviewImg').style.display = 'none';
-  document.getElementById('galFileInput').value = '';
-  renderAdminGallery();
-  setTimeout(() => msgEl.innerHTML = '', 3000);
+  msgEl.innerHTML = '<div class="alert-ok">Uploading...</div>';
+  try {
+    const res = await fetch(API + '/api/gallery', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'Authorization':'Bearer '+adminToken},
+      body: JSON.stringify({ caption: cap, imageData: img.src })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message);
+    msgEl.innerHTML = '<div class="alert-ok">✅ Photo uploaded to gallery!</div>';
+    document.getElementById('galCaptionInput').value = '';
+    document.getElementById('galPreviewImg').style.display = 'none';
+    document.getElementById('galFileInput').value = '';
+    renderAdminGallery();
+    setTimeout(() => msgEl.innerHTML = '', 3000);
+  } catch(e) {
+    msgEl.innerHTML = '<div class="alert-err">Upload failed: ' + e.message + '</div>';
+  }
 }
 
-function deleteGalleryPhoto(id) {
+async function deleteGalleryPhoto(id) {
   if (!confirm('Delete this photo from gallery?')) return;
-  setGallery(getGallery().filter(i => i.id !== id));
-  renderAdminGallery();
+  try {
+    await fetch(API + '/api/gallery/' + id, {
+      method: 'DELETE',
+      headers: {'Authorization':'Bearer '+adminToken}
+    });
+    renderAdminGallery();
+  } catch(e) { alert('Delete failed'); }
 }
 
-function renderAdminGallery() {
-  const g = getGallery(), el = document.getElementById('galAdminGrid');
+async function renderAdminGallery() {
+  const el = document.getElementById('galAdminGrid');
   if (!el) return;
-  if (!g.length) {
-    el.innerHTML = '<p style="color:var(--muted);font-size:13px;padding:20px 0">No photos yet. Upload your first product photo above!</p>';
-    return;
+  el.innerHTML = '<p style="color:var(--muted);font-size:13px;padding:10px 0">Loading...</p>';
+  try {
+    const res = await fetch(API + '/api/gallery');
+    const data = await res.json();
+    const g = data.data || [];
+    if (!g.length) {
+      el.innerHTML = '<p style="color:var(--muted);font-size:13px;padding:20px 0">No photos yet. Upload your first product photo above!</p>';
+      return;
+    }
+    el.innerHTML = g.map(it =>
+      '<div class="gal-admin-item">' +
+      '<img src="' + it.imageData + '" alt="' + it.caption + '"/>' +
+      '<button class="gal-del-btn" onclick="deleteGalleryPhoto(\'' + it._id + '\')">×</button>' +
+      '<div class="gal-admin-info">' + it.caption + '</div></div>'
+    ).join('');
+  } catch(e) {
+    el.innerHTML = '<div class="alert-err">Could not load gallery.</div>';
   }
-  el.innerHTML = g.map(it =>
-    '<div class="gal-admin-item">' +
-    '<img src="' + it.src + '" alt="' + it.caption + '"/>' +
-    '<button class="gal-del-btn" onclick="deleteGalleryPhoto(' + it.id + ')">×</button>' +
-    '<div class="gal-admin-info">' + it.caption + '</div></div>'
-  ).join('');
 }
 
 // ─── CHAT ─────────────────────────────────────────────────
