@@ -223,7 +223,12 @@ footer strong{color:#e8a598}
           <button class="quick-btn" onclick="sendMsg('What are your prices?')">Prices?</button>
           <button class="quick-btn" onclick="sendMsg('Do you deliver?')">Delivery?</button>
         </div>
-        <div class="chat-input-row">
+        <div id="photoUploadArea" style="display:none;padding:8px 14px;background:#fdf9f7;border-top:1px solid rgba(201,125,110,0.15)">
+  <label for="refPhotoInput" style="display:flex;align-items:center;gap:7px;padding:8px 12px;background:#fff;border:1.5px dashed #e8927c;border-radius:11px;cursor:pointer;font-size:12px;color:#e8927c;font-weight:500">📎 Attach reference photo (optional)</label>
+  <input type="file" id="refPhotoInput" accept="image/*" onchange="onRefPhoto(this)" style="display:none"/>
+  <div id="refPreviewBox" style="margin-top:6px"></div>
+</div>
+<div class="chat-input-row">
           <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1" onkeydown="handleKey(event)"></textarea>
           <button class="send-btn" id="sendBtn" onclick="sendFromInput()">➤</button>
         </div>
@@ -253,9 +258,44 @@ footer strong{color:#e8a598}
         <h2>📊 Orders Dashboard</h2>
         <button class="btn-secondary" style="font-size:13px;padding:8px 16px" onclick="doLogout()">Logout</button>
       </div>
-      <div class="stats-grid" id="statsGrid"></div>
+      <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+  <button onclick="showAdminTab('orders')" id="tabOrders" style="padding:7px 16px;border-radius:16px;border:none;background:#e8927c;color:#fff;font-size:12px;font-weight:600;cursor:pointer">Orders</button>
+  <button onclick="showAdminTab('gallery')" id="tabGallery" style="padding:7px 16px;border-radius:16px;border:1.5px solid #f5e6da;background:transparent;color:#9a7060;font-size:12px;font-weight:600;cursor:pointer">Gallery</button>
+</div>
+<div id="adminOrders">
+<div class="stats-grid" id="statsGrid"></div>
       <div id="ordersContent"></div>
     </div>
+</div>
+<div id="adminGallery" style="display:none">
+  <div style="background:#fff;border-radius:14px;padding:20px;border:1px solid rgba(201,125,110,0.15);margin-bottom:20px">
+    <h3 style="font-size:15px;font-weight:600;color:#3d1f1f;margin-bottom:14px">📸 Upload Product Photo</h3>
+    <div onclick="document.getElementById('galFile').click()" style="border:2px dashed #e8927c;border-radius:11px;padding:24px;text-align:center;cursor:pointer;background:#fdf8f3;margin-bottom:12px">
+      <input type="file" id="galFile" accept="image/*" onchange="galPreview(this)" style="display:none"/>
+      <div style="font-size:30px">📷</div>
+      <p style="font-size:13px;color:#e8927c;font-weight:500;margin-top:6px">Tap to select photo</p>
+      <small style="font-size:11px;color:#9a7060">JPG or PNG</small>
+    </div>
+    <img id="galPreviewImg" style="width:100%;max-height:180px;object-fit:cover;border-radius:9px;margin:8px 0;display:none"/>
+    <div style="margin-bottom:12px">
+      <label style="display:block;font-size:11px;font-weight:600;color:#3d1f1f;margin-bottom:4px">Caption</label>
+      <input id="galCaption" placeholder="e.g. Birthday Cake 1kg" style="width:100%;padding:10px 12px;border:1.5px solid #f5e6da;border-radius:9px;font-size:13px;outline:none;background:#fdf8f3;font-family:inherit"/>
+    </div>
+    <button onclick="saveGalPhoto()" style="width:100%;padding:11px;background:#e8927c;color:#fff;border:none;border-radius:22px;font-size:14px;font-weight:600;cursor:pointer">Upload to Gallery 📸</button>
+    <div id="galMsg" style="margin-top:10px"></div>
+  </div>
+  <h3 style="font-size:17px;font-weight:600;color:#3d1f1f;margin-bottom:12px">Gallery Photos</h3>
+  <div id="galAdminGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px"></div>
+</div>
+  </div>
+</div>
+
+<!-- GALLERY PAGE -->
+<div id="page-gallery" class="page" style="display:none">
+  <div style="max-width:860px;margin:0 auto;padding:30px 16px">
+    <h2 style="font-family:Georgia,serif;font-size:26px;color:#3d1f1f;margin-bottom:6px">Our Gallery</h2>
+    <p style="color:#9a7060;font-size:13px;margin-bottom:18px">Beautiful creations made with love - tap any photo to order</p>
+    <div id="pubGalGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px"></div>
   </div>
 </div>
 
@@ -406,12 +446,12 @@ let ostep=null,od={},refB64=null;
 const MENU2='BITES:\n- Cupcakes Buttercream: 10,000\n- Cookies: 5,000\n- Plain Cupcakes 6pcs: 3,000\n- Chapati: 10,000\n- Donuts 6pcs: 10,000\n- Mandazi 10pcs: 3,000\n- Sambusa 8pcs: 10,000\n\nCAKES:\n- Plain Cake: 10,000\n- Bento Cake: 15,000\n- Birthday 700g: 25,000\n- Chocolate 1kg: 45,000\n- Flavour 1kg: 35,000\n- Fruits 1kg: 55,000\n- Red Velvet 1kg: 40,000';
 function getSmartReply(txt){
   const t=txt.toLowerCase();
-  if(ostep==='item'){od.item=txt;ostep='name';return 'Great: '+txt+'! What is your full name?';}
+  if(ostep==='item'){od.item=txt;ostep='name';showPhotoUpload();return 'Great choice: '+txt+'!\n\nYou can attach a reference photo above (optional).\n\nWhat is your full name?';}
   if(ostep==='name'){od.name=txt;ostep='phone';return 'Nice to meet you '+txt+'! Your phone number?';}
   if(ostep==='phone'){od.phone=txt;ostep='delivery';return 'Got it! Pickup or Delivery?\n(Delivery in Himo: TZS 3,000-8,000)';}
   if(ostep==='delivery'){od.delivery=txt;ostep='date';return 'When do you need your order?';}
   if(ostep==='date'){od.date=txt;ostep='confirm';return 'Confirm:\nItem: '+od.item+'\nName: '+od.name+'\nPhone: '+od.phone+'\nDelivery: '+od.delivery+'\nDate: '+od.date+(refB64?'\nPhoto: Attached':'')+'\n\nType YES or NO';}
-  if(ostep==='confirm'){if(t.includes('yes')||t.includes('ndio')){doOrder();return null;}ostep=null;od={};return 'Cancelled. Type order anytime!';}
+  if(ostep==='confirm'){if(t.includes('yes')||t.includes('ndio')){doOrder();return null;}ostep=null;od={};if(typeof hidePhotoUpload==='function')hidePhotoUpload();return 'Cancelled. Type order anytime!';}
   if(t.match(/^(hi|hello|hujambo|hey)/)){return 'Hujambo! Welcome to Abby Cake and Bites!\n\nType menu, order, hours, or delivery';}
   if(t.includes('menu')||t.includes('price')||t.includes('bei')||t.includes('how much')){return MENU2;}
   if(t.includes('order')||t.includes('nataka')||t.includes('want')||t.includes('buy')){ostep='item';od={};return 'What would you like?\n\n'+MENU2+'\n\nType the item name!';}
@@ -422,14 +462,14 @@ function getSmartReply(txt){
 }
 async function doOrder(){
   try{await fetch(API+'/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customer:{name:od.name,phone:od.phone},item:{type:od.item,size:'',flavor:'',quantity:1},delivery:{type:od.delivery.toLowerCase().includes('delivery')?'delivery':'pickup',address:''},dateNeeded:od.date,notes:refB64?'Photo attached':''})});}catch(e){}
-  const waTxt='New Order - Abby Website\nName: '+od.name+'\nPhone: '+od.phone+'\nItem: '+od.item+'\nDelivery: '+od.delivery+'\nDate: '+od.date+(refB64?'\nCustomer has reference photo':'');
+  const waTxt='New Order - Abby Cake and Bites Website!\nName: '+od.name+'\nPhone: '+od.phone+'\nItem: '+od.item+'\nDelivery: '+od.delivery+'\nDate: '+od.date+(refB64?'\nNote: Customer has a reference photo, please ask them to send it on WhatsApp.':'');
   const waUrl='https://wa.me/255620767919?text='+encodeURIComponent(waTxt);
   removeTyping();
-  const el=document.getElementById('chatMessages')||document.getElementById('cmsgs');
+  const el=document.getElementById('chatMsgs');
   const d=document.createElement('div');d.className='message assistant-message';
   let html='Order confirmed! Thank you <strong>'+od.name+'</strong>!<br/>We will call <strong>'+od.phone+'</strong> to confirm.<br/><br/>';
-  if(refB64)html+='<img src="'+refB64+'" style="width:80px;height:80px;object-fit:cover;border-radius:9px;border:2px solid #e8927c;display:block;margin-bottom:8px"/>';
-  html+='<a href="'+waUrl+'" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:10px 20px;border-radius:20px;text-decoration:none;font-weight:600">Send Order on WhatsApp</a>';
+  if(refB64)html+='<img src="'+refB64+'" style="width:80px;height:80px;object-fit:cover;border-radius:9px;border:2px solid #e8927c;display:block;margin-bottom:8px"/><br/>';
+  html+='<a href="'+waUrl+'" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:11px 22px;border-radius:22px;text-decoration:none;font-weight:600;font-size:14px">Send Order on WhatsApp</a><br/><small style="color:#aaa">Tap to notify the bakery!</small>';
   d.innerHTML='<div class="message-bubble">'+html+'</div>';
   el.appendChild(d);el.scrollTop=el.scrollHeight;
   ostep=null;od={};refB64=null;chatLoading=false;
@@ -540,6 +580,135 @@ async function loadAdminData() {
 
 // ── INIT ───────────────────────────────────────
 initHours();
+
+function onRefPhoto(inp){
+  if(!inp.files||!inp.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    refB64=e.target.result;
+    document.getElementById('refPreviewBox').innerHTML='<img src="'+refB64+'" style="width:70px;height:70px;object-fit:cover;border-radius:9px;border:2px solid #e8927c"/><button onclick="removeRefPhoto()" style="background:#e8927c;color:#fff;border:none;border-radius:50%;width:20px;height:20px;margin-left:5px;cursor:pointer;font-weight:700;vertical-align:top">x</button><div style="font-size:10px;color:#9a7060;margin-top:3px">Reference photo attached!</div>';
+  };
+  r.readAsDataURL(inp.files[0]);
+}
+function removeRefPhoto(){
+  refB64=null;
+  document.getElementById('refPreviewBox').innerHTML='';
+  document.getElementById('refPhotoInput').value='';
+}
+function showPhotoUpload(){document.getElementById('photoUploadArea').style.display='block';}
+function hidePhotoUpload(){document.getElementById('photoUploadArea').style.display='none';removeRefPhoto();}
+
+// Gallery
+function getGallery(){try{return JSON.parse(localStorage.getItem('abby_gallery')||'[]');}catch(e){return[];}}
+function saveGalleryData(g){localStorage.setItem('abby_gallery',JSON.stringify(g));}
+
+// GALLERY FUNCTIONS
+function getGallery(){try{return JSON.parse(localStorage.getItem('abby_gallery')||'[]');}catch(e){return[];}}
+function saveGalleryLS(g){localStorage.setItem('abby_gallery',JSON.stringify(g));}
+
+function galPreview(inp){
+  if(!inp.files||!inp.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{const i=document.getElementById('galPreviewImg');i.src=e.target.result;i.style.display='block';};
+  r.readAsDataURL(inp.files[0]);
+}
+
+function saveGalPhoto(){
+  const img=document.getElementById('galPreviewImg');
+  const cap=document.getElementById('galCaption').value.trim();
+  const msg=document.getElementById('galMsg');
+  if(!img.src||img.style.display==='none'){msg.innerHTML='<p style="color:#c62828;font-size:12px">Please select a photo first.</p>';return;}
+  if(!cap){msg.innerHTML='<p style="color:#c62828;font-size:12px">Please add a caption.</p>';return;}
+  const g=getGallery();
+  g.unshift({id:Date.now(),src:img.src,caption:cap});
+  saveGalleryLS(g);
+  msg.innerHTML='<p style="color:#2e7d32;font-size:12px">Uploaded successfully!</p>';
+  document.getElementById('galCaption').value='';
+  document.getElementById('galPreviewImg').style.display='none';
+  document.getElementById('galFile').value='';
+  renderAdminGallery();
+  setTimeout(()=>msg.innerHTML='',3000);
+}
+
+function deleteGalPhoto(id){
+  if(!confirm('Delete this photo?'))return;
+  saveGalleryLS(getGallery().filter(i=>i.id!==id));
+  renderAdminGallery();
+}
+
+function renderAdminGallery(){
+  const g=getGallery(),el=document.getElementById('galAdminGrid');
+  if(!el)return;
+  if(!g.length){el.innerHTML='<p style="color:#9a7060;font-size:13px;padding:20px">No photos yet. Upload your first product photo above!</p>';return;}
+  el.innerHTML=g.map(it=>'<div style="background:#fff;border-radius:11px;overflow:hidden;border:1px solid rgba(201,125,110,0.15);position:relative"><img src="'+it.src+'" style="width:100%;aspect-ratio:1;object-fit:cover"/><button onclick="deleteGalPhoto('+it.id+')" style="position:absolute;top:5px;right:5px;background:rgba(196,28,28,0.85);color:#fff;border:none;border-radius:50%;width:24px;height:24px;font-size:13px;cursor:pointer;font-weight:700">×</button><div style="padding:8px;font-size:11px;font-weight:600;color:#3d1f1f">'+it.caption+'</div></div>').join('');
+}
+
+function showAdminGallery(){
+  document.getElementById('page-gallery-admin').style.display='block';
+  renderAdminGallery();
+}
+function hideAdminGallery(){
+  document.getElementById('page-gallery-admin').style.display='none';
+}
+
+// Public gallery render
+function renderPublicGallery(){
+  const g=getGallery(),el=document.getElementById('pubGalGrid');
+  if(!el)return;
+  if(!g.length){el.innerHTML='<p style="color:#9a7060;text-align:center;padding:30px">No photos yet. Check back soon!</p>';return;}
+  el.innerHTML=g.map(it=>'<div onclick="startOrderItem(''+it.caption+'')" style="border-radius:12px;overflow:hidden;aspect-ratio:1;background:#f5e6da;border:1px solid rgba(201,125,110,0.15);cursor:pointer;position:relative"><img src="'+it.src+'" style="width:100%;height:100%;object-fit:cover"/><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(61,31,31,0.7));color:#fff;font-size:11px;font-weight:500;padding:16px 6px 6px;text-align:center">'+it.caption+'</div></div>').join('');
+}
+
+function showAdminTab(tab){
+  document.getElementById('adminOrders').style.display=tab==='orders'?'block':'none';
+  document.getElementById('adminGallery').style.display=tab==='gallery'?'block':'none';
+  document.getElementById('tabOrders').style.background=tab==='orders'?'#e8927c':'transparent';
+  document.getElementById('tabOrders').style.color=tab==='orders'?'#fff':'#9a7060';
+  document.getElementById('tabOrders').style.border=tab==='orders'?'none':'1.5px solid #f5e6da';
+  document.getElementById('tabGallery').style.background=tab==='gallery'?'#e8927c':'transparent';
+  document.getElementById('tabGallery').style.color=tab==='gallery'?'#fff':'#9a7060';
+  document.getElementById('tabGallery').style.border=tab==='gallery'?'none':'1.5px solid #f5e6da';
+  if(tab==='gallery')renderAdminGallery();
+}
+function getGallery(){try{return JSON.parse(localStorage.getItem('abby_gallery')||'[]');}catch(e){return[];}}
+function saveGalleryLS(g){localStorage.setItem('abby_gallery',JSON.stringify(g));}
+function galPreview(inp){
+  if(!inp.files||!inp.files[0])return;
+  const r=new FileReader();r.onload=e=>{const i=document.getElementById('galPreviewImg');i.src=e.target.result;i.style.display='block';};r.readAsDataURL(inp.files[0]);
+}
+function saveGalPhoto(){
+  const img=document.getElementById('galPreviewImg'),cap=document.getElementById('galCaption').value.trim(),msg=document.getElementById('galMsg');
+  if(!img.src||img.style.display==='none'){msg.innerHTML='<p style="color:#c62828;font-size:12px">Select a photo first.</p>';return;}
+  if(!cap){msg.innerHTML='<p style="color:#c62828;font-size:12px">Add a caption.</p>';return;}
+  const g=getGallery();g.unshift({id:Date.now(),src:img.src,caption:cap});saveGalleryLS(g);
+  msg.innerHTML='<p style="color:#2e7d32;font-size:12px">✅ Uploaded!</p>';
+  document.getElementById('galCaption').value='';
+  document.getElementById('galPreviewImg').style.display='none';
+  document.getElementById('galFile').value='';
+  renderAdminGallery();setTimeout(()=>msg.innerHTML='',3000);
+}
+function deleteGalPhoto(id){
+  if(!confirm('Delete this photo?'))return;
+  saveGalleryLS(getGallery().filter(i=>i.id!==id));renderAdminGallery();
+}
+function renderAdminGallery(){
+  const g=getGallery(),el=document.getElementById('galAdminGrid');if(!el)return;
+  if(!g.length){el.innerHTML='<p style="color:#9a7060;font-size:13px;padding:20px 0">No photos yet.</p>';return;}
+  el.innerHTML=g.map(it=>'<div style="background:#fff;border-radius:11px;overflow:hidden;border:1px solid rgba(201,125,110,0.15);position:relative"><img src="'+it.src+'" style="width:100%;aspect-ratio:1;object-fit:cover"/><button onclick="deleteGalPhoto('+it.id+')" style="position:absolute;top:5px;right:5px;background:rgba(196,28,28,0.85);color:#fff;border:none;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;font-weight:700;line-height:1">×</button><div style="padding:7px;font-size:11px;font-weight:600;color:#3d1f1f">'+it.caption+'</div></div>').join('');
+}
+function renderPublicGallery(){
+  const g=getGallery(),el=document.getElementById('pubGalGrid');if(!el)return;
+  if(!g.length){el.innerHTML='<p style="color:#9a7060;text-align:center;padding:40px;grid-column:1/-1">No photos yet. Check back soon!</p>';return;}
+  el.innerHTML=g.map(it=>'<div onclick="startOrderItem(''+it.caption+'')" style="border-radius:12px;overflow:hidden;aspect-ratio:1;background:#f5e6da;border:1px solid rgba(201,125,110,0.15);cursor:pointer;position:relative"><img src="'+it.src+'" style="width:100%;height:100%;object-fit:cover"/><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(61,31,31,0.7));color:#fff;font-size:11px;font-weight:500;padding:16px 6px 6px;text-align:center">'+it.caption+'</div></div>').join('');
+}
+function startOrderItem(item){showSection('chat');setTimeout(()=>sendMsg('I want to order '+item),400);}
+function onRefPhoto(inp){
+  if(!inp.files||!inp.files[0])return;
+  const r=new FileReader();r.onload=e=>{refB64=e.target.result;document.getElementById('refPreviewBox').innerHTML='<img src="'+refB64+'" style="width:70px;height:70px;object-fit:cover;border-radius:9px;border:2px solid #e8927c;vertical-align:middle"/><button onclick="removeRefPhoto()" style="background:#e8927c;color:#fff;border:none;border-radius:50%;width:20px;height:20px;margin-left:6px;cursor:pointer;font-weight:700;vertical-align:middle;font-size:13px">×</button><span style="font-size:10px;color:#9a7060;margin-left:6px">Photo attached!</span>';};r.readAsDataURL(inp.files[0]);
+}
+function removeRefPhoto(){refB64=null;document.getElementById('refPreviewBox').innerHTML='';document.getElementById('refPhotoInput').value='';}
+function showPhotoUpload(){const a=document.getElementById('photoUploadArea');if(a)a.style.display='block';}
+function hidePhotoUpload(){const a=document.getElementById('photoUploadArea');if(a)a.style.display='none';removeRefPhoto();}
 </script>
 </body>
 </html>
