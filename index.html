@@ -2,229 +2,257 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Abby Cake and Bites</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Abby Cake and Bites · Himo, Tanzania</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:#fdf6ee;color:#2c1810}
-nav{background:white;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f5d6c8;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(107,63,42,0.06)}
-.nav-brand{display:flex;align-items:center;gap:8px;font-family:'Playfair Display',serif;font-size:17px;color:#6b3f2a;font-weight:700}
-.nav-links{display:flex;gap:4px}
-.nav-btn{padding:7px 14px;border-radius:20px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;background:transparent;color:#6b3f2a;transition:all 0.2s}
-.nav-btn:hover{background:#f5d6c8}
-.nav-btn.active{background:#c97d6e;color:white}
-.status-pill{font-size:11px;padding:4px 10px;border-radius:12px;font-weight:600}
-.status-open{background:#d4edda;color:#155724}
-.status-closed{background:#f8d7da;color:#721c24}
-.page{display:none}
-.page.active{display:block}
-/* HERO */
-.hero{background:linear-gradient(150deg,#fdf0e6,#f9e2d2,#f5d6c8);padding:70px 24px 50px;text-align:center;position:relative}
-.hero-badge{display:inline-block;background:rgba(201,125,110,0.12);color:#c97d6e;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;margin-bottom:18px;border:1px solid rgba(201,125,110,0.2)}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,60px);color:#6b3f2a;line-height:1.1;margin-bottom:14px}
-.hero h1 em{font-style:italic;color:#c97d6e}
-.hero p{font-size:16px;color:#8a6050;max-width:440px;margin:0 auto 28px;line-height:1.6}
-.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-primary{background:linear-gradient(135deg,#c97d6e,#b56e60);color:white;padding:13px 26px;border-radius:30px;border:none;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;box-shadow:0 4px 18px rgba(201,125,110,0.35)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(201,125,110,0.45)}
-.btn-secondary{background:white;color:#c97d6e;padding:13px 26px;border-radius:30px;border:2px solid #e8a598;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
-.btn-secondary:hover{background:#f5d6c8}
-/* CONTAINER */
-.container{max-width:860px;margin:0 auto;padding:36px 20px}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:40px}
-.info-card{background:white;border-radius:14px;padding:18px;border:1px solid rgba(232,165,152,0.2);box-shadow:0 2px 12px rgba(107,63,42,0.04)}
-.info-icon{font-size:22px;margin-bottom:8px}
-.info-label{font-size:11px;font-weight:600;color:#e8a598;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px}
-.info-value{font-size:14px;color:#2c1810;font-weight:500;line-height:1.5}
-.section-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,32px);color:#6b3f2a;margin-bottom:8px}
-.section-sub{color:#8a6050;font-size:14px;margin-bottom:24px}
+:root{--rose:#e8927c;--deep:#3d1f1f;--cream:#fdf8f3;--soft:#f5e6da;--muted:#9a7060;--border:rgba(201,125,110,0.15);--card:#fff}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--deep);min-height:100vh}
+/* NAV */
+nav{position:sticky;top:0;z-index:999;background:rgba(253,248,243,0.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;gap:8px}
+.brand{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;color:var(--deep);white-space:nowrap;flex-shrink:0}
+.brand span{color:var(--rose)}
+.nav-links{display:flex;gap:2px}
+.nl{padding:5px 10px;border-radius:16px;border:none;background:transparent;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
+.nl:hover{background:var(--soft)}.nl.on{background:var(--rose);color:#fff}
+.status{font-size:10px;font-weight:600;padding:3px 9px;border-radius:14px;flex-shrink:0}
+.open{background:#e8f5e9;color:#2e7d32}.closed{background:#fce4ec;color:#c62828}
+/* PAGES */
+.pg{display:none;animation:fadeIn .3s ease}.pg.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* HOME */
+.hero{background:linear-gradient(150deg,#fdf8f3,#f5e6da,#eeddd0);padding:64px 18px 48px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(232,146,124,.13),transparent 70%);border-radius:50%;pointer-events:none}
+.hero-tag{display:inline-block;border:1px solid var(--rose);color:var(--rose);padding:4px 14px;border-radius:16px;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,8vw,60px);color:var(--deep);line-height:1.05;margin-bottom:12px;font-weight:700}
+.hero h1 em{color:var(--rose);font-style:italic}
+.hero-sub{font-size:13px;color:var(--muted);max-width:360px;margin:0 auto 24px;line-height:1.7;font-weight:300}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{padding:11px 22px;border-radius:26px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .25s;letter-spacing:.02em;display:inline-block;text-decoration:none}
+.btn-rose{background:var(--rose);color:#fff;box-shadow:0 4px 14px rgba(232,146,124,.4)}.btn-rose:hover{transform:translateY(-2px)}
+.btn-out{background:transparent;color:var(--rose);border:2px solid var(--rose)}.btn-out:hover{background:var(--rose);color:#fff}
+.btn-green{background:#25D366;color:#fff;box-shadow:0 4px 14px rgba(37,211,102,.35)}.btn-green:hover{transform:translateY(-2px)}
+.wrap{max-width:840px;margin:0 auto;padding:28px 15px}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:34px}
+.info-card{background:var(--card);border-radius:12px;padding:15px;border:1px solid var(--border)}
+.ic-icon{font-size:20px;margin-bottom:7px}.ic-label{font-size:10px;font-weight:600;color:var(--rose);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}.ic-val{font-size:13px;font-weight:500;line-height:1.5}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--deep);margin-bottom:4px}
+.section-sub{color:var(--muted);font-size:12px;margin-bottom:14px}
+.hours-list{background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.h-row{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;border-bottom:1px solid var(--border);font-size:12px}
+.h-row:last-child{border-bottom:none}.h-row.today{background:linear-gradient(90deg,rgba(232,146,124,.06),transparent)}
+.h-day{font-weight:500}.h-time{color:var(--muted)}.h-closed{color:var(--rose);font-style:italic}
+/* GALLERY */
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:14px}
+.gal-item{border-radius:12px;overflow:hidden;aspect-ratio:1;background:var(--soft);border:1px solid var(--border);position:relative;cursor:pointer}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s}.gal-item:hover img{transform:scale(1.05)}
+.gal-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(61,31,31,.72));color:#fff;font-size:11px;font-weight:500;padding:18px 7px 6px;text-align:center}
+.gal-empty{text-align:center;padding:50px 20px;color:var(--muted);font-size:13px;grid-column:1/-1}
 /* MENU */
-.menu-cat-title{font-family:'Playfair Display',serif;font-size:20px;color:#6b3f2a;margin-bottom:14px;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:2px solid #f5d6c8}
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:32px}
-.menu-card{background:white;border-radius:12px;padding:16px;border:1px solid rgba(232,165,152,0.2);cursor:pointer;transition:all 0.2s}
-.menu-card:hover{border-color:#e8a598;box-shadow:0 4px 14px rgba(201,125,110,0.12);transform:translateY(-2px)}
-.menu-card-name{font-weight:600;font-size:14px;color:#2c1810;margin-bottom:3px}
-.menu-card-desc{font-size:12px;color:#9a7060;margin-bottom:7px;line-height:1.4}
-.menu-card-price{font-size:12px;font-weight:700;color:#c97d6e}
-/* HOURS */
-.hours-card{background:white;border-radius:14px;padding:20px;border:1px solid rgba(232,165,152,0.2)}
-.hours-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f5ede8;font-size:14px}
-.hours-row:last-child{border-bottom:none}
-.hours-day{font-weight:500;color:#2c1810}
-.hours-time{color:#8a6050}
-.hours-closed{color:#d4a0a0;font-style:italic}
-.hours-today{background:#fff8f6;border-radius:8px;padding:9px 12px;margin-bottom:2px}
+.menu-section{margin-bottom:28px}
+.menu-cat{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--deep);padding-bottom:8px;border-bottom:2px solid var(--soft);margin-bottom:12px}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:8px}
+.m-card{background:var(--card);border-radius:11px;padding:13px;border:1px solid var(--border);cursor:pointer;transition:all .2s}
+.m-card:hover{border-color:var(--rose);transform:translateY(-2px);box-shadow:0 4px 12px rgba(232,146,124,.15)}
+.m-card:active{transform:scale(.97)}
+.m-name{font-weight:600;font-size:12px;color:var(--deep);margin-bottom:2px}
+.m-desc{font-size:11px;color:var(--muted);margin-bottom:6px;line-height:1.4}
+.m-price{font-size:12px;font-weight:700;color:var(--rose)}
 /* CHAT */
-.chat-wrapper{max-width:660px;margin:0 auto}
-.chat-box{background:white;border-radius:22px;border:1px solid rgba(232,165,152,0.3);box-shadow:0 4px 28px rgba(107,63,42,0.08);overflow:hidden;display:flex;flex-direction:column;height:560px}
-.chat-header{background:linear-gradient(135deg,#c97d6e,#b56e60);padding:16px 18px;display:flex;align-items:center;gap:10px;color:white}
-.chat-avatar{width:42px;height:42px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.chat-header h3{font-size:15px;font-weight:600}
-.chat-header p{font-size:12px;opacity:0.85}
-.online-dot{width:7px;height:7px;background:#7fff7f;border-radius:50%;display:inline-block;margin-right:4px}
-.chat-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;background:#fdf9f7}
-.chat-msgs::-webkit-scrollbar{width:3px}
-.chat-msgs::-webkit-scrollbar-thumb{background:#f5d6c8;border-radius:2px}
-.msg{max-width:80%;animation:fadeUp 0.3s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.msg.user{align-self:flex-end}
-.msg.assistant{align-self:flex-start}
-.msg-bubble{padding:11px 15px;border-radius:17px;font-size:14px;line-height:1.6;white-space:pre-wrap}
-.msg.user .msg-bubble{background:linear-gradient(135deg,#c97d6e,#b56e60);color:white;border-bottom-right-radius:4px}
-.msg.assistant .msg-bubble{background:white;color:#2c1810;border:1px solid rgba(232,165,152,0.25);border-bottom-left-radius:4px;box-shadow:0 2px 6px rgba(107,63,42,0.06)}
-.msg-time{font-size:10px;color:#ccc;margin-top:3px;padding:0 3px}
-.msg.user .msg-time{text-align:right}
-.typing{display:flex;gap:4px;align-items:center;padding:12px 15px}
-.typing span{width:6px;height:6px;background:#e8a598;border-radius:50%;animation:bounce 1.2s infinite}
-.typing span:nth-child(2){animation-delay:0.2s}
-.typing span:nth-child(3){animation-delay:0.4s}
-@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
-.quick-btns{display:flex;flex-wrap:wrap;gap:7px;padding:0 18px 12px;background:#fdf9f7}
-.quick-btn{padding:6px 13px;background:white;border:1.5px solid #f5d6c8;border-radius:14px;font-size:12px;color:#c97d6e;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all 0.15s}
-.quick-btn:hover{background:#f5d6c8}
-.chat-input-row{padding:12px 14px;border-top:1px solid rgba(232,165,152,0.2);background:white;display:flex;gap:8px;align-items:flex-end}
-.chat-input{flex:1;border:1.5px solid #f5d6c8;border-radius:18px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:#2c1810;outline:none;resize:none;max-height:90px;transition:border-color 0.2s;background:#fdf9f7}
-.chat-input:focus{border-color:#c97d6e}
-.send-btn{width:40px;height:40px;background:linear-gradient(135deg,#c97d6e,#b56e60);border:none;border-radius:50%;color:white;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s}
-.send-btn:hover{transform:scale(1.08)}
-.send-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
-/* ORDER SUCCESS */
-.order-success{background:white;border-radius:18px;padding:28px;text-align:center;border:2px solid rgba(168,184,154,0.4);box-shadow:0 4px 20px rgba(107,63,42,0.08)}
-.order-success-icon{font-size:48px;margin-bottom:14px}
-.order-success h3{font-family:'Playfair Display',serif;font-size:22px;color:#6b3f2a;margin-bottom:8px}
-.order-details{background:#fdf9f7;border-radius:10px;padding:14px;margin:18px 0;text-align:left;font-size:13px}
-.detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0e8e4}
-.detail-row:last-child{border-bottom:none}
-.detail-key{color:#9a7060;font-weight:500}
-.detail-val{font-weight:600;color:#6b3f2a}
+.chat-wrap{max-width:580px;margin:0 auto}
+.chat-box{background:var(--card);border-radius:18px;border:1px solid var(--border);box-shadow:0 6px 28px rgba(61,31,31,.08);overflow:hidden;display:flex;flex-direction:column;height:560px}
+.chat-head{background:linear-gradient(135deg,var(--rose),#c9644e);padding:13px 16px;display:flex;align-items:center;gap:10px;color:#fff}
+.chat-av{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.chat-head h3{font-size:13px;font-weight:600;margin-bottom:1px}
+.chat-head p{font-size:10px;opacity:.85}
+.online-dot{width:6px;height:6px;background:#7fff7f;border-radius:50%;display:inline-block;margin-right:3px}
+.chat-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fdf9f7}
+.chat-msgs::-webkit-scrollbar{width:2px}.chat-msgs::-webkit-scrollbar-thumb{background:var(--soft)}
+.msg{max-width:85%}.msg.u{align-self:flex-end}.msg.a{align-self:flex-start}
+.bub{padding:9px 12px;border-radius:15px;font-size:13px;line-height:1.6}
+.msg.u .bub{background:var(--rose);color:#fff;border-bottom-right-radius:3px}
+.msg.a .bub{background:#fff;color:var(--deep);border:1px solid var(--border);border-bottom-left-radius:3px;box-shadow:0 1px 4px rgba(61,31,31,.05)}
+.msg-time{font-size:9px;color:#ccc;margin-top:2px;padding:0 2px}.msg.u .msg-time{text-align:right}
+.typing{display:flex;gap:3px;align-items:center;padding:9px 12px}
+.typing span{width:5px;height:5px;background:var(--rose);border-radius:50%;animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
+.quick-btns{display:flex;flex-wrap:wrap;gap:5px;padding:0 12px 8px;background:#fdf9f7}
+.qbtn{padding:5px 10px;background:#fff;border:1.5px solid var(--soft);border-radius:11px;font-size:11px;color:var(--rose);cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;transition:all .15s}
+.qbtn:hover{background:var(--soft)}
+/* PHOTO UPLOAD IN CHAT */
+.photo-upload-area{display:none;padding:8px 13px;background:#fdf9f7;border-top:1px solid var(--border)}
+.photo-upload-label{display:flex;align-items:center;gap:7px;padding:8px 12px;background:#fff;border:1.5px dashed var(--rose);border-radius:10px;cursor:pointer;font-size:12px;color:var(--rose);font-weight:500;font-family:'Jost',sans-serif}
+.photo-preview-box{margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.photo-preview-box img{width:68px;height:68px;object-fit:cover;border-radius:8px;border:2px solid var(--rose)}
+.rm-photo-btn{background:var(--rose);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:12px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chat-bottom{padding:9px 11px;border-top:1px solid var(--border);background:#fff;display:flex;gap:6px;align-items:flex-end}
+.chat-input{flex:1;border:1.5px solid var(--soft);border-radius:15px;padding:8px 11px;font-family:'Jost',sans-serif;font-size:13px;outline:none;resize:none;max-height:70px;background:#fdf9f7;color:var(--deep);transition:border-color .2s}
+.chat-input:focus{border-color:var(--rose)}
+.send-btn{width:36px;height:36px;background:var(--rose);border:none;border-radius:50%;color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.send-btn:hover{transform:scale(1.08)}.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 /* ADMIN */
-.admin-login{max-width:340px;margin:50px auto;background:white;border-radius:18px;padding:36px 28px;box-shadow:0 4px 28px rgba(107,63,42,0.1);text-align:center}
-.admin-login h2{font-family:'Playfair Display',serif;font-size:24px;color:#6b3f2a;margin-bottom:4px}
-.admin-login p{color:#9a7060;font-size:13px;margin-bottom:24px}
-.form-field{margin-bottom:14px;text-align:left}
-.form-field label{display:block;font-size:12px;font-weight:600;color:#6b3f2a;margin-bottom:5px}
-.form-input{width:100%;padding:10px 13px;border:1.5px solid #f5d6c8;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:14px;color:#2c1810;outline:none;transition:border-color 0.2s}
-.form-input:focus{border-color:#c97d6e}
-.admin-panel{max-width:860px;margin:0 auto;padding:28px 20px}
-.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px}
-.admin-header h2{font-family:'Playfair Display',serif;font-size:26px;color:#6b3f2a}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
-.stat-card{background:white;border-radius:12px;padding:16px;border:1px solid rgba(232,165,152,0.2)}
-.stat-val{font-size:26px;font-weight:700;color:#c97d6e;font-family:'Playfair Display',serif}
-.stat-label{font-size:11px;color:#9a7060;margin-top:3px;font-weight:500}
-.orders-table{background:white;border-radius:14px;overflow:hidden;border:1px solid rgba(232,165,152,0.2)}
-.table-header{background:linear-gradient(135deg,#f5d6c8,#f9e2d2);padding:12px 18px;display:grid;grid-template-columns:80px 1fr 1fr 90px;gap:10px;font-size:11px;font-weight:700;color:#6b3f2a;text-transform:uppercase;letter-spacing:0.05em}
-.order-row{padding:12px 18px;display:grid;grid-template-columns:80px 1fr 1fr 90px;gap:10px;border-bottom:1px solid #f5ede8;font-size:13px;align-items:center}
-.order-row:last-child{border-bottom:none}
-.order-row:hover{background:#fdf9f7}
-.badge{padding:3px 8px;border-radius:8px;font-size:11px;font-weight:600;display:inline-block}
-.badge-pending{background:#fff3cd;color:#856404}
-.badge-confirmed{background:#d4edda;color:#155724}
-.error-msg{background:#fff0f0;color:#c0392b;padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;border:1px solid #ffd5d5}
-/* FLOATING BTNS */
-.wa-float{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:0 4px 14px rgba(37,211,102,0.4);z-index:999;text-decoration:none;transition:all 0.2s}
-.wa-float:hover{transform:scale(1.1)}
-footer{background:#2c1810;color:rgba(255,255,255,0.65);text-align:center;padding:28px 20px;font-size:13px;margin-top:50px}
-footer strong{color:#e8a598}
-@media(max-width:500px){
-  .table-header,.order-row{grid-template-columns:60px 1fr 1fr}
-  .table-header span:last-child,.order-row span:last-child{display:none}
-  .nav-btn span{display:none}
-}
+.admin-login-card{max-width:320px;margin:44px auto;background:var(--card);border-radius:16px;padding:30px 24px;box-shadow:0 6px 28px rgba(61,31,31,.1);text-align:center;border:1px solid var(--border)}
+.admin-login-card h2{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--deep);margin-bottom:4px}
+.admin-login-card p{color:var(--muted);font-size:12px;margin-bottom:20px}
+.field{margin-bottom:12px;text-align:left}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--deep);margin-bottom:3px;letter-spacing:.04em}
+.field input{width:100%;padding:9px 12px;border:1.5px solid var(--soft);border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:var(--cream);transition:border-color .2s;color:var(--deep)}
+.field input:focus{border-color:var(--rose)}
+.alert-err{background:#fce4ec;color:#c62828;padding:8px 11px;border-radius:7px;font-size:12px;margin-bottom:10px;text-align:left}
+.alert-ok{background:#e8f5e9;color:#2e7d32;padding:8px 11px;border-radius:7px;font-size:12px;margin-bottom:10px;text-align:left}
+.admin-wrap{max-width:840px;margin:0 auto;padding:24px 14px}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px}
+.admin-header h2{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--deep)}
+.admin-tabs{display:flex;gap:7px;margin-bottom:18px}
+.atab{padding:6px 15px;border-radius:15px;border:1.5px solid var(--soft);background:transparent;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s}
+.atab.on{background:var(--rose);color:#fff;border-color:var(--rose)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:9px;margin-bottom:20px}
+.stat-card{background:var(--card);border-radius:11px;padding:13px;border:1px solid var(--border)}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--rose)}
+.stat-l{font-size:10px;color:var(--muted);margin-top:2px;font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.orders-table{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow:hidden}
+.orders-head{background:linear-gradient(90deg,var(--soft),var(--cream));padding:10px 14px;display:grid;grid-template-columns:72px 1fr 1fr 64px;gap:8px;font-size:10px;font-weight:600;color:var(--deep);text-transform:uppercase;letter-spacing:.05em}
+.order-row{padding:10px 14px;display:grid;grid-template-columns:72px 1fr 1fr 64px;gap:8px;border-top:1px solid var(--border);font-size:12px;align-items:center}
+.order-row:hover{background:var(--cream)}
+.badge{padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600}
+.badge-pending{background:#fff8e1;color:#f57f17}.badge-confirmed{background:#e8f5e9;color:#2e7d32}
+/* ADMIN GALLERY */
+.gal-upload-box{border:2px dashed var(--rose);border-radius:11px;padding:22px;text-align:center;cursor:pointer;background:#fff;margin-bottom:12px;transition:all .2s}
+.gal-upload-box:hover{background:rgba(232,146,124,.04)}
+.gal-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:9px;margin-top:12px}
+.gal-admin-item{background:var(--card);border-radius:11px;overflow:hidden;border:1px solid var(--border);position:relative}
+.gal-admin-item img{width:100%;aspect-ratio:1;object-fit:cover}
+.gal-admin-info{padding:7px;font-size:11px;font-weight:600;color:var(--deep)}
+.gal-del-btn{position:absolute;top:5px;right:5px;background:rgba(196,28,28,.85);color:#fff;border:none;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center}
+/* FAB */
+.wa-fab{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 14px rgba(37,211,102,.45);z-index:998;text-decoration:none;transition:transform .2s}
+.wa-fab:hover{transform:scale(1.1)}
+footer{background:var(--deep);color:rgba(255,255,255,.5);text-align:center;padding:24px 15px;font-size:12px;margin-top:48px}
+footer strong{color:var(--rose)}
+@media(max-width:440px){.orders-head,.order-row{grid-template-columns:58px 1fr 1fr}.orders-head span:last-child,.order-row span:last-child{display:none}}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-brand">🎂 Abby Cake & Bites</div>
+  <div class="brand">🎂 Abby <span>Cake & Bites</span></div>
   <div class="nav-links">
-    <button class="nav-btn active" onclick="showPage('home')">🏠 <span>Home</span></button>
-    <button class="nav-btn" onclick="showPage('menu')">🎂 <span>Menu</span></button>
-    <button class="nav-btn" onclick="showPage('chat')">💬 <span>Order</span></button>
-    <button class="nav-btn" onclick="showPage('admin')">🔐 <span>Admin</span></button>
+    <button class="nl on" onclick="goTo('home')">🏠</button>
+    <button class="nl" onclick="goTo('gallery')">🖼</button>
+    <button class="nl" onclick="goTo('menu')">🎂</button>
+    <button class="nl" onclick="goTo('chat')">💬</button>
+    <button class="nl" onclick="goTo('admin')">🔐</button>
   </div>
-  <span id="statusPill" class="status-pill status-closed">Closed</span>
+  <span id="statusBadge" class="status closed">Closed</span>
 </nav>
 
 <!-- HOME PAGE -->
-<div id="page-home" class="page active">
+<div id="pg-home" class="pg on">
   <div class="hero">
-    <div class="hero-badge">✨ Handcrafted Cakes & Bites · Himo, Tanzania</div>
+    <div class="hero-tag">Handcrafted · Himo, Tanzania</div>
     <h1>Where Every Bite is<br/><em>Pure Delight</em></h1>
-    <p>Custom cakes, pastries & sweets baked fresh daily with love for every occasion.</p>
-    <div class="hero-ctas">
-      <button class="btn-primary" onclick="showPage('chat')">🎂 Order via AI Chat</button>
-      <button class="btn-secondary" onclick="showPage('menu')">View Menu</button>
+    <p class="hero-sub">Custom cakes, pastries and sweets baked fresh daily with love for every occasion.</p>
+    <div class="hero-btns">
+      <button class="btn btn-rose" onclick="goTo('chat')">🎂 Order Now</button>
+      <button class="btn btn-out" onclick="goTo('gallery')">View Gallery</button>
     </div>
   </div>
-  <div class="container">
+  <div class="wrap">
     <div class="info-grid">
-      <div class="info-card"><div class="info-icon">📍</div><div class="info-label">Location</div><div class="info-value">Njiapanda, Himo<br/>Tanzania</div></div>
-      <div class="info-card"><div class="info-icon">📞</div><div class="info-label">Phone / WhatsApp</div><div class="info-value">0620 767 919</div></div>
-      <div class="info-card"><div class="info-icon">🕐</div><div class="info-label">Today's Hours</div><div class="info-value" id="todayHours">Loading...</div></div>
-      <div class="info-card"><div class="info-icon">🚗</div><div class="info-label">Delivery</div><div class="info-value">Available in Himo<br/>TZS 3,000–8,000</div></div>
+      <div class="info-card"><div class="ic-icon">📍</div><div class="ic-label">Location</div><div class="ic-val">Njiapanda, Himo<br/>Tanzania</div></div>
+      <div class="info-card"><div class="ic-icon">📞</div><div class="ic-label">Phone / WhatsApp</div><div class="ic-val">0620 767 919</div></div>
+      <div class="info-card"><div class="ic-icon">🕐</div><div class="ic-label">Today's Hours</div><div class="ic-val" id="todayHours">Loading...</div></div>
+      <div class="info-card"><div class="ic-icon">🚗</div><div class="ic-label">Delivery</div><div class="ic-val">Available in Himo<br/>TZS 3,000–8,000</div></div>
     </div>
-    <h2 class="section-title">Opening Hours</h2>
-    <p class="section-sub">We're here to sweeten your week</p>
-    <div class="hours-card" id="hoursCard"></div>
+    <div class="section-title">Opening Hours</div>
+    <div class="section-sub">We are here to sweeten your week</div>
+    <div class="hours-list" id="hoursList"></div>
   </div>
-  <footer><strong>Abby Cake and Bites</strong> · Njiapanda, Himo · 0620 767 919 · Made with 🎂</footer>
+  <footer><strong>Abby Cake and Bites</strong> · Njiapanda, Himo, Tanzania · 0620 767 919<br/>Made with ❤️ for every sweet occasion</footer>
+</div>
+
+<!-- GALLERY PAGE -->
+<div id="pg-gallery" class="pg">
+  <div class="wrap">
+    <div class="section-title">Our Gallery</div>
+    <div class="section-sub">Beautiful creations made with love — tap any photo to order</div>
+    <div class="gal-grid" id="pubGallery">
+      <div class="gal-empty">📸 No photos yet. Check back soon!</div>
+    </div>
+  </div>
 </div>
 
 <!-- MENU PAGE -->
-<div id="page-menu" class="page">
-  <div class="container">
-    <h2 class="section-title">Our Menu</h2>
-    <p class="section-sub">Fresh, handcrafted treats for every occasion — tap any item to order!</p>
-    <div class="menu-cat-title">🎂 Custom Cakes</div>
-    <div class="menu-grid">
-      <div class="menu-card" onclick="orderItem('Birthday Cake')"><div class="menu-card-name">Birthday Cake</div><div class="menu-card-desc">Personalized & themed to your wishes</div><div class="menu-card-price">TZS 25,000 – 80,000</div></div>
-      <div class="menu-card" onclick="orderItem('Wedding Cake')"><div class="menu-card-name">Wedding Cake</div><div class="menu-card-desc">Elegant multi-tier masterpieces</div><div class="menu-card-price">TZS 80,000 – 300,000</div></div>
-      <div class="menu-card" onclick="orderItem('Anniversary Cake')"><div class="menu-card-name">Anniversary Cake</div><div class="menu-card-desc">Romantic designs with messages</div><div class="menu-card-price">TZS 30,000 – 75,000</div></div>
-      <div class="menu-card" onclick="orderItem('Baby Shower Cake')"><div class="menu-card-name">Baby Shower Cake</div><div class="menu-card-desc">Adorable pastel creations</div><div class="menu-card-price">TZS 28,000 – 60,000</div></div>
+<div id="pg-menu" class="pg">
+  <div class="wrap">
+    <div class="section-title">Menu & Prices</div>
+    <div class="section-sub">Tap any item to start your order instantly</div>
+    <div class="menu-section">
+      <div class="menu-cat">🍪 Bites / Vitafunwa</div>
+      <div class="menu-grid">
+        <div class="m-card" onclick="orderItem('Cupcakes with Buttercream')"><div class="m-name">Cupcakes with Buttercream</div><div class="m-desc">Decorated with creamy buttercream</div><div class="m-price">TZS 10,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Cookies Package')"><div class="m-name">Cookies Package</div><div class="m-desc">Freshly baked cookies</div><div class="m-price">TZS 5,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Plain Cupcakes 6pcs')"><div class="m-name">Plain Cupcakes 6pcs</div><div class="m-desc">Package of 6 pieces</div><div class="m-price">TZS 3,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Chapati Package')"><div class="m-name">Chapati Package</div><div class="m-desc">Soft and delicious</div><div class="m-price">TZS 10,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Donut Package 6pcs')"><div class="m-name">Donut Package 6pcs</div><div class="m-desc">6 pieces glazed and fluffy</div><div class="m-price">TZS 10,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Mandazi Package 10pcs')"><div class="m-name">Mandazi 10pcs</div><div class="m-desc">Soft and sweet</div><div class="m-price">TZS 3,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Meat Sambusa 8pcs')"><div class="m-name">Meat Sambusa 8pcs</div><div class="m-desc">Crispy and tasty</div><div class="m-price">TZS 10,000/=</div></div>
+      </div>
     </div>
-    <div class="menu-cat-title">🍪 Bites & Pastries</div>
-    <div class="menu-grid">
-      <div class="menu-card" onclick="orderItem('Cupcakes')"><div class="menu-card-name">Cupcakes</div><div class="menu-card-desc">Mini decorated in any flavor</div><div class="menu-card-price">TZS 12,000 – 22,000</div></div>
-      <div class="menu-card" onclick="orderItem('Cookies')"><div class="menu-card-name">Cookies</div><div class="menu-card-desc">Freshly baked butter & choco chip</div><div class="menu-card-price">TZS 8,000 – 15,000</div></div>
-      <div class="menu-card" onclick="orderItem('Brownies')"><div class="menu-card-name">Brownies</div><div class="menu-card-desc">Fudgy dark chocolate brownies</div><div class="menu-card-price">TZS 10,000 – 20,000</div></div>
-      <div class="menu-card" onclick="orderItem('Cake Pops')"><div class="menu-card-name">Cake Pops</div><div class="menu-card-desc">Fun bite-sized cake balls on a stick</div><div class="menu-card-price">TZS 12,000 – 22,000</div></div>
-      <div class="menu-card" onclick="orderItem('Doughnuts')"><div class="menu-card-name">Doughnuts</div><div class="menu-card-desc">Glazed, sprinkled or filled</div><div class="menu-card-price">TZS 9,000 – 17,000</div></div>
-      <div class="menu-card" onclick="orderItem('Muffins')"><div class="menu-card-name">Muffins</div><div class="menu-card-desc">Blueberry, banana or choco-chip</div><div class="menu-card-price">TZS 8,000 – 15,000</div></div>
+    <div class="menu-section">
+      <div class="menu-cat">🎂 Cakes</div>
+      <div class="menu-grid">
+        <div class="m-card" onclick="orderItem('Plain Cake')"><div class="m-name">Plain Cake</div><div class="m-desc">Simple and delicious</div><div class="m-price">TZS 10,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Bento Cake')"><div class="m-name">Bento Cake</div><div class="m-desc">Cute mini bento style</div><div class="m-price">TZS 15,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Birthday Cake 700g')"><div class="m-name">Birthday Cake 700g</div><div class="m-desc">Perfect for celebrations</div><div class="m-price">TZS 25,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Chocolate Cake 1kg')"><div class="m-name">Chocolate Cake 1kg</div><div class="m-desc">Rich dark chocolate</div><div class="m-price">TZS 45,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Flavour Cake 1kg')"><div class="m-name">Flavour Cake 1kg</div><div class="m-desc">Your choice of flavor</div><div class="m-price">TZS 35,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Fruits Cake 1kg')"><div class="m-name">Fruits Cake 1kg</div><div class="m-desc">Fresh fruits and cream</div><div class="m-price">TZS 55,000/=</div></div>
+        <div class="m-card" onclick="orderItem('Red Velvet Cake 1kg')"><div class="m-name">Red Velvet Cake 1kg</div><div class="m-desc">Velvety smooth and elegant</div><div class="m-price">TZS 40,000/=</div></div>
+      </div>
     </div>
     <div style="text-align:center;margin-top:16px">
-      <button class="btn-primary" onclick="showPage('chat')">Place Order via AI Chat 🎂</button>
+      <button class="btn btn-rose" onclick="goTo('chat')">Order via Chat 🎂</button>
     </div>
   </div>
 </div>
 
 <!-- CHAT PAGE -->
-<div id="page-chat" class="page">
-  <div class="container">
-    <h2 class="section-title">Chat with Abby</h2>
-    <p class="section-sub" id="chatStatusMsg">Ask anything or place your order</p>
-    <div class="chat-wrapper">
-      <div id="orderSuccess" style="display:none"></div>
-      <div id="chatBox" class="chat-box">
-        <div class="chat-header">
-          <div class="chat-avatar">🎂</div>
+<div id="pg-chat" class="pg">
+  <div class="wrap">
+    <div class="section-title">Chat with Abby</div>
+    <div class="section-sub">Smart assistant — order easily and attach a reference photo</div>
+    <div class="chat-wrap">
+      <div class="chat-box">
+        <div class="chat-head">
+          <div class="chat-av">🎂</div>
           <div>
-            <h3>Abby · AI Assistant</h3>
-            <p><span class="online-dot"></span>Connected · Orders saved & SMS sent</p>
+            <h3>Abby · Smart Assistant</h3>
+            <p><span class="online-dot"></span>Ready to take your order</p>
           </div>
         </div>
         <div class="chat-msgs" id="chatMsgs"></div>
         <div class="quick-btns" id="quickBtns">
-          <button class="quick-btn" onclick="sendMsg('What cakes do you have?')">What cakes?</button>
-          <button class="quick-btn" onclick="sendMsg('Are you open now?')">Are you open?</button>
-          <button class="quick-btn" onclick="sendMsg('I want to place an order')">Order now</button>
-          <button class="quick-btn" onclick="sendMsg('What are your prices?')">Prices?</button>
-          <button class="quick-btn" onclick="sendMsg('Do you deliver?')">Delivery?</button>
+          <button class="qbtn" onclick="userSend('What cakes do you have?')">What cakes?</button>
+          <button class="qbtn" onclick="userSend('Are you open now?')">Open now?</button>
+          <button class="qbtn" onclick="userSend('I want to order')">Order now</button>
+          <button class="qbtn" onclick="userSend('What are your prices?')">Prices?</button>
+          <button class="qbtn" onclick="userSend('Do you deliver?')">Delivery?</button>
         </div>
-        <div class="chat-input-row">
-          <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1" onkeydown="handleKey(event)"></textarea>
+        <!-- REFERENCE PHOTO UPLOAD -->
+        <div class="photo-upload-area" id="photoUploadArea">
+          <label class="photo-upload-label" for="refPhotoInput">
+            📎 Attach reference photo (optional)
+          </label>
+          <input type="file" id="refPhotoInput" accept="image/*" onchange="onRefPhoto(this)" style="display:none"/>
+          <div class="photo-preview-box" id="photoPreviewBox"></div>
+        </div>
+        <div class="chat-bottom">
+          <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendFromInput()}"></textarea>
           <button class="send-btn" id="sendBtn" onclick="sendFromInput()">➤</button>
         </div>
       </div>
@@ -233,316 +261,491 @@ footer strong{color:#e8a598}
 </div>
 
 <!-- ADMIN PAGE -->
-<div id="page-admin" class="page">
+<div id="pg-admin" class="pg">
+  <!-- LOGIN -->
   <div id="adminLogin">
-    <div class="container">
-      <div class="admin-login">
-        <div style="font-size:38px;margin-bottom:10px">🔐</div>
+    <div class="wrap">
+      <div class="admin-login-card">
+        <div style="font-size:36px;margin-bottom:10px">🔐</div>
         <h2>Admin Login</h2>
-        <p>Abby Cake & Bites · Dashboard</p>
+        <p>Abby Cake & Bites Dashboard</p>
         <div id="loginErr"></div>
-        <div class="form-field"><label>Username</label><input class="form-input" id="adminUser" placeholder="abby_admin"/></div>
-        <div class="form-field"><label>Password</label><input class="form-input" type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
-        <button class="btn-primary" style="width:100%" onclick="doLogin()" id="loginBtn">Login →</button>
+        <div class="field"><label>Username</label><input id="adminUser" placeholder="abby_admin" autocomplete="off"/></div>
+        <div class="field"><label>Password</label><input id="adminPass" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+        <button class="btn btn-rose" style="width:100%;margin-top:4px" onclick="doLogin()" id="loginBtn">Login →</button>
       </div>
     </div>
   </div>
-  <div id="adminPanel" style="display:none">
-    <div class="admin-panel">
+  <!-- DASHBOARD -->
+  <div id="adminDash" style="display:none">
+    <div class="admin-wrap">
       <div class="admin-header">
-        <h2>📊 Orders Dashboard</h2>
-        <button class="btn-secondary" style="font-size:13px;padding:8px 16px" onclick="doLogout()">Logout</button>
+        <h2>Dashboard</h2>
+        <button class="btn btn-out" style="font-size:12px;padding:6px 14px" onclick="doLogout()">Logout</button>
       </div>
-      <div class="stats-grid" id="statsGrid"></div>
-      <div id="ordersContent"></div>
+      <div class="admin-tabs">
+        <button class="atab on" onclick="switchTab('orders',this)">📦 Orders</button>
+        <button class="atab" onclick="switchTab('gallery',this)">🖼 Gallery</button>
+      </div>
+      <!-- ORDERS TAB -->
+      <div id="tab-orders">
+        <div class="stats-grid" id="statsGrid"></div>
+        <div id="ordersContent"></div>
+      </div>
+      <!-- GALLERY TAB -->
+      <div id="tab-gallery" style="display:none">
+        <div style="background:var(--card);border-radius:13px;padding:18px;border:1px solid var(--border);margin-bottom:18px">
+          <h3 style="font-size:14px;font-weight:600;color:var(--deep);margin-bottom:13px">📸 Upload Product Photo</h3>
+          <div class="gal-upload-box" onclick="document.getElementById('galFileInput').click()">
+            <input type="file" id="galFileInput" accept="image/*" onchange="galPreview(this)" style="display:none"/>
+            <div style="font-size:28px">📷</div>
+            <p style="font-size:12px;color:var(--rose);font-weight:500;margin-top:6px">Tap to select photo</p>
+            <small style="font-size:10px;color:var(--muted)">JPG or PNG</small>
+          </div>
+          <img id="galPreviewImg" style="width:100%;max-height:170px;object-fit:cover;border-radius:9px;margin:8px 0;display:none"/>
+          <div class="field" style="margin-bottom:12px">
+            <label>Caption (product name)</label>
+            <input id="galCaptionInput" placeholder="e.g. Birthday Cake 1kg"/>
+          </div>
+          <button class="btn btn-rose" style="width:100%" onclick="saveGalleryPhoto()">Upload to Gallery 📸</button>
+          <div id="galMessage" style="margin-top:9px"></div>
+        </div>
+        <div class="section-title" style="font-size:18px;margin-bottom:10px">Gallery Photos</div>
+        <div class="gal-admin-grid" id="galAdminGrid"></div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- WHATSAPP FLOAT -->
-<a class="wa-float" href="https://wa.me/255620767919" target="_blank">💬</a>
+<!-- WHATSAPP FAB -->
+<a class="wa-fab" href="https://wa.me/255620767919" target="_blank" title="WhatsApp">💬</a>
 
 <script>
+// ─── CONFIG ───────────────────────────────────────────────
 const API = 'https://abby-backend.onrender.com';
-
-// ── HOURS ──────────────────────────────────────
-const HOURS = {
-  0: null,
-  1: [7,19], 2: [7,19], 3: [7,19], 4: [7,19],
-  5: [7,20], 6: [7,20]
-};
+const WA_NUMBER = '255620767919';
 const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const HOURS = {0:null,1:[7,19],2:[7,19],3:[7,19],4:[7,19],5:[7,20],6:[7,20]};
+const MENU_TEXT =
+  'BITES / VITAFUNWA:\n' +
+  '- Cupcakes with Buttercream: TZS 10,000\n' +
+  '- Cookies Package: TZS 5,000\n' +
+  '- Plain Cupcakes 6pcs: TZS 3,000\n' +
+  '- Chapati Package: TZS 10,000\n' +
+  '- Donut Package 6pcs: TZS 10,000\n' +
+  '- Mandazi 10pcs: TZS 3,000\n' +
+  '- Meat Sambusa 8pcs: TZS 10,000\n\n' +
+  'CAKES:\n' +
+  '- Plain Cake: TZS 10,000\n' +
+  '- Bento Cake: TZS 15,000\n' +
+  '- Birthday Cake 700g: TZS 25,000\n' +
+  '- Chocolate Cake 1kg: TZS 45,000\n' +
+  '- Flavour Cake 1kg: TZS 35,000\n' +
+  '- Fruits Cake 1kg: TZS 55,000\n' +
+  '- Red Velvet Cake 1kg: TZS 40,000';
 
+// ─── HOURS ────────────────────────────────────────────────
 function isOpen() {
-  const now = new Date();
-  const day = now.getDay();
-  const h = now.getHours();
-  const rule = HOURS[day];
-  if (!rule) return false;
-  return h >= rule[0] && h < rule[1];
+  const n = new Date(), d = n.getDay(), h = n.getHours(), r = HOURS[d];
+  return !!(r && h >= r[0] && h < r[1]);
 }
-
-function getHoursText(day) {
-  const rule = HOURS[day];
-  if (!rule) return 'Closed';
-  return rule[0]+':00 AM – '+( rule[1] > 12 ? (rule[1]-12)+':00 PM' : rule[1]+':00 PM');
+function hoursTxt(d) {
+  const r = HOURS[d];
+  if (!r) return 'Closed';
+  return r[0] + ':00 AM – ' + (r[1] > 12 ? (r[1]-12) + ':00 PM' : r[1] + ':00 AM');
 }
-
 function initHours() {
-  const today = new Date().getDay();
-  const open = isOpen();
-  // status pill
-  const pill = document.getElementById('statusPill');
-  pill.textContent = open ? '🟢 Open Now' : '🔴 Closed';
-  pill.className = 'status-pill ' + (open ? 'status-open' : 'status-closed');
-  // today card
-  document.getElementById('todayHours').innerHTML = '<strong>'+DAYS[today]+'</strong><br/>'+getHoursText(today)+(open?'<br/><span style="color:#2d8a4e;font-size:12px;font-weight:600">● Open Now</span>':'<br/><span style="color:#c97d6e;font-size:12px;font-weight:600">● Currently Closed</span>');
-  // hours list
-  let html = '';
+  const t = new Date().getDay(), op = isOpen();
+  document.getElementById('statusBadge').textContent = op ? 'Open Now' : 'Closed';
+  document.getElementById('statusBadge').className = 'status ' + (op ? 'open' : 'closed');
+  document.getElementById('todayHours').innerHTML =
+    '<strong>' + DAYS[t] + '</strong><br/>' + hoursTxt(t) +
+    '<br/><span style="font-size:10px;color:' + (op?'#2e7d32':'#c62828') + ';font-weight:600">' +
+    (op ? '● Open Now' : '● Closed') + '</span>';
+  let h = '';
   for (let i = 1; i <= 7; i++) {
-    const d = i % 7;
-    const isToday = d === today;
-    html += '<div class="hours-row'+(isToday?' hours-today':'')+'"><span class="hours-day">'+(isToday?'<strong>':'')+DAYS[d]+(isToday?' (Today)</strong>':'')+'</span>';
-    const t = getHoursText(d);
-    html += t === 'Closed' ? '<span class="hours-closed">Closed</span>' : '<span class="hours-time">'+t+'</span>';
-    html += '</div>';
+    const d = i % 7, today = d === t;
+    const tx = hoursTxt(d);
+    h += '<div class="h-row' + (today?' today':'') + '">' +
+      '<span class="h-day">' + (today?'<strong>':'') + DAYS[d] + (today?' (Today)</strong>':'') + '</span>' +
+      (tx==='Closed' ? '<span class="h-closed">Closed</span>' : '<span class="h-time">'+tx+'</span>') +
+      '</div>';
   }
-  document.getElementById('hoursCard').innerHTML = html;
+  document.getElementById('hoursList').innerHTML = h;
 }
 
-// ── NAVIGATION ─────────────────────────────────
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.nav-btn')[['home','menu','chat','admin'].indexOf(name)].classList.add('active');
-  if (name === 'chat' && chatHistory.length === 0) initChat();
+// ─── NAVIGATION ───────────────────────────────────────────
+function goTo(page) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.nl').forEach(b => b.classList.remove('on'));
+  document.getElementById('pg-' + page).classList.add('on');
+  const pages = ['home','gallery','menu','chat','admin'];
+  const idx = pages.indexOf(page);
+  if (idx >= 0) document.querySelectorAll('.nl')[idx].classList.add('on');
+  if (page === 'gallery') renderPublicGallery();
+  if (page === 'chat' && !chatStarted) initChat();
+  window.scrollTo(0,0);
 }
 
-function orderItem(item) {
-  showPage('chat');
-  if (chatHistory.length === 0) initChat();
-  setTimeout(() => sendMsg('I want to order ' + item), 400);
+// ─── GALLERY (localStorage) ───────────────────────────────
+function getGallery() {
+  try { return JSON.parse(localStorage.getItem('abby_gallery') || '[]'); } catch(e) { return []; }
+}
+function setGallery(g) { localStorage.setItem('abby_gallery', JSON.stringify(g)); }
+
+function renderPublicGallery() {
+  const g = getGallery(), el = document.getElementById('pubGallery');
+  if (!g.length) {
+    el.innerHTML = '<div class="gal-empty">📸 No photos yet. Check back soon!</div>';
+    return;
+  }
+  el.innerHTML = g.map(it =>
+    '<div class="gal-item" onclick="orderItem(\'' + it.caption.replace(/'/g,"\\'") + '\')">' +
+    '<img src="' + it.src + '" alt="' + it.caption + '"/>' +
+    '<div class="gal-cap">' + it.caption + '</div></div>'
+  ).join('');
 }
 
-// ── CHAT ───────────────────────────────────────
-let chatHistory = [];
-let chatLoading = false;
+function galPreview(inp) {
+  if (!inp.files || !inp.files[0]) return;
+  const r = new FileReader();
+  r.onload = e => {
+    const img = document.getElementById('galPreviewImg');
+    img.src = e.target.result;
+    img.style.display = 'block';
+  };
+  r.readAsDataURL(inp.files[0]);
+}
+
+function saveGalleryPhoto() {
+  const img = document.getElementById('galPreviewImg');
+  const cap = document.getElementById('galCaptionInput').value.trim();
+  const msgEl = document.getElementById('galMessage');
+  if (!img.src || img.style.display === 'none') {
+    msgEl.innerHTML = '<div class="alert-err">Please select a photo first.</div>';
+    return;
+  }
+  if (!cap) {
+    msgEl.innerHTML = '<div class="alert-err">Please add a caption.</div>';
+    return;
+  }
+  const g = getGallery();
+  g.unshift({ id: Date.now(), src: img.src, caption: cap });
+  setGallery(g);
+  msgEl.innerHTML = '<div class="alert-ok">✅ Photo uploaded to gallery!</div>';
+  document.getElementById('galCaptionInput').value = '';
+  document.getElementById('galPreviewImg').style.display = 'none';
+  document.getElementById('galFileInput').value = '';
+  renderAdminGallery();
+  setTimeout(() => msgEl.innerHTML = '', 3000);
+}
+
+function deleteGalleryPhoto(id) {
+  if (!confirm('Delete this photo from gallery?')) return;
+  setGallery(getGallery().filter(i => i.id !== id));
+  renderAdminGallery();
+}
+
+function renderAdminGallery() {
+  const g = getGallery(), el = document.getElementById('galAdminGrid');
+  if (!el) return;
+  if (!g.length) {
+    el.innerHTML = '<p style="color:var(--muted);font-size:13px;padding:20px 0">No photos yet. Upload your first product photo above!</p>';
+    return;
+  }
+  el.innerHTML = g.map(it =>
+    '<div class="gal-admin-item">' +
+    '<img src="' + it.src + '" alt="' + it.caption + '"/>' +
+    '<button class="gal-del-btn" onclick="deleteGalleryPhoto(' + it.id + ')">×</button>' +
+    '<div class="gal-admin-info">' + it.caption + '</div></div>'
+  ).join('');
+}
+
+// ─── CHAT ─────────────────────────────────────────────────
+let chatStarted = false, chatBusy = false;
+let orderStep = null, orderData = {}, refPhotoB64 = null;
 
 function initChat() {
-  const open = isOpen();
-  let greeting;
-  if (open) {
-    greeting = "Hi there! 🎂 I'm Abby, your virtual assistant for Abby Cake and Bites!\n\nWe're currently OPEN and ready to take your order! I can help you with our menu, prices, or place an order for you right now.\n\nWhat can I do for you today?";
-  } else {
-    const today = new Date().getDay();
-    const tomorrow = (today + 1) % 7;
-    const nextOpen = HOURS[tomorrow] ? 'tomorrow at ' + HOURS[tomorrow][0] + ':00 AM' : 'Monday at 7:00 AM';
-    greeting = "Hi there! 🎂 I'm Abby from Abby Cake and Bites!\n\nWe're currently CLOSED right now, but we'll be open " + nextOpen + ".\n\nYou're welcome to browse our menu or pre-order and we'll confirm when we open! How can I help you?";
-  }
-  addMsg('assistant', greeting);
-  chatHistory = [{role:'assistant', content: greeting}];
+  chatStarted = true;
+  const op = isOpen(), t = new Date().getDay(), tom = (t+1)%7;
+  const nxt = HOURS[tom] ? 'tomorrow at ' + HOURS[tom][0] + ':00 AM' : 'Monday at 7:00 AM';
+  addBotMsg(op
+    ? 'Hujambo! Welcome to Abby Cake and Bites! 🎂\n\nWe are OPEN now and ready to take your order!\n\nHow can I help you today?'
+    : 'Hujambo! Welcome to Abby Cake and Bites! 🎂\n\nWe are currently CLOSED but will open ' + nxt + '.\n\nYou can pre-order now and we will confirm when we open!'
+  );
 }
 
-function addMsg(role, text) {
-  const msgs = document.getElementById('chatMsgs');
-  const div = document.createElement('div');
-  div.className = 'msg ' + role;
-  const now = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  div.innerHTML = '<div class="msg-bubble">'+escHtml(text)+'</div><div class="msg-time">'+now+'</div>';
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-  if (chatHistory.length > 2) document.getElementById('quickBtns').style.display = 'none';
+function addUserMsg(txt) {
+  const el = document.getElementById('chatMsgs');
+  const d = document.createElement('div'); d.className = 'msg u';
+  const now = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  d.innerHTML = '<div class="bub">' + txt.replace(/\n/g,'<br/>') + '</div><div class="msg-time">' + now + '</div>';
+  el.appendChild(d); el.scrollTop = el.scrollHeight;
+}
+
+function addBotMsg(txt) {
+  const el = document.getElementById('chatMsgs');
+  const d = document.createElement('div'); d.className = 'msg a';
+  const now = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  d.innerHTML = '<div class="bub">' + txt.replace(/\n/g,'<br/>') + '</div><div class="msg-time">' + now + '</div>';
+  el.appendChild(d); el.scrollTop = el.scrollHeight;
+}
+
+function addBotHtml(html) {
+  const el = document.getElementById('chatMsgs');
+  const d = document.createElement('div'); d.className = 'msg a';
+  const now = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  d.innerHTML = '<div class="bub">' + html + '</div><div class="msg-time">' + now + '</div>';
+  el.appendChild(d); el.scrollTop = el.scrollHeight;
 }
 
 function showTyping() {
-  const msgs = document.getElementById('chatMsgs');
-  const div = document.createElement('div');
-  div.className = 'msg assistant';
-  div.id = 'typingIndicator';
-  div.innerHTML = '<div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
+  const el = document.getElementById('chatMsgs');
+  const d = document.createElement('div'); d.className = 'msg a'; d.id = 'typingIndicator';
+  d.innerHTML = '<div class="bub"><div class="typing"><span></span><span></span><span></span></div></div>';
+  el.appendChild(d); el.scrollTop = el.scrollHeight;
+}
+function removeTyping() { const t = document.getElementById('typingIndicator'); if (t) t.remove(); }
+
+function showPhotoUpload() { document.getElementById('photoUploadArea').style.display = 'block'; }
+function hidePhotoUpload() {
+  document.getElementById('photoUploadArea').style.display = 'none';
+  refPhotoB64 = null;
+  document.getElementById('photoPreviewBox').innerHTML = '';
+  const inp = document.getElementById('refPhotoInput'); if (inp) inp.value = '';
 }
 
-function removeTyping() {
-  const t = document.getElementById('typingIndicator');
-  if (t) t.remove();
+function onRefPhoto(inp) {
+  if (!inp.files || !inp.files[0]) return;
+  const r = new FileReader();
+  r.onload = e => {
+    refPhotoB64 = e.target.result;
+    document.getElementById('photoPreviewBox').innerHTML =
+      '<img src="' + refPhotoB64 + '" alt="Reference"/>' +
+      '<button class="rm-photo-btn" onclick="removeRefPhoto()">×</button>' +
+      '<span style="font-size:10px;color:var(--muted)">Photo attached!</span>';
+  };
+  r.readAsDataURL(inp.files[0]);
+}
+function removeRefPhoto() {
+  refPhotoB64 = null;
+  document.getElementById('photoPreviewBox').innerHTML = '';
+  document.getElementById('refPhotoInput').value = '';
 }
 
-function escHtml(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br/>');
+function getReply(txt) {
+  const t = txt.toLowerCase();
+  // ORDER FLOW
+  if (orderStep === 'item') {
+    orderData.item = txt; orderStep = 'name';
+    showPhotoUpload();
+    return 'Great choice: ' + txt + '! 🎂\n\nYou can attach a reference photo above (optional).\n\nWhat is your full name?';
+  }
+  if (orderStep === 'name') { orderData.name = txt; orderStep = 'phone'; return 'Nice to meet you, ' + txt + '!\n\nWhat is your phone number?'; }
+  if (orderStep === 'phone') { orderData.phone = txt; orderStep = 'delivery'; return 'Got it!\n\nPickup or Delivery?\n(Delivery in Himo: TZS 3,000–8,000)'; }
+  if (orderStep === 'delivery') { orderData.delivery = txt; orderStep = 'date'; return 'When do you need your order?\n(e.g. Tomorrow, Friday, March 1)'; }
+  if (orderStep === 'date') {
+    orderData.date = txt; orderStep = 'confirm';
+    return 'Please confirm your order:\n\n' +
+      'Item: ' + orderData.item + '\n' +
+      'Name: ' + orderData.name + '\n' +
+      'Phone: ' + orderData.phone + '\n' +
+      'Delivery: ' + orderData.delivery + '\n' +
+      'Date: ' + orderData.date +
+      (refPhotoB64 ? '\nPhoto: ✅ Attached' : '') +
+      '\n\nType YES to confirm or NO to cancel.';
+  }
+  if (orderStep === 'confirm') {
+    if (t.includes('yes') || t.includes('ndio')) { confirmOrder(); return null; }
+    orderStep = null; orderData = {}; hidePhotoUpload();
+    return 'Order cancelled. Type "order" anytime to start again! 😊';
+  }
+  // GENERAL
+  if (t.match(/^(hi|hello|hey|hujambo|habari|salaam|mambo)/)) {
+    return 'Hujambo! Welcome to Abby Cake and Bites! 🎂\n\nHow can I help?\n- Type menu: see our prices\n- Type order: place an order\n- Type hours: opening times\n- Type delivery: delivery info';
+  }
+  if (t.includes('menu') || t.includes('price') || t.includes('bei') || t.includes('how much') || t.includes('vitafunwa') || (t.includes('what') && (t.includes('have') || t.includes('sell')))) {
+    return MENU_TEXT;
+  }
+  if (t.includes('order') || t.includes('buy') || t.includes('nataka') || t.includes('want') || t.includes('agiza')) {
+    orderStep = 'item'; orderData = {}; hidePhotoUpload();
+    return 'What would you like to order? 🎂\n\n' + MENU_TEXT + '\n\nType the item name!';
+  }
+  if (t.includes('open') || t.includes('hour') || t.includes('time') || t.includes('wazi')) {
+    return 'Opening Hours:\nMon–Thu: 7:00 AM – 7:00 PM\nFri–Sat: 7:00 AM – 8:00 PM\nSunday: Closed\n\nRight now we are: ' + (isOpen() ? '✅ OPEN' : '❌ CLOSED');
+  }
+  if (t.includes('deliver') || t.includes('location') || t.includes('where') || t.includes('wapi')) {
+    return 'We are at:\nNjiapanda, Himo, Tanzania\n\nDelivery in Himo: TZS 3,000–8,000\nPickup also available!\n\nCall: 0620 767 919';
+  }
+  if (t.includes('gallery') || t.includes('photo') || t.includes('picture') || t.includes('picha')) {
+    goTo('gallery'); return 'Here is our gallery! Tap any photo to order that item. 📸';
+  }
+  if (t.includes('thank') || t.includes('asante')) { return 'Asante sana! It\'s our pleasure! 🙏🎂'; }
+  if (t.includes('bye') || t.includes('kwaheri')) { return 'Kwaheri! Come back for more sweet treats! 🎂❤️'; }
+  return 'I can help with:\n- menu: see prices\n- order: place an order\n- hours: opening times\n- delivery: info\n\nOr call us: 0620 767 919 📞';
 }
 
-function handleKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendFromInput(); }
-}
-
-function sendFromInput() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (text) { input.value = ''; sendMsg(text); }
-}
-
-async function sendMsg(text) {
-  if (chatLoading || !text.trim()) return;
-  if (chatHistory.length === 0) initChat();
-  addMsg('user', text);
-  chatHistory.push({role:'user', content: text});
-  chatLoading = true;
-  document.getElementById('sendBtn').disabled = true;
-  showTyping();
-
+async function confirmOrder() {
+  // Save to backend
   try {
-    const res = await fetch(API + '/api/chat', {
+    await fetch(API + '/api/orders', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({messages: chatHistory})
+      body: JSON.stringify({
+        customer: {name: orderData.name, phone: orderData.phone},
+        item: {type: orderData.item, size:'', flavor:'', quantity:1},
+        delivery: {type: orderData.delivery.toLowerCase().includes('delivery')?'delivery':'pickup', address:''},
+        dateNeeded: orderData.date,
+        notes: refPhotoB64 ? 'Customer attached a reference photo' : ''
+      })
     });
-    const data = await res.json();
-    removeTyping();
+  } catch(e) {}
 
-    if (!data.success) throw new Error(data.message);
-    const reply = data.reply;
+  // Build WhatsApp message
+  const waTxt =
+    '🎂 NEW ORDER - Abby Cake and Bites\n\n' +
+    'Name: ' + orderData.name + '\n' +
+    'Phone: ' + orderData.phone + '\n' +
+    'Item: ' + orderData.item + '\n' +
+    'Delivery: ' + orderData.delivery + '\n' +
+    'Date: ' + orderData.date +
+    (refPhotoB64 ? '\n\n📎 Customer has a reference photo. Please ask them to send it on WhatsApp.' : '');
+  const waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waTxt);
 
-    // Check for order JSON
-    const match = reply.match(/ORDER_JSON:(\{.*?\})/s);
-    if (match) {
-      try {
-        const parsed = JSON.parse(match[1]);
-        const orderRes = await fetch(API + '/api/orders', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({
-            customer: {name: parsed.customerName, phone: parsed.customerPhone},
-            item: {type: parsed.itemType, size: parsed.size, flavor: parsed.flavor, quantity: parsed.quantity},
-            delivery: {type: (parsed.deliveryType||'').toLowerCase().includes('delivery')?'delivery':'pickup', address: parsed.address},
-            dateNeeded: parsed.dateNeeded,
-            notes: parsed.notes || ''
-          })
-        });
-        const orderData = await orderRes.json();
-        const cleanReply = reply.replace(/ORDER_JSON:\{.*?\}/s,'').trim();
-        if (cleanReply) addMsg('assistant', cleanReply);
-        if (orderData.success) showOrderSuccess(orderData.order);
-      } catch(e) {
-        addMsg('assistant', reply.replace(/ORDER_JSON:\{.*?\}/s,'').trim() || 'Your order details have been noted! Please call 0620 767 919 to confirm.');
-      }
-    } else {
-      addMsg('assistant', reply);
-      chatHistory.push({role:'assistant', content: reply});
-    }
-  } catch(e) {
-    removeTyping();
-    addMsg('assistant', 'Sorry, having trouble connecting right now. Please call us at 0620 767 919 📞');
+  removeTyping();
+
+  // Build confirmation HTML
+  let html = '✅ Order confirmed! Thank you <strong>' + orderData.name + '</strong>!<br/><br/>' +
+    'We will call you on <strong>' + orderData.phone + '</strong> to confirm.<br/><br/>';
+
+  if (refPhotoB64) {
+    html += '<img src="' + refPhotoB64 + '" style="width:85px;height:85px;object-fit:cover;border-radius:10px;border:2px solid var(--rose);display:block;margin-bottom:10px"/>';
   }
-  chatLoading = false;
+
+  html +=
+    '<a href="' + waUrl + '" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:11px 22px;border-radius:22px;text-decoration:none;font-weight:600;font-size:13px;margin-bottom:6px">📱 Send Order on WhatsApp</a>' +
+    '<br/><span style="font-size:10px;color:#aaa">Tap to notify the bakery directly!</span>';
+
+  addBotHtml(html);
+
+  orderStep = null; orderData = {}; hidePhotoUpload();
+  chatBusy = false;
   document.getElementById('sendBtn').disabled = false;
 }
 
-function showOrderSuccess(order) {
-  document.getElementById('chatBox').style.display = 'none';
-  const rows = [
-    ['Order ID', order.orderId],
-    ['Name', order.customer?.name],
-    ['Phone', order.customer?.phone],
-    ['Item', order.item?.type],
-    ['Flavor', order.item?.flavor],
-    ['Size', order.item?.size],
-    ['Delivery', order.delivery?.type],
-    ['Date Needed', order.dateNeeded],
-  ].filter(([,v])=>v&&v!=='undefined');
-  document.getElementById('orderSuccess').style.display = 'block';
-  document.getElementById('orderSuccess').innerHTML = `
-    <div class="order-success">
-      <div class="order-success-icon">🎉</div>
-      <h3>Order Confirmed!</h3>
-      <p>Your order has been saved and an SMS notification has been sent to the bakery. We'll contact you soon to confirm!</p>
-      <div class="order-details">${rows.map(([k,v])=>`<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val">${v}</span></div>`).join('')}</div>
-      <p style="font-size:12px;color:#9a7060;margin-bottom:18px">Questions? Call 0620 767 919</p>
-      <button class="btn-primary" onclick="resetChat()">New Order 💬</button>
-    </div>`;
+async function userSend(txt) {
+  if (chatBusy || !txt.trim()) return;
+  if (!chatStarted) initChat();
+  addUserMsg(txt);
+  chatBusy = true;
+  document.getElementById('sendBtn').disabled = true;
+  if (document.getElementById('chatMsgs').children.length > 4) {
+    document.getElementById('quickBtns').style.display = 'none';
+  }
+  showTyping();
+  await new Promise(r => setTimeout(r, 650));
+  if (orderStep === 'confirm' && (txt.toLowerCase().includes('yes') || txt.toLowerCase().includes('ndio'))) {
+    await confirmOrder(); return;
+  }
+  removeTyping();
+  const reply = getReply(txt);
+  if (reply) addBotMsg(reply);
+  chatBusy = false;
+  document.getElementById('sendBtn').disabled = false;
 }
 
-function resetChat() {
-  chatHistory = [];
-  chatLoading = false;
-  document.getElementById('chatMsgs').innerHTML = '';
-  document.getElementById('orderSuccess').style.display = 'none';
-  document.getElementById('chatBox').style.display = 'flex';
-  document.getElementById('quickBtns').style.display = 'flex';
-  initChat();
+function sendFromInput() {
+  const inp = document.getElementById('chatInput');
+  const txt = inp.value.trim();
+  if (txt) { inp.value = ''; userSend(txt); }
 }
 
-// ── ADMIN ──────────────────────────────────────
+function orderItem(item) {
+  goTo('chat');
+  if (!chatStarted) initChat();
+  setTimeout(() => userSend('I want to order ' + item), 400);
+}
+
+// ─── ADMIN ────────────────────────────────────────────────
 let adminToken = null;
 
 async function doLogin() {
   const u = document.getElementById('adminUser').value;
   const p = document.getElementById('adminPass').value;
+  const errEl = document.getElementById('loginErr');
   const btn = document.getElementById('loginBtn');
-  document.getElementById('loginErr').innerHTML = '';
-  btn.textContent = 'Logging in...';
-  btn.disabled = true;
+  errEl.innerHTML = '';
+  btn.textContent = 'Logging in...'; btn.disabled = true;
   try {
     const res = await fetch(API + '/api/admin/login', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({username:u, password:p})
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({username: u, password: p})
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.message || 'Invalid credentials');
     adminToken = data.token;
     document.getElementById('adminLogin').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    loadAdminData();
+    document.getElementById('adminDash').style.display = 'block';
+    loadOrders();
   } catch(e) {
-    document.getElementById('loginErr').innerHTML = '<div class="error-msg">'+e.message+'</div>';
+    errEl.innerHTML = '<div class="alert-err">' + e.message + '</div>';
   }
-  btn.textContent = 'Login →';
-  btn.disabled = false;
+  btn.textContent = 'Login →'; btn.disabled = false;
 }
 
 function doLogout() {
   adminToken = null;
   document.getElementById('adminLogin').style.display = 'block';
-  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('adminDash').style.display = 'none';
+  document.getElementById('adminUser').value = '';
+  document.getElementById('adminPass').value = '';
 }
 
-async function loadAdminData() {
+function switchTab(tab, el) {
+  document.querySelectorAll('.atab').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('tab-orders').style.display = tab === 'orders' ? 'block' : 'none';
+  document.getElementById('tab-gallery').style.display = tab === 'gallery' ? 'block' : 'none';
+  if (tab === 'gallery') renderAdminGallery();
+}
+
+async function loadOrders() {
   try {
-    const [oRes, sRes] = await Promise.all([
-      fetch(API+'/api/admin/orders', {headers:{Authorization:'Bearer '+adminToken}}),
-      fetch(API+'/api/admin/stats', {headers:{Authorization:'Bearer '+adminToken}})
+    const [or, sr] = await Promise.all([
+      fetch(API + '/api/admin/orders', {headers:{Authorization:'Bearer '+adminToken}}),
+      fetch(API + '/api/admin/stats', {headers:{Authorization:'Bearer '+adminToken}})
     ]);
-    const oData = await oRes.json();
-    const sData = await sRes.json();
-    const stats = sData.stats || {};
-    document.getElementById('statsGrid').innerHTML = `
-      <div class="stat-card"><div class="stat-val">${stats.totalOrders||0}</div><div class="stat-label">Total Orders</div></div>
-      <div class="stat-card"><div class="stat-val">${stats.pendingOrders||0}</div><div class="stat-label">Pending</div></div>
-      <div class="stat-card"><div class="stat-val">${stats.todayOrders||0}</div><div class="stat-label">Today</div></div>
-      <div class="stat-card"><div class="stat-val">${stats.deliveryCount||0}</div><div class="stat-label">Deliveries</div></div>`;
-    const orders = oData.data || [];
-    if (orders.length === 0) {
-      document.getElementById('ordersContent').innerHTML = '<div style="text-align:center;padding:50px;color:#9a7060"><div style="font-size:44px;margin-bottom:10px">🎂</div><p>No orders yet. Orders from the chat will appear here.</p></div>';
+    const od = await or.json(), sd = await sr.json(), s = sd.stats || {};
+    document.getElementById('statsGrid').innerHTML =
+      '<div class="stat-card"><div class="stat-n">' + (s.totalOrders||0) + '</div><div class="stat-l">Total Orders</div></div>' +
+      '<div class="stat-card"><div class="stat-n">' + (s.pendingOrders||0) + '</div><div class="stat-l">Pending</div></div>' +
+      '<div class="stat-card"><div class="stat-n">' + (s.todayOrders||0) + '</div><div class="stat-l">Today</div></div>' +
+      '<div class="stat-card"><div class="stat-n">' + (s.deliveryCount||0) + '</div><div class="stat-l">Deliveries</div></div>';
+    const orders = od.data || [];
+    if (!orders.length) {
+      document.getElementById('ordersContent').innerHTML =
+        '<div style="text-align:center;padding:50px;color:var(--muted)"><div style="font-size:40px;margin-bottom:10px">🎂</div><p>No orders yet! Orders from chat will appear here.</p></div>';
       return;
     }
-    document.getElementById('ordersContent').innerHTML = `
-      <div class="orders-table">
-        <div class="table-header"><span>Order ID</span><span>Customer</span><span>Item</span><span>Status</span></div>
-        ${orders.map(o=>`<div class="order-row">
-          <span style="font-size:11px;color:#bbb;font-weight:600">${o.orderId}</span>
-          <span><div style="font-weight:600">${o.customer?.name||''}</div><div style="font-size:11px;color:#9a7060">${o.customer?.phone||''}</div></span>
-          <span><div style="font-weight:500">${o.item?.type||''}</div><div style="font-size:11px;color:#9a7060">${o.item?.flavor||''} · ${o.delivery?.type||''}</div></span>
-          <span><span class="badge badge-${o.status}">${o.status}</span></span>
-        </div>`).join('')}
-      </div>`;
+    document.getElementById('ordersContent').innerHTML =
+      '<div class="orders-table">' +
+      '<div class="orders-head"><span>Order ID</span><span>Customer</span><span>Item</span><span>Status</span></div>' +
+      orders.map(o =>
+        '<div class="order-row">' +
+        '<span style="font-size:9px;color:#bbb;font-weight:600">' + (o.orderId||'') + '</span>' +
+        '<span><div style="font-weight:600">' + (o.customer&&o.customer.name||'') + '</div><div style="font-size:10px;color:var(--muted)">' + (o.customer&&o.customer.phone||'') + '</div></span>' +
+        '<span><div style="font-weight:500">' + (o.item&&o.item.type||'') + '</div><div style="font-size:10px;color:var(--muted)">' + (o.delivery&&o.delivery.type||'') + '</div></span>' +
+        '<span><span class="badge badge-' + (o.status==='confirmed'?'confirmed':'pending') + '">' + (o.status||'pending') + '</span></span>' +
+        '</div>'
+      ).join('') + '</div>';
   } catch(e) {
-    document.getElementById('ordersContent').innerHTML = '<div class="error-msg">Failed to load orders: '+e.message+'</div>';
+    document.getElementById('ordersContent').innerHTML =
+      '<div class="alert-err">Could not load orders. <a href="https://abby-backend.onrender.com" target="_blank" style="color:var(--rose)">Wake the backend first</a></div>';
   }
 }
 
-// ── INIT ───────────────────────────────────────
+// ─── INIT ─────────────────────────────────────────────────
 initHours();
 </script>
 </body>
